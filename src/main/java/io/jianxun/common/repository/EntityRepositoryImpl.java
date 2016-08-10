@@ -5,9 +5,9 @@ import java.io.Serializable;
 import javax.persistence.EntityManager;
 
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
-import org.springframework.data.jpa.repository.support.QueryDslJpaRepository;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
-public class EntityRepositoryImpl<T, ID extends Serializable> extends QueryDslJpaRepository<T, ID>
+public class EntityRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID>
 		implements EntityRepository<T, ID> {
 
 	private final EntityManager entityManager;
