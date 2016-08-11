@@ -10,12 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.jianxun.common.domain.IdEntity;
 import io.jianxun.common.repository.EntityRepository;
+import io.jianxun.common.repository.EntityRepositoryImpl;
 
 @Transactional(readOnly = true)
 public class EntityService<T extends IdEntity, ID extends Serializable> {
 
 	@Autowired
 	private EntityRepository<T, ID> entityRepository;
+
+	public String getDomainClassLowName() {
+		return ((EntityRepositoryImpl<T, ID>) entityRepository).getEntityClass().getSimpleName().toLowerCase();
+	}
 
 	/**
 	 * 读取单个对象

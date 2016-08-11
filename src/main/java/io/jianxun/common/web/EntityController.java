@@ -42,7 +42,7 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 		model.addAttribute("pageSize", pageable.getPageSize());
 		// 提供模板方法 处理非标准数据
 		otherPageDate(model);
-		return "page";
+		return getTemplePrefix() + "/page";
 	}
 
 	protected void otherPageDate(Model model) {
@@ -60,10 +60,15 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 		List<T> list = entityService.findAll();
 		model.addAttribute("content", list);
 		otherListDate(model);
-		return "list";
+		return getTemplePrefix() + "/list";
 	}
 
 	protected void otherListDate(Model model) {
+	}
+
+	// 获取模板目录 默认以实体名称全小写命名
+	protected String getTemplePrefix() {
+		return entityService.getDomainClassLowName();
 	}
 
 }
