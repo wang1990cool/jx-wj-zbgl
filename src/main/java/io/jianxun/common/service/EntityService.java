@@ -6,9 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.jianxun.common.domain.IdEntity;
+import io.jianxun.common.domain.user.User;
 import io.jianxun.common.repository.EntityRepository;
 import io.jianxun.common.repository.EntityRepositoryImpl;
 
@@ -21,6 +24,20 @@ public class EntityService<T extends IdEntity, ID extends Serializable> {
 	public String getDomainClassLowName() {
 		return ((EntityRepositoryImpl<T, ID>) entityRepository).getEntityClass().getSimpleName().toLowerCase();
 	}
+	
+	/*
+	 * 获取当前登陆用户名称信息
+	 */
+	public User getCurrentUser() {
+
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+	    if (authentication == null || !authentication.isAuthenticated()) {
+	      return null;
+	    }
+
+	    return ((User) authentication.getPrincipal());
+	  }
 
 	/**
 	 * 读取单个对象

@@ -11,12 +11,12 @@ public class EntityRepositoryImpl<T, ID extends Serializable> extends SimpleJpaR
 		implements EntityRepository<T, ID> {
 
 	private final EntityManager entityManager;
-	private final Class<T> entityClass;
+	private final JpaEntityInformation<T, ID> entityInformation;
 
 	public EntityRepositoryImpl(JpaEntityInformation<T, ID> entityInformation, EntityManager entityManager) {
 		super(entityInformation, entityManager);
 		this.entityManager = entityManager;
-		this.entityClass = entityInformation.getJavaType();
+		this.entityInformation = entityInformation;
 	}
 
 	public EntityManager getEntityManager() {
@@ -24,9 +24,11 @@ public class EntityRepositoryImpl<T, ID extends Serializable> extends SimpleJpaR
 	}
 
 	public Class<T> getEntityClass() {
-		return entityClass;
+		return entityInformation.getJavaType();
 	}
-	
-	
+
+	public boolean isNew(T entity) {
+		return entityInformation.isNew(entity);
+	}
 
 }

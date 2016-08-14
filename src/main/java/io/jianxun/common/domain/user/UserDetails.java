@@ -3,28 +3,42 @@ package io.jianxun.common.domain.user;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 
-public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
+import com.google.common.collect.Lists;
+
+@Entity
+@Table(name = "jx_sys_users")
+public class UserDetails extends User implements org.springframework.security.core.userdetails.UserDetails {
 
 	private static final long serialVersionUID = -6278197000645900257L;
+	
+	private String password;
+	@ManyToMany
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id") , inverseJoinColumns = @JoinColumn(name = "role_id") )
+	private List<Role> roles = Lists.newArrayList();
 
-	private User user;
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+	//用户失效
+	private boolean accountNonExpired = true;
+	//用户锁定
+	private boolean accountNonLocked = true;
+	//密码失效
+	private boolean credentialsNonExpired = true;
+	//用户可用
+	private boolean enabled = true;
 
 	@Override
+	@Transient
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		if (this.user == null)
-			return AuthorityUtils.commaSeparatedStringToAuthorityList("");
-		List<Role> roles = user.getRoles();
+		List<Role> roles = this.getRoles();
 		if (roles == null || roles.size() < 1) {
 			return AuthorityUtils.commaSeparatedStringToAuthorityList("");
 		}
@@ -35,35 +49,81 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		String authorities = commaBuilder.substring(0, commaBuilder.length() - 1);
 		return AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
 	}
-
-	@Override
+	
 	public String getPassword() {
-		return user == null ? "" : user.getPassword();
+		return password;
 	}
 
-	@Override
-	public String getUsername() {
-		return user == null ? "" : user.getLoginName();
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	@Override
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	/**
+	 * @return the accountNonExpired
+	 */
 	public boolean isAccountNonExpired() {
-		return true;
+		return accountNonExpired;
 	}
 
-	@Override
+	/**
+	 * @param accountNonExpired
+	 *            the accountNonExpired to set
+	 */
+	public void setAccountNonExpired(boolean accountNonExpired) {
+		this.accountNonExpired = accountNonExpired;
+	}
+
+	/**
+	 * @return the accountNonLocked
+	 */
 	public boolean isAccountNonLocked() {
-		return true;
+		return accountNonLocked;
 	}
 
-	@Override
+	/**
+	 * @param accountNonLocked
+	 *            the accountNonLocked to set
+	 */
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
+
+	/**
+	 * @return the credentialsNonExpired
+	 */
 	public boolean isCredentialsNonExpired() {
-		return true;
+		return credentialsNonExpired;
 	}
 
-	@Override
+	/**
+	 * @param credentialsNonExpired
+	 *            the credentialsNonExpired to set
+	 */
+	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+		this.credentialsNonExpired = credentialsNonExpired;
+	}
+
+	/**
+	 * @return the enabled
+	 */
 	public boolean isEnabled() {
-		return true;
+		return enabled;
+	}
+
+	/**
+	 * @param enabled
+	 *            the enabled to set
+	 */
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 }

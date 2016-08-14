@@ -17,10 +17,11 @@ public class Role extends IdEntity {
 	@NotNull
 	private String name;
 	/**
-	 * 角色值 eg:ADMIN,USER
+	 * 角色值
 	 */
 	@NotNull
-	private String roleCode;
+	private String code;
+
 
 	public String getName() {
 		return name;
@@ -30,12 +31,19 @@ public class Role extends IdEntity {
 		this.name = name;
 	}
 
-	public String getRoleCode() {
-		return roleCode;
+	/**
+	 * @return the code
+	 */
+	public String getCode() {
+		return code;
 	}
 
-	public void setRoleCode(String roleCode) {
-		this.roleCode = roleCode;
+	/**
+	 * @param code
+	 *            the code to set
+	 */
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 }

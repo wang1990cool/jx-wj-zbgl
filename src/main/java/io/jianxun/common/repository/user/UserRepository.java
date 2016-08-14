@@ -1,10 +1,10 @@
 package io.jianxun.common.repository.user;
 
-import io.jianxun.common.domain.user.User;
+import io.jianxun.common.domain.user.UserDetails;
 import io.jianxun.common.repository.EntityRepository;
 
-public interface UserRepository extends EntityRepository<User, Long> {
+public interface UserRepository extends EntityRepository<UserDetails, Long> {
 
-	User findByLoginName(String loginName);
+	UserDetails findByUsername(String username);
 
 }
