@@ -29,9 +29,9 @@ public class WebSecuritConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/static/**", "/favicon.ico").permitAll()
-				.antMatchers("/{domain}/{operate}/**").access("@webSecurity.check(authentication,#domain,#operate)")
+				.antMatchers("/pc/{domain}/{operate}/**").access("@webSecurity.check(authentication,#domain,#operate)")
 				.anyRequest().authenticated().and().formLogin().usernameParameter("username").loginPage("/login")
-				.defaultSuccessUrl("/main").permitAll().and().logout().permitAll();
+				.defaultSuccessUrl("/main").permitAll().and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
 	}
 
 	@Bean
