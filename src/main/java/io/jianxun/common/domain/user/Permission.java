@@ -15,10 +15,13 @@ public class Permission extends IdEntity {
 	private static final long serialVersionUID = -4816458616971775233L;
 
 	// 显示名称
-	//前台显示名称
+	// 前台显示名称
 	private String name;
 	// 权限值
 	private String value;
+
+	// 所属角色id
+	private Long owner = -1L;
 
 	/**
 	 * @return the name
@@ -49,5 +52,21 @@ public class Permission extends IdEntity {
 	public void setValue(String value) {
 		this.value = value;
 	}
+
+	/**
+	 * @return the owner
+	 */
+	public Long getOwner() {
+		return owner;
+	}
+
+	/**
+	 * @param owner the owner to set
+	 */
+	public void setOwner(Long owner) {
+		this.owner = owner;
+	}
+	
+	
 
 }

@@ -28,9 +28,10 @@ public class WebSecuritConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/static/**", "/favicon.ico").permitAll().anyRequest().authenticated()
-				.and().formLogin().usernameParameter("loginName").loginPage("/login").defaultSuccessUrl("/main")
-				.permitAll().and().logout().permitAll();
+		http.authorizeRequests().antMatchers("/static/**", "/favicon.ico").permitAll()
+				.antMatchers("/{domain}/{operate}/**").access("@webSecurity.check(authentication,#domain,#operate)")
+				.anyRequest().authenticated().and().formLogin().usernameParameter("username").loginPage("/login")
+				.defaultSuccessUrl("/main").permitAll().and().logout().permitAll();
 	}
 
 	@Bean
@@ -49,6 +50,11 @@ public class WebSecuritConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider());
+	}
+
+	@Bean
+	public WebSecurity webSecurity() {
+		return new WebSecurity();
 	}
 
 }

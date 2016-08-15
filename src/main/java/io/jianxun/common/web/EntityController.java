@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import io.jianxun.common.service.EntityService;
 
 public class EntityController<T extends IdEntity, ID extends Serializable> {
 
-	protected final EntityService<T, ID> entityService;
+	private final EntityService<T, ID> entityService;
 
 	@Autowired
 	public EntityController(EntityService<T, ID> entityService) {
@@ -56,7 +57,7 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model, HttpRequest request) {
+		public String list(Model model, HttpRequest request) {
 		List<T> list = entityService.findAll();
 		model.addAttribute("content", list);
 		otherListDate(model);

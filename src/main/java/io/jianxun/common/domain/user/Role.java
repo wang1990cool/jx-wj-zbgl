@@ -22,6 +22,8 @@ public class Role extends IdEntity {
 	@NotNull
 	private String code;
 
+	// 所属用户id
+	private Long owner = -1L;
 
 	public String getName() {
 		return name;
@@ -44,6 +46,21 @@ public class Role extends IdEntity {
 	 */
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	/**
+	 * @return the owner
+	 */
+	public Long getOwner() {
+		return owner;
+	}
+
+	/**
+	 * @param owner
+	 *            the owner to set
+	 */
+	public void setOwner(Long owner) {
+		this.owner = owner;
 	}
 
 }

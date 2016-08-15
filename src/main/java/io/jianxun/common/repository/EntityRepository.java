@@ -10,5 +10,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface EntityRepository<T, ID extends Serializable>
 		extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
 
+	boolean isNew(T entity);
 
 }

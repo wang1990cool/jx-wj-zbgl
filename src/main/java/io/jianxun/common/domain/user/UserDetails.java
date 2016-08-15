@@ -4,9 +4,6 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -20,36 +17,35 @@ import com.google.common.collect.Lists;
 public class UserDetails extends User implements org.springframework.security.core.userdetails.UserDetails {
 
 	private static final long serialVersionUID = -6278197000645900257L;
-	
-	private String password;
-	@ManyToMany
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id") , inverseJoinColumns = @JoinColumn(name = "role_id") )
-	private List<Role> roles = Lists.newArrayList();
 
-	//用户失效
+	private String password;
+	@Transient
+	private List<String> permissions = Lists.newArrayList();
+
+	// 用户失效
 	private boolean accountNonExpired = true;
-	//用户锁定
+	// 用户锁定
 	private boolean accountNonLocked = true;
-	//密码失效
+	// 密码失效
 	private boolean credentialsNonExpired = true;
-	//用户可用
+	// 用户可用
 	private boolean enabled = true;
 
 	@Override
 	@Transient
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<Role> roles = this.getRoles();
-		if (roles == null || roles.size() < 1) {
+		List<String> permissions = this.getPermissions();
+		if (permissions == null || permissions.size() < 1) {
 			return AuthorityUtils.commaSeparatedStringToAuthorityList("");
 		}
 		StringBuilder commaBuilder = new StringBuilder();
-		for (Role role : roles) {
-			commaBuilder.append(role.getRoleCode()).append(",");
+		for (String permission : permissions) {
+			commaBuilder.append(permission).append(",");
 		}
 		String authorities = commaBuilder.substring(0, commaBuilder.length() - 1);
 		return AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -58,12 +54,20 @@ public class UserDetails extends User implements org.springframework.security.co
 		this.password = password;
 	}
 
-	public List<Role> getRoles() {
-		return roles;
+	
+
+	/**
+	 * @return the permissions
+	 */
+	public List<String> getPermissions() {
+		return permissions;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	/**
+	 * @param permissions the permissions to set
+	 */
+	public void setPermissions(List<String> permissions) {
+		this.permissions = permissions;
 	}
 
 	/**
