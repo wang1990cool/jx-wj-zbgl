@@ -97,11 +97,11 @@ public class UserDetailsService extends EntityService<UserDetails, Long>
 	}
 
 	/*
-	 * 重置密码
+	 * 修改密码
 	 */
 	@Transactional(readOnly = false)
-	public UserDetails resetPassword(UserDetails user, String newPassword) {
-		logger.info("[当前用户 %s] -- 重置%s用户密码 -- ", getCurrentUser(), user);
+	public UserDetails changePassword(UserDetails user, String newPassword) {
+		logger.info("[当前用户 %s] -- 修改%s用户密码 -- ", getCurrentUser(), user);
 		user.setPassword(bCryptPasswordEncoder.encode(newPassword));
 		return super.save(user);
 	}
