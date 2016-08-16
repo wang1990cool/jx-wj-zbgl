@@ -39,11 +39,11 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 	 */
 
 	@RequestMapping(value = { "", "/page" }, method = RequestMethod.GET)
-	public String page(Model model, Pageable pageable, HttpRequest request) {
+	public String page(Model model, Pageable pageable) {
 		Page<T> page = entityService.findAll(pageable);
 		model.addAttribute("content", page.getContent());
-		model.addAttribute("pageNum", pageable.getPageNumber());
-		model.addAttribute("pageSize", pageable.getPageSize());
+		model.addAttribute("page", pageable.getPageNumber());
+		model.addAttribute("size", pageable.getPageSize());
 		// 提供模板方法 处理非标准数据
 		otherPageDate(model);
 		return getTemplePrefix() + "/page";

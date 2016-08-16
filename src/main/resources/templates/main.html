@@ -166,10 +166,10 @@
 			ajaxTimeout : 50000, //[可选]全局Ajax请求超时时间(毫秒)
 			pageInfo : {
 				total : 'total',
-				pageCurrent : 'pageNum',
-				pageSize : 'pageSize',
-				orderField : 'orderField',
-				orderDirection : 'orderDirection'
+				pageCurrent : 'page',
+				pageSize : 'size',
+				orderField : 'sort',
+				orderDirection : 'sort'
 			}, //[可选]分页参数
 			alertMsg : {
 				displayPosition : 'topcenter',
@@ -337,7 +337,7 @@
 						 <li class="active"><a href="javascript:;" data-toggle="slidebar"><i class="fa fa-check-square-o"></i> 器械信息管理</a>
                         <div class="items hide" data-noinit="true">
                             <ul class="menu-items" data-faicon="star-o">
-                                <li><a href="form-input.html" data-options="{id:'form-input', faicon:'caret-right'}">基本信息</a></li>
+                                <li><a href="#" th:href="@{/business/weapon/page/}" data-options="{id:'weapon-page', faicon:'caret-right'}">基本信息</a></li>
                                 <li><a href="form-select.html" data-options="{id:'form-select', faicon:'caret-right'}">库存信息</a></li>
                             </ul>
                             <ul class="menu-items" data-tit="器械领用管理" data-faicon="spinner">

@@ -23,7 +23,7 @@ public class EntityRepositoryImpl<T, ID extends Serializable> extends SimpleJpaR
 		return entityManager;
 	}
 
-	public Class<T> getEntityClass() {
+	public Class<T> getDomainClazz() {
 		return entityInformation.getJavaType();
 	}
 

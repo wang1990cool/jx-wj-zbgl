@@ -12,4 +12,6 @@ public interface EntityRepository<T, ID extends Serializable>
 
 	boolean isNew(T entity);
 
+	Class<T> getDomainClazz();
+
 }
