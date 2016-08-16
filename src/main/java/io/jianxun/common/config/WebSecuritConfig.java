@@ -31,12 +31,12 @@ public class WebSecuritConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/static/**", "/favicon.ico").permitAll()
 				.antMatchers("/pc/{domain}/{operate}/**").access("@webSecurity.check(authentication,#domain,#operate)")
 				.anyRequest().authenticated().and().formLogin().usernameParameter("username").loginPage("/login")
-				.defaultSuccessUrl("/main").permitAll().and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
+				.defaultSuccessUrl("/main",true).permitAll().and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
 	}
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder(17);
+		return new BCryptPasswordEncoder(7);
 	}
 
 	@Bean
