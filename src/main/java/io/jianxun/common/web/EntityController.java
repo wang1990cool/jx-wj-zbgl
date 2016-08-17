@@ -83,6 +83,16 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 	protected void otherListDate(Model model) {
 	}
 
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public String create(Model model) {
+		prepareCreateForm();
+		return getTemplePrefix() + "/form";
+	}
+
+	protected void prepareCreateForm() {
+
+	}
+
 	// 获取模板目录 默认以实体名称全小写命名
 	protected String getTemplePrefix() {
 		return entityService.getDomainClassLowName();

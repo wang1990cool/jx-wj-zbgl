@@ -14,7 +14,7 @@ import io.jianxun.common.domain.IdEntity;
  *
  */
 @Entity
-@Table(name="wj_zb_weapons")
+@Table(name = "wj_zb_weapons")
 public class Weapon extends IdEntity {
 
 	private static final long serialVersionUID = -3815803388244972663L;
@@ -23,6 +23,10 @@ public class Weapon extends IdEntity {
 	private String name;
 	@Column(length = 500)
 	private String descrip;
+	// 编号
+	private String code;
+	// 条形码
+	private String barcode;
 
 	/**
 	 * @return the name
@@ -52,6 +56,22 @@ public class Weapon extends IdEntity {
 	 */
 	public void setDescrip(String descrip) {
 		this.descrip = descrip;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getBarcode() {
+		return barcode;
+	}
+
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
 	}
 
 }
