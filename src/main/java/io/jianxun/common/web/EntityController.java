@@ -3,12 +3,16 @@ package io.jianxun.common.web;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpRequest;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -17,10 +21,19 @@ import io.jianxun.common.service.EntityService;
 
 public class EntityController<T extends IdEntity, ID extends Serializable> {
 
+	protected HttpServletRequest request;
+	protected HttpServletResponse response;
+
 	protected final EntityService<T, ID> entityService;
 
 	public EntityService<T, ID> getEntityService() {
 		return entityService;
+	}
+
+	@ModelAttribute
+	public void getRequestResponse(HttpServletRequest request, HttpServletResponse response) {
+		this.request = request;
+		this.response = response;
 	}
 
 	@Autowired
