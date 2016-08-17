@@ -1,7 +1,5 @@
 package io.jianxun.business.web.dto;
 
-import org.springframework.util.StringUtils;
-
 /**
  * 
  * @author tongtn
