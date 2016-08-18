@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,9 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import io.jianxun.business.web.dto.ReturnDto;
 import io.jianxun.common.domain.IdEntity;
 import io.jianxun.common.service.EntityService;
 
@@ -55,8 +58,9 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 	public String page(Model model, Pageable pageable) {
 		Page<T> page = entityService.findAll(pageable);
 		model.addAttribute("content", page.getContent());
-		model.addAttribute("page", pageable.getPageNumber());
-		model.addAttribute("size", pageable.getPageSize());
+		model.addAttribute("page", page.getNumber());
+		model.addAttribute("size", page.getSize());
+		model.addAttribute("total", page.getNumberOfElements());
 		// 提供模板方法 处理非标准数据
 		otherPageDate(model);
 		return getTemplePrefix() + "/page";
@@ -85,11 +89,23 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
-		prepareCreateForm();
+		model.addAttribute(getDomainName(), entityService.getDomain());
+		prepareCreateForm(model);
 		return getTemplePrefix() + "/form";
 	}
 
-	protected void prepareCreateForm() {
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	@ResponseBody
+	public ReturnDto createSave(@Valid T entity) {
+		entityService.save(entity);
+		return ReturnDto.tabSuccessReturn("操作成功!", getTemplePrefix() + "-page");
+	}
+
+	protected String getDomainName() {
+		return entityService.getDomainClassLowName();
+	}
+
+	protected void prepareCreateForm(Model model) {
 
 	}
 

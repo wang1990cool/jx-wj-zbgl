@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import io.jianxun.common.domain.IdEntity;
 import io.jianxun.common.domain.user.User;
 import io.jianxun.common.repository.EntityRepository;
+import io.jianxun.common.service.exception.ServiceException;
 
 @Transactional(readOnly = true)
 public class EntityService<T extends IdEntity, ID extends Serializable> {
@@ -20,8 +21,21 @@ public class EntityService<T extends IdEntity, ID extends Serializable> {
 	@Autowired
 	protected EntityRepository<T, ID> entityRepository;
 
+	public Class<T> getDomainClass() {
+		return entityRepository.getDomainClazz();
+	}
+
+	public T getDomain() {
+		try {
+			return getDomainClass().newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
+			throw new ServiceException("domain init fail");
+		}
+	}
+
 	public String getDomainClassLowName() {
-		return entityRepository.getDomainClazz().getSimpleName().toLowerCase();
+		return getDomainClass().getSimpleName().toLowerCase();
 	}
 
 	/*

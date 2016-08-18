@@ -1,5 +1,5 @@
 <div class="bjui-pageHeader">
-    <form id="pagerForm" data-toggle="ajaxsearch" th:action="@{/business/weapon/page}" action="#" method="post">
+    <form id="pagerForm" data-toggle="ajaxsearch" th:action="@{/business/weapon/page}" action="#" method="get">
         <input type="hidden" name="size" th:value="${size}" value="30" />
         <input type="hidden" name="page" th:value="${page}" value="1" />
         <input type="hidden" name="sort" th:value="${sort}" value="id" />
@@ -7,7 +7,6 @@
         <div class="bjui-searchBar">
             <label>名称：</label><input type="text"  th:value="${{param.search_LIKE_name}}" value="" name="search_LIKE_name" class="form-control" size="10" />&nbsp;
             <button type="submit" class="btn-default" data-icon="search">查询</button>
-            <a class="btn btn-orange" href="javascript:;" data-toggle="reloadsearch" data-clear-query="true" data-icon="undo">清空查询</a>
         </div>
     </form>
      <hr style="margin: 5px 0" />
@@ -23,12 +22,7 @@
                     </ul>
                 </div>
             </div>
-           
-    
 </div>
-
-
-
 <div class="bjui-pageContent tableContent">
     <table data-toggle="tablefixed" data-width="100%" data-nowrap="true" data-selected-multi="true">
         <thead>
@@ -41,7 +35,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="e : ${result}" th:attr="data-id=${e.id}">
+            <tr th:each="e : ${content}" th:attr="data-id=${e.id}">
             	<td><input type="checkbox" name="ids" data-toggle="icheck" th:value="${e.id}" value="-1" /></td>
             	<td th:text="${e.code}">编码</td>
                 <td th:text="${e.name}">名称</td>

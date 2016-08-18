@@ -13,6 +13,9 @@ public class ReturnDto {
 
 	private Integer statusCode;
 	private String message;
+	private String tabid;
+	private String dialogid;
+	private String divid;
 
 	private ReturnDto(StatusCode statusCode) {
 		super();
@@ -49,8 +52,37 @@ public class ReturnDto {
 		this.message = message;
 	}
 
+	public String getTabid() {
+		return tabid;
+	}
+
+	public void setTabid(String tabid) {
+		this.tabid = tabid;
+	}
+
+	public String getDialogid() {
+		return dialogid;
+	}
+
+	public void setDialogid(String dialogid) {
+		this.dialogid = dialogid;
+	}
+
+	public String getDivid() {
+		return divid;
+	}
+
+	public void setDivid(String divid) {
+		this.divid = divid;
+	}
+
 	public static ReturnDto ok(String message) {
 		ReturnDto.OK.setMessage(message);
+		return ReturnDto.OK;
+	}
+
+	public static ReturnDto tabSuccessReturn(String message, String tabid) {
+		ok(message).setTabid(tabid);
 		return ReturnDto.OK;
 	}
 
