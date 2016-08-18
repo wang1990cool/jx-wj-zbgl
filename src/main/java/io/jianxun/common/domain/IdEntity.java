@@ -13,7 +13,7 @@ public class IdEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected Long id;
+	protected Long id = null;
 
 	public Long getId() {
 		return id;

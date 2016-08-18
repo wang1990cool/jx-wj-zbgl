@@ -1,32 +1,33 @@
 <div class="bjui-pageContent">
-    <form action="#" id="weapon_form" th:action="@{/business/weapon/create}" method="POST" th:object="${weapon}" data-toggle="validate" data-alertmsg="false">
-        <table class="table table-condensed table-hover" width="100%">
-            <tbody>
-                <tr>
-                    <td>
-                        <label for="j_custom_name" class="control-label x95">装备器械代码：</label>
-                        <input type="text" th:field="*{code}" name="code" data-rule="required" size="15" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="j_custom_fname" class="control-label x95">装备器械名称：</label>
-                        <input type="text" th:field="*{name}" name="name" data-rule="required" size="15" />
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        <label for="j_custom_note" class="control-label x95">备注：</label>
-                        <textarea name="descrip" th:field="*{descrip}"  data-toggle="autoheight" cols="60" rows="8"></textarea>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </form>
+	<form action="#" id="weapon_form"
+		th:action="@{/business/weapon/{path}(path=${action})}" method="POST"
+		th:object="${weapon}" data-toggle="validate" data-alertmsg="false">
+		<table class="table table-condensed table-hover" width="100%">
+			<tbody>
+				<tr>
+					<td><label for="j_custom_name" class="control-label x95">装备器械代码：</label>
+						<input type="text" th:field="*{code}" name="code"
+						data-rule="required" size="15" /> <input type="hidden" name="id"
+						th:value="${id}" /></td>
+				</tr>
+				<tr>
+					<td><label for="j_custom_fname" class="control-label x95">装备器械名称：</label>
+						<input type="text" th:field="*{name}" name="name"
+						data-rule="required" size="15" /></td>
+				</tr>
+				<tr>
+					<td colspan="4"><label for="j_custom_note"
+						class="control-label x95">备注：</label> <textarea name="descrip"
+							th:field="*{descrip}" data-toggle="autoheight" cols="60" rows="8"></textarea>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
 </div>
 <div class="bjui-pageFooter">
-    <ul>
-        <li><button type="button" class="btn-close" data-icon="close">取消</button></li>
-        <li><button type="submit" class="btn-default" data-icon="save">保存</button></li>
-    </ul>
+	<ul>
+		<li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+		<li><button type="submit" class="btn-default" data-icon="save">保存</button></li>
+	</ul>
 </div>

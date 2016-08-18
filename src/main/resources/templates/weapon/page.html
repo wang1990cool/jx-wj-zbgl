@@ -1,58 +1,76 @@
 <div class="bjui-pageHeader">
-    <form id="pagerForm" data-toggle="ajaxsearch" th:action="@{/business/weapon/page}" action="#" method="get">
-        <input type="hidden" name="size" th:value="${size}" value="30" />
-        <input type="hidden" name="page" th:value="${page}" value="1" />
-        <input type="hidden" name="sort" th:value="${sort}" value="id" />
-        <input type="hidden" name="sort" th:value="${sort}" value="DESC" />
-        <div class="bjui-searchBar">
-            <label>名称：</label><input type="text"  th:value="${{param.search_LIKE_name}}" value="" name="search_LIKE_name" class="form-control" size="10" />&nbsp;
-            <button type="submit" class="btn-default" data-icon="search">查询</button>
-        </div>
-    </form>
-     <hr style="margin: 5px 0" />
-    <div class="pull-left">
-    			<button type="button" data-toggle="navtab" class="btn-red" data-id="weapon-navtab-new" data-url="business/weapon/create">新增--器械信息</button>
-                <div class="btn-group">
-                    <button type="button" class="btn-default dropdown-toggle" data-toggle="dropdown" data-icon="copy">批量操作<span class="caret"></span></button>
-                    <ul class="dropdown-menu right" role="menu">
-                        <li><a href="book1.xlsx" data-toggle="doexport" data-confirm-msg="确定要导出信息吗？">导出<span style="color: green;">全部</span></a></li>
-                        <li><a href="book1.xlsx" data-toggle="doexportchecked" data-confirm-msg="确定要导出选中项吗？" data-idname="expids" data-group="ids">导出<span style="color: red;">选中</span></a></li>
-                        <li class="divider"></li>
-                        <li><a th:href="@{/business/weapon/remove}" href="#" data-toggle="doajaxchecked" data-confirm-msg="确定要删除选中项吗？" data-idname="ids" data-group="ids">删除选中</a></li>
-                    </ul>
-                </div>
-            </div>
+	<form id="pagerForm" data-toggle="ajaxsearch"
+		th:action="@{/business/weapon/page}" action="#" method="POST">
+		<input type="text" name="size" th:value="${size}" value="30" /> <input
+			type="text" name="page" th:value="${page}" value="1" /> <input
+			type="text" name="sort" th:value="${sort}" value="id" /> <input
+			type="text" name="sort" th:value="${sort}" value="DESC" />
+		<div class="bjui-searchBar">
+			<label>名称：</label><input type="text"
+				th:value="${{param.search_LIKE_name}}" value=""
+				name="search_LIKE_name" class="form-control" size="10" />&nbsp;
+			<button type="submit" class="btn-default" data-icon="search">查询</button>
+		</div>
+	</form>
+	<hr style="margin: 5px 0" />
+	<div class="pull-left">
+		<button type="button" data-toggle="navtab" class="btn-red"
+			data-id="weapon-navtab-new" data-url="business/weapon/create">新增--器械信息</button>
+		<div class="btn-group">
+			<button type="button" class="btn-default dropdown-toggle"
+				data-toggle="dropdown" data-icon="copy">
+				批量操作<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu right" role="menu">
+				<li><a href="book1.xlsx" data-toggle="doexport"
+					data-confirm-msg="确定要导出信息吗？">导出<span style="color: green;">全部</span></a></li>
+				<li><a href="book1.xlsx" data-toggle="doexportchecked"
+					data-confirm-msg="确定要导出选中项吗？" data-idname="expids" data-group="ids">导出<span
+						style="color: red;">选中</span></a></li>
+				<li class="divider"></li>
+				<li><a th:href="@{/business/weapon/remove}" href="#"
+					data-toggle="doajaxchecked" data-confirm-msg="确定要删除选中项吗？"
+					data-idname="ids" data-group="ids">删除选中</a></li>
+			</ul>
+		</div>
+	</div>
 </div>
 <div class="bjui-pageContent tableContent">
-    <table data-toggle="tablefixed" data-width="100%" data-nowrap="true" data-selected-multi="true">
-        <thead>
-            <tr>
-                <th width="26"><input type="checkbox" class="checkboxCtrl" data-group="ids" data-toggle="icheck" /></th>
-                <th data-order-field="code">器械编码</th>
-                <th data-order-field="name">器械名称</th>
-                <th >器械描述</th>
-                <th width="100">操作</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="e : ${content}" th:attr="data-id=${e.id}">
-            	<td><input type="checkbox" name="ids" data-toggle="icheck" th:value="${e.id}" value="-1" /></td>
-            	<td th:text="${e.code}">编码</td>
-                <td th:text="${e.name}">名称</td>
-                <td th:text="${e.descrip}">名称</td>
-                <td>
-                    <a th:href="@{/business/weapon/modify}" href="#" class="btn btn-green" data-toggle="navtab" data-id="form" data-reload-warn="本页已有打开的内容，确定将刷新本页内容，是否继续？" data-title="编辑-孙悟空">编辑</a>
-                    <a th:href="@{/business/weapon/remove}" href="#" class="btn btn-red" data-toggle="doajax" data-confirm-msg="确定要删除该行信息吗？">删</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+	<table data-toggle="tablefixed" data-width="100%" data-nowrap="true"
+		data-selected-multi="true">
+		<thead>
+			<tr>
+				<th width="26"><input type="checkbox" class="checkboxCtrl"
+					data-group="ids" data-toggle="icheck" /></th>
+				<th data-order-field="code">器械编码</th>
+				<th data-order-field="name">器械名称</th>
+				<th>器械描述</th>
+				<th width="100">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="e : ${content}" th:attr="data-id=${e.id}">
+				<td><input type="checkbox" name="ids" data-toggle="icheck"
+					th:value="${e.id}" value="-1" /></td>
+				<td th:text="${e.code}">编码</td>
+				<td th:text="${e.name}">名称</td>
+				<td th:text="${e.descrip}">名称</td>
+				<td><a th:href="@{/business/weapon/modify/{id}(id=${e.id})}"
+					href="#" class="btn btn-green" data-toggle="navtab" data-id="form"
+					data-reload-warn="本页已有打开的内容，确定将刷新本页内容，是否继续？" data-title="修改-器械信息">修改</a>
+					<a th:href="@{/business/weapon/remove/{id}(id=${e.id})}" href="#"
+					class="btn btn-red" data-toggle="doajax"
+					data-confirm-msg="确定要删除该行信息吗？">删除</a></td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <div class="bjui-pageFooter">
-    <div class="pages">
-        <span th:text="'每页 '+${size}+' 条 '">每页 0 条</span> &nbsp;
-        <span th:text="',共 '+${total}+' 条 '">共  0 条</span>
-    </div>
-    <div class="pagination-box" data-toggle="pagination" th:attrappend="data-total=${total},data-page-size=${size},data-page-current=${page}">
-    </div>
+	<div class="pages">
+		<span th:text="'每页 '+${size}+' 条 '">每页 0 条</span> &nbsp; <span
+			th:text="',共 '+${total}+' 条 '">共 0 条</span>
+	</div>
+	<div class="pagination-box" data-toggle="pagination"
+		th:attrappend="data-total=${total},data-page-size=${size},data-page-current=${page}">
+	</div>
 </div>

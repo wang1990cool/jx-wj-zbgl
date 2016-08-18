@@ -14,8 +14,10 @@ import org.springframework.http.HttpRequest;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.jianxun.business.web.dto.ReturnDto;
@@ -54,13 +56,13 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 	 * @return
 	 */
 
-	@RequestMapping(value = { "", "/page" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "", "/page" })
 	public String page(Model model, Pageable pageable) {
 		Page<T> page = entityService.findAll(pageable);
 		model.addAttribute("content", page.getContent());
-		model.addAttribute("page", page.getNumber());
+		model.addAttribute("page", page.getNumber() + 1);
 		model.addAttribute("size", page.getSize());
-		model.addAttribute("total", page.getNumberOfElements());
+		model.addAttribute("total", page.getTotalElements());
 		// 提供模板方法 处理非标准数据
 		otherPageDate(model);
 		return getTemplePrefix() + "/page";
@@ -90,8 +92,13 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
 		model.addAttribute(getDomainName(), entityService.getDomain());
+		model.addAttribute("action", "create");
 		prepareCreateForm(model);
 		return getTemplePrefix() + "/form";
+	}
+
+	protected void prepareCreateForm(Model model) {
+
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -101,17 +108,42 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 		return ReturnDto.tabSuccessReturn("操作成功!", getTemplePrefix() + "-page");
 	}
 
-	protected String getDomainName() {
-		return entityService.getDomainClassLowName();
+	@RequestMapping(value = "/modify/{id}", method = RequestMethod.GET)
+	public <S extends ID> String modify(@PathVariable("id") S id, Model model) {
+		model.addAttribute(getDomainName(), entityService.findOne(id));
+		model.addAttribute("action", "modify");
+		prepareModifyForm(model);
+		return getTemplePrefix() + "/form";
+
 	}
 
-	protected void prepareCreateForm(Model model) {
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	@ResponseBody
+	public ReturnDto modifySave(@Valid @ModelAttribute T entity, Model model) {
+		entityService.save(entity);
+		return ReturnDto.tabSuccessReturn("操作成功!", getTemplePrefix() + "-page");
+	}
 
+	protected void prepareModifyForm(Model model) {
+
+	}
+
+	protected String getDomainName() {
+		return entityService.getDomainClassLowName();
 	}
 
 	// 获取模板目录 默认以实体名称全小写命名
 	protected String getTemplePrefix() {
 		return entityService.getDomainClassLowName();
+	}
+
+	@ModelAttribute
+	public void getMode(@RequestParam(value = "id", defaultValue = "-1") ID id, Model model) {
+		if (id != null) {
+			T entity = entityService.findOne(id);
+			if (entity != null)
+				model.addAttribute(getDomainName(), entity);
+		}
 	}
 
 }
