@@ -110,7 +110,7 @@ public class EntityService<T extends IdEntity, ID extends Serializable> {
 	public void deleteInBatch(Iterable<T> entities) {
 		entityRepository.deleteInBatch(entities);
 	}
-
+	
 	public Page<T> findAll(Pageable pageable) {
 		return entityRepository.findAll(pageable);
 	}

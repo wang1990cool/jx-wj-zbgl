@@ -166,6 +166,22 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 
 	}
 
+	@RequestMapping(value = "/remove/{id}")
+	@ResponseBody
+	public ReturnDto remove(@PathVariable("id") ID id) {
+		entityService.delete(id);
+		return ReturnDto.ok("操作成功!");
+	}
+
+	@RequestMapping("/remove")
+	@ResponseBody
+	public ReturnDto batchRemove(@RequestParam("ids") ID[] ids) {
+		for (ID id : ids) {
+			entityService.delete(id);
+		}
+		return ReturnDto.ok("操作成功!");
+	}
+
 	protected String getDomainName() {
 		return entityService.getDomainClassLowName();
 	}
