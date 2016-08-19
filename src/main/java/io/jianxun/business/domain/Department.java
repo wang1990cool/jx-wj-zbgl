@@ -18,6 +18,12 @@ public class Department extends IdEntity {
 	@NotNull
 	private String name;
 
+	// 上级代码
+	private Long parentId;
+
+	// 机构层级代码
+	private String levelCode;
+
 	/**
 	 * @return the name
 	 */
@@ -26,12 +32,27 @@ public class Department extends IdEntity {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getLevelCode() {
+		return levelCode;
+	}
+
+	public void setLevelCode(String levelCode) {
+		this.levelCode = levelCode;
+	}
 
 }

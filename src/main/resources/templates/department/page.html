@@ -1,0 +1,93 @@
+<div class="bjui-pageContent">
+<!-- tree -->
+ <div style="float:left; width:200px;">
+        <ul id="layout-tree" class="ztree" data-toggle="ztree" data-expand-all="true" data-on-click="do_open_layout">
+            <li data-id="1" data-pid="0">第一业务</li>
+            <li data-id="10" data-pid="1" data-url="layout/layout-01.html" data-divid="#layout-01">业务1</li>
+            <li data-id="11" data-pid="1" data-url="layout/layout-02.html" data-divid="#layout-02">业务2</li>
+            <li data-id="2" data-pid="0">第二业务</li>
+            <li data-id="20" data-pid="2" data-url="layout/layout-03.html" data-divid="#layout-01">业务3</li>
+            <li data-id="21" data-pid="2" data-url="layout/layout-04.html" data-divid="#layout-02">业务4</li>
+        </ul>
+    </div>
+<!-- page -->
+</div>
+
+
+
+<div class="bjui-pageHeader">
+	<form id="pagerForm" data-toggle="ajaxsearch"
+		th:action="@{/business/department/page}" action="#" method="POST">
+		<input type="hidden" name="parentId" th:value="${parentId}" value="-1" />
+		<input type="hidden" name="size" th:value="${size}" value="20" /> <input
+			type="hidden" name="page" th:value="${page}" value="1" /> <input
+			type="hidden" name="orderField" th:value="${orderField}" value="id" /> <input
+			type="hidden" name="orderDirection" th:value="${orderDirection}" value="DESC" />
+		<div class="bjui-searchBar">
+			<label>名称：</label><input type="text"
+				th:value="${{param.search_LIKE_name}}" value=""
+				name="search_LIKE_name" class="form-control" size="10" />&nbsp;
+			<button type="submit" class="btn-default" data-icon="search">查询</button>
+		</div>
+	</form>
+	<hr style="margin: 5px 0" />
+	<div class="pull-left">
+		<button type="button" data-toggle="navtab" class="btn-red"
+			data-id="department-navtab-new" data-url="business/department/create">新增--机构信息</button>
+		<div class="btn-group">
+			<button type="button" class="btn-default dropdown-toggle"
+				data-toggle="dropdown" data-icon="copy">
+				批量操作<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu right" role="menu">
+				<li><a href="#" data-toggle="doexport"
+					data-confirm-msg="确定要导出信息吗？">导出<span style="color: green;">全部</span></a></li>
+				<li><a href="#" data-toggle="doexportchecked"
+					data-confirm-msg="确定要导出选中项吗？" data-idname="expids" data-group="ids">导出<span
+						style="color: red;">选中</span></a></li>
+				<li class="divider"></li>
+				<li><a th:href="@{/business/department/remove}" href="#"
+					data-toggle="doajaxchecked" data-confirm-msg="确定要删除选中项吗？"
+					data-idname="ids" data-group="ids">删除选中</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="bjui-pageContent tableContent">
+	<table data-toggle="tablefixed" data-width="100%" data-nowrap="true"
+		data-selected-multi="true">
+		<thead>
+			<tr>
+				<th width="26"><input type="checkbox" class="checkboxCtrl"
+					data-group="ids" data-toggle="icheck" /></th>
+				<th data-order-field="code">机构名称</th>
+				<th data-order-field="name">层级代码</th>
+				<th>机构描述</th>
+				<th width="100">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="e : ${content}" th:attr="data-id=${e.id}">
+				<td><input type="checkbox" name="ids" data-toggle="icheck"
+					th:value="${e.id}" value="-1" /></td>
+				<td th:text="${e.name}">机构名称</td>
+				<td th:text="${e.levelCode}">层级代码</td>
+				<td th:text="${e.descrip}">机构描述</td>
+				<td><a th:href="@{/business/department/modify/{id}(id=${e.id})}"
+					href="#" class="btn btn-green" data-toggle="navtab" data-id="form" data-title="修改-机构信息">修改</a>
+					<a th:href="@{/business/department/remove/{id}(id=${e.id})}" href="#"
+					class="btn btn-red" data-toggle="doajax"
+					data-confirm-msg="确定要删除该行信息吗？">删除</a></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="bjui-pageFooter">
+	<div class="pages">
+		<span th:text="'每页 '+${size}+' 条 '">每页 0 条</span> &nbsp; <span
+			th:text="',共 '+${total}+' 条 '">共 0 条</span>
+	</div>
+	<div class="pagination-box" data-toggle="pagination"
+		th:attrappend="data-total=${total},data-page-size=${size},data-page-current=${page}">
+	</div>
+</div>

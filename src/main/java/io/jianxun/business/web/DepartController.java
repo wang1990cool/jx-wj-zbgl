@@ -8,7 +8,7 @@ import io.jianxun.common.service.EntityService;
 import io.jianxun.common.web.EntityController;
 
 @Controller
-@RequestMapping(value = "depart")
+@RequestMapping(value = "/business/department")
 public class DepartController extends EntityController<Department, Long> {
 
 	public DepartController(EntityService<Department, Long> entityService) {
