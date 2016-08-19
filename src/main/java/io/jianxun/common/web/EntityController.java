@@ -2,6 +2,7 @@ package io.jianxun.common.web;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +10,10 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpRequest;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -23,10 +27,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import io.jianxun.business.web.dto.ReturnDto;
 import io.jianxun.common.domain.IdEntity;
 import io.jianxun.common.service.EntityService;
+import io.jianxun.common.utils.Servlets;
 
 public class EntityController<T extends IdEntity, ID extends Serializable> {
 
+	@Autowired
 	protected HttpServletRequest request;
+	@Autowired
 	protected HttpServletResponse response;
 
 	protected final EntityService<T, ID> entityService;
@@ -57,15 +64,46 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 	 */
 
 	@RequestMapping(value = { "", "/page" })
-	public String page(Model model, Pageable pageable) {
-		Page<T> page = entityService.findAll(pageable);
+	public String page(Model model, Pageable pageable,
+			@RequestParam(value = "orderField", defaultValue = "id") String orderField,
+			@RequestParam(value = "orderDirection", defaultValue = "DESC") String orderDirection) {
+		// 处理分页及排序
+		// 由于B-jui 分页组件设定与pageable 有所差别为简单处理 在此直接代码修改pageable对象
+		Sort sort = createSort(orderField, orderDirection);
+		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
+		Page<T> page = entityService.findAll(buildPageable(pageable, sort), searchParams);
 		model.addAttribute("content", page.getContent());
 		model.addAttribute("page", page.getNumber() + 1);
 		model.addAttribute("size", page.getSize());
+		model.addAttribute("orderField", orderField);
+		model.addAttribute("orderDirection", orderDirection);
 		model.addAttribute("total", page.getTotalElements());
+		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		// 提供模板方法 处理非标准数据
+		// 如查询条件
 		otherPageDate(model);
 		return getTemplePrefix() + "/page";
+	}
+
+	private Sort createSort(String orderField, String orderDirection) {
+		Direction d = Direction.valueOf(orderDirection.toUpperCase());
+		if (d == null)
+			d = Direction.DESC;
+		Sort sort = new Sort(d, orderField);
+		return sort;
+	}
+
+	private Pageable buildPageable(Pageable pageable, Sort sort) {
+		int page = pageable.getPageNumber() - 1;
+		if (page < 0)
+			page = 0;
+		int pageSize = pageable.getPageSize();
+		if (pageSize < 0)
+			// 如果没有参数默认显示20条
+			pageSize = 20;
+		pageable = null;
+		return new PageRequest(page, pageSize, sort);
+
 	}
 
 	protected void otherPageDate(Model model) {

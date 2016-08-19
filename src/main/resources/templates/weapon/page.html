@@ -1,10 +1,10 @@
 <div class="bjui-pageHeader">
 	<form id="pagerForm" data-toggle="ajaxsearch"
 		th:action="@{/business/weapon/page}" action="#" method="POST">
-		<input type="text" name="size" th:value="${size}" value="30" /> <input
-			type="text" name="page" th:value="${page}" value="1" /> <input
-			type="text" name="sort" th:value="${sort}" value="id" /> <input
-			type="text" name="sort" th:value="${sort}" value="DESC" />
+		<input type="hidden" name="size" th:value="${size}" value="30" /> <input
+			type="hidden" name="page" th:value="${page}" value="1" /> <input
+			type="hidden" name="orderField" th:value="${orderField}" value="id" /> <input
+			type="hidden" name="orderDirection" th:value="${orderDirection}" value="DESC" />
 		<div class="bjui-searchBar">
 			<label>名称：</label><input type="text"
 				th:value="${{param.search_LIKE_name}}" value=""

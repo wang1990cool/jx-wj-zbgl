@@ -2,10 +2,12 @@ package io.jianxun.common.service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,8 @@ import io.jianxun.common.domain.IdEntity;
 import io.jianxun.common.domain.user.User;
 import io.jianxun.common.repository.EntityRepository;
 import io.jianxun.common.service.exception.ServiceException;
+import io.jianxun.common.utils.DynamicSpecifications;
+import io.jianxun.common.utils.SearchFilter;
 
 @Transactional(readOnly = true)
 public class EntityService<T extends IdEntity, ID extends Serializable> {
@@ -109,6 +113,19 @@ public class EntityService<T extends IdEntity, ID extends Serializable> {
 
 	public Page<T> findAll(Pageable pageable) {
 		return entityRepository.findAll(pageable);
+	}
+
+	public Page<T> findAll(Pageable pageable, Map<String, Object> searchParams) {
+		Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
+		return entityRepository.findAll(buildSpecification(filters), pageable);
+	}
+
+	/**
+	 * 创建动态查询条件组合.
+	 */
+	protected Specification<T> buildSpecification(Map<String, SearchFilter> filterParams) {
+		Specification<T> spec = DynamicSpecifications.bySearchFilter(filterParams.values(), getDomainClass());
+		return spec;
 	}
 
 	public List<T> findAll() {
