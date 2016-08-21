@@ -1,25 +1,7 @@
-<div class="bjui-pageContent">
-<!-- tree -->
- <div style="float:left; width:200px;">
-        <ul id="layout-tree" class="ztree" data-toggle="ztree" data-expand-all="true" data-on-click="do_open_layout">
-            <li data-id="1" data-pid="0">第一业务</li>
-            <li data-id="10" data-pid="1" data-url="layout/layout-01.html" data-divid="#layout-01">业务1</li>
-            <li data-id="11" data-pid="1" data-url="layout/layout-02.html" data-divid="#layout-02">业务2</li>
-            <li data-id="2" data-pid="0">第二业务</li>
-            <li data-id="20" data-pid="2" data-url="layout/layout-03.html" data-divid="#layout-01">业务3</li>
-            <li data-id="21" data-pid="2" data-url="layout/layout-04.html" data-divid="#layout-02">业务4</li>
-        </ul>
-    </div>
-<!-- page -->
-</div>
-
-
-
 <div class="bjui-pageHeader">
 	<form id="pagerForm" data-toggle="ajaxsearch"
 		th:action="@{/business/department/page}" action="#" method="POST">
-		<input type="hidden" name="parentId" th:value="${parentId}" value="-1" />
-		<input type="hidden" name="size" th:value="${size}" value="20" /> <input
+		<input type="hidden" name="size" th:value="${size}" value="30" /> <input
 			type="hidden" name="page" th:value="${page}" value="1" /> <input
 			type="hidden" name="orderField" th:value="${orderField}" value="id" /> <input
 			type="hidden" name="orderDirection" th:value="${orderDirection}" value="DESC" />
@@ -33,7 +15,7 @@
 	<hr style="margin: 5px 0" />
 	<div class="pull-left">
 		<button type="button" data-toggle="navtab" class="btn-red"
-			data-id="department-navtab-new" data-url="business/department/create">新增--机构信息</button>
+			data-id="department-navtab-new" data-url="business/department/create/${parentId}">新增--机构信息</button>
 		<div class="btn-group">
 			<button type="button" class="btn-default dropdown-toggle"
 				data-toggle="dropdown" data-icon="copy">
@@ -60,9 +42,9 @@
 			<tr>
 				<th width="26"><input type="checkbox" class="checkboxCtrl"
 					data-group="ids" data-toggle="icheck" /></th>
-				<th data-order-field="code">机构名称</th>
-				<th data-order-field="name">层级代码</th>
-				<th>机构描述</th>
+				<th data-order-field="code">器械编码</th>
+				<th data-order-field="name">器械名称</th>
+				<th>器械描述</th>
 				<th width="100">操作</th>
 			</tr>
 		</thead>
@@ -70,11 +52,11 @@
 			<tr th:each="e : ${content}" th:attr="data-id=${e.id}">
 				<td><input type="checkbox" name="ids" data-toggle="icheck"
 					th:value="${e.id}" value="-1" /></td>
-				<td th:text="${e.name}">机构名称</td>
-				<td th:text="${e.levelCode}">层级代码</td>
-				<td th:text="${e.descrip}">机构描述</td>
+				<td th:text="${e.code}">编码</td>
+				<td th:text="${e.name}">名称</td>
+				<td th:text="${e.descrip}">名称</td>
 				<td><a th:href="@{/business/department/modify/{id}(id=${e.id})}"
-					href="#" class="btn btn-green" data-toggle="navtab" data-id="form" data-title="修改-机构信息">修改</a>
+					href="#" class="btn btn-green" data-toggle="navtab" data-id="form" data-title="修改-器械信息">修改</a>
 					<a th:href="@{/business/department/remove/{id}(id=${e.id})}" href="#"
 					class="btn btn-red" data-toggle="doajax"
 					data-confirm-msg="确定要删除该行信息吗？">删除</a></td>

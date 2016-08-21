@@ -19,7 +19,7 @@ public class Department extends IdEntity {
 	private String name;
 
 	// 上级代码
-	private Long parentId;
+	private Long pId;
 
 	// 机构层级代码
 	private String levelCode;
@@ -39,12 +39,19 @@ public class Department extends IdEntity {
 		this.name = name;
 	}
 
-	public Long getParentId() {
-		return parentId;
+	/**
+	 * @return the pId
+	 */
+	public Long getpId() {
+		return pId;
 	}
 
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
+	/**
+	 * @param pId
+	 *            the pId to set
+	 */
+	public void setpId(Long pId) {
+		this.pId = pId;
 	}
 
 	public String getLevelCode() {
