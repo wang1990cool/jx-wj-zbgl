@@ -333,6 +333,16 @@
             var IDMark_A = '_a'
             var zTree    = $.fn.zTree.getZTreeObj($this.attr('id'))
             
+            // start ---默认选中第后台回传id 自动执行onClick事件
+            var selectId = $this.attr('selectid');
+            if(selectId&&op.onClick){
+            	var node = zTree.getNodeByParam("id", selectId, null); 
+        		if(node){
+        			zTree.selectNode(node);
+        			op.onClick.toFunc().call(this, event, zTree.setting.treeId, node)
+        		}
+            }
+            // end ---
             if (op.expandAll) zTree.expandAll(true)
             
             // onCreated
@@ -526,7 +536,7 @@
                 })
             }
             
-            //destroy selectzTree
+            // destroy selectzTree
             $this.on('destroy.bjui.selectztree', function() {
                 $box.remove()
             })
@@ -575,32 +585,54 @@
             if (options.confirmSelect)     options.confirmSelect = options.confirmSelect.toFunc()
             
             var htmlTags = {
-                font : [/*'color', 'size', 'face', '.background-color'*/],
+                font : [/* 'color', 'size', 'face', '.background-color' */],
                 span : ['.color', '.background-color', '.font-size', '.font-family'
-                        /*'.color', '.background-color', '.font-size', '.font-family', '.background',
-                        '.font-weight', '.font-style', '.text-decoration', '.vertical-align', '.line-height'*/
+                        /*
+						 * '.color', '.background-color', '.font-size',
+						 * '.font-family', '.background', '.font-weight',
+						 * '.font-style', '.text-decoration', '.vertical-align',
+						 * '.line-height'
+						 */
                 ],
                 div : ['.margin', '.padding', '.text-align'
-                        /*'align', '.border', '.margin', '.padding', '.text-align', '.color',
-                        '.background-color', '.font-size', '.font-family', '.font-weight', '.background',
-                        '.font-style', '.text-decoration', '.vertical-align', '.margin-left'*/
+                        /*
+						 * 'align', '.border', '.margin', '.padding',
+						 * '.text-align', '.color', '.background-color',
+						 * '.font-size', '.font-family', '.font-weight',
+						 * '.background', '.font-style', '.text-decoration',
+						 * '.vertical-align', '.margin-left'
+						 */
                 ],
                 table: ['align', 'width'
-                        /*'border', 'cellspacing', 'cellpadding', 'width', 'height', 'align', 'bordercolor',
-                        '.padding', '.margin', '.border', 'bgcolor', '.text-align', '.color', '.background-color',
-                        '.font-size', '.font-family', '.font-weight', '.font-style', '.text-decoration', '.background',
-                        '.width', '.height', '.border-collapse'*/
+                        /*
+						 * 'border', 'cellspacing', 'cellpadding', 'width',
+						 * 'height', 'align', 'bordercolor', '.padding',
+						 * '.margin', '.border', 'bgcolor', '.text-align',
+						 * '.color', '.background-color', '.font-size',
+						 * '.font-family', '.font-weight', '.font-style',
+						 * '.text-decoration', '.background', '.width',
+						 * '.height', '.border-collapse'
+						 */
                 ],
                 'td,th': ['align', 'valign', 'width', 'height', 'colspan', 'rowspan'
-                        /*'align', 'valign', 'width', 'height', 'colspan', 'rowspan', 'bgcolor',
-                        '.text-align', '.color', '.background-color', '.font-size', '.font-family', '.font-weight',
-                        '.font-style', '.text-decoration', '.vertical-align', '.background', '.border'*/
+                        /*
+						 * 'align', 'valign', 'width', 'height', 'colspan',
+						 * 'rowspan', 'bgcolor', '.text-align', '.color',
+						 * '.background-color', '.font-size', '.font-family',
+						 * '.font-weight', '.font-style', '.text-decoration',
+						 * '.vertical-align', '.background', '.border'
+						 */
                 ],
                 a : ['href', 'target', 'name'],
                 embed : ['src', 'width', 'height', 'type', 'loop', 'autostart', 'quality', '.width', '.height', 'align', 'allowscriptaccess'],
                 img : ['src', 'width', 'height', 'border', 'alt', 'title', 'align', '.width', '.height', '.border'],
                 'p,ol,ul,li,blockquote,h1,h2,h3,h4,h5,h6' : [
-                    'class', 'align', '.text-align', '.color', /*'.background-color', '.font-size', '.font-family', '.background',*/
+                    'class', 'align', '.text-align', '.color', /*
+																 * '.background-color',
+																 * '.font-size',
+																 * '.font-family',
+																 * '.background',
+																 */
                     '.font-weight', '.font-style', '.text-decoration', '.vertical-align', '.text-indent', '.margin-left'
                 ],
                 pre : ['class'],
@@ -616,7 +648,7 @@
                 uploadJson               : options.uploadJson,
                 fileManagerJson          : options.fileManagerJson,
                 allowFileManager         : options.allowFileManager || true,
-                fillDescAfterUploadImage : options.fillDescAfterUploadImage || true, //上传图片成功后转到属性页，为false则直接插入图片[设为true方便自定义函数(X_afterSelect)]
+                fillDescAfterUploadImage : options.fillDescAfterUploadImage || true, // 上传图片成功后转到属性页，为false则直接插入图片[设为true方便自定义函数(X_afterSelect)]
                 afterUpload              : options.afterUpload,
                 afterSelectFile          : options.afterSelectFile,
                 X_afterSelect            : options.confirmSelect,
@@ -674,11 +706,12 @@
             $(this).validator('destroy')
         })
 
-        /* ========================================================================
-         * @description highCharts
-         * @author 小策一喋 <xvpindex@qq.com>
-         * @Blog http://www.topjui.com
-         * ======================================================================== */
+        /*
+		 * ========================================================================
+		 * @description highCharts @author 小策一喋 <xvpindex@qq.com> @Blog
+		 * http://www.topjui.com
+		 * ========================================================================
+		 */
         var $highcharts = $box.find('[data-toggle="highcharts"]')
         
         $highcharts.each(function(){
@@ -690,11 +723,12 @@
             }, 'json')
         })
 
-        /* ========================================================================
-         * @description ECharts
-         * @author 小策一喋 <xvpindex@qq.com>
-         * @Blog http://www.topjui.com
-         * ======================================================================== */
+        /*
+		 * ========================================================================
+		 * @description ECharts @author 小策一喋 <xvpindex@qq.com> @Blog
+		 * http://www.topjui.com
+		 * ========================================================================
+		 */
         var $echarts = $box.find('[data-toggle="echarts"]')
         
         $echarts.each(function(){

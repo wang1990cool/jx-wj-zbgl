@@ -70,7 +70,7 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 		// 处理分页及排序
 		// 由于B-jui 分页组件设定与pageable 有所差别为简单处理 在此直接代码修改pageable对象
 		Sort sort = createSort(orderField, orderDirection);
-		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
+		Map<String, Object> searchParams = getSearchParam();
 		Page<T> page = entityService.findAll(buildPageable(pageable, sort), searchParams);
 		model.addAttribute("content", page.getContent());
 		model.addAttribute("page", page.getNumber() + 1);
@@ -85,7 +85,11 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 		return getTemplePrefix() + "/page";
 	}
 
-	private Sort createSort(String orderField, String orderDirection) {
+	protected Map<String, Object> getSearchParam() {
+		return Servlets.getParametersStartingWith(request, "search_");
+	}
+
+	protected Sort createSort(String orderField, String orderDirection) {
 		Direction d = Direction.valueOf(orderDirection.toUpperCase());
 		if (d == null)
 			d = Direction.DESC;
@@ -93,7 +97,7 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 		return sort;
 	}
 
-	private Pageable buildPageable(Pageable pageable, Sort sort) {
+	protected Pageable buildPageable(Pageable pageable, Sort sort) {
 		int page = pageable.getPageNumber() - 1;
 		if (page < 0)
 			page = 0;
@@ -143,6 +147,10 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 	@ResponseBody
 	public ReturnDto createSave(@Valid T entity) {
 		entityService.save(entity);
+		return getSaveReturn();
+	}
+
+	protected ReturnDto getSaveReturn() {
 		return ReturnDto.tabSuccessReturn("操作成功!", getTemplePrefix() + "-page");
 	}
 
@@ -159,7 +167,7 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 	@ResponseBody
 	public ReturnDto modifySave(@Valid @ModelAttribute T entity, Model model) {
 		entityService.save(entity);
-		return ReturnDto.tabSuccessReturn("操作成功!", getTemplePrefix() + "-page");
+		return getSaveReturn();
 	}
 
 	protected void prepareModifyForm(Model model) {

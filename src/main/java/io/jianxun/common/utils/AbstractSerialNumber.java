@@ -4,8 +4,9 @@ import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
 import com.google.common.collect.Maps;
+
+import io.jianxun.common.service.exception.ServiceException;
 
 public abstract class AbstractSerialNumber {
 
@@ -77,19 +78,19 @@ public abstract class AbstractSerialNumber {
 
 	}
 
-	public abstract int getMaxSerialNumber(String prefix) throws Exception;
+	public abstract int getMaxSerialNumber(String prefix) throws ServiceException;
 
 	public void initCache() {
 		cache.clear();
 	}
 
-	public void initSerialNumber(SerialNumberKey key) throws Exception {
+	public void initSerialNumber(SerialNumberKey key) throws ServiceException {
 		cache.remove(key);
 		cache.put(key,
 				new SerialNumberEntity(getMaxSerialNumber(key.getPrefix())));
 	}
 
-	public String getSerialNumberEntityNumber(String keyStr) throws Exception {
+	public String getSerialNumberEntityNumber(String keyStr) throws ServiceException {
 		SerialNumberKey key = getKey(keyStr);
 		SerialNumberEntity entity = getSerialNumberEntityFromCache(key);
 		return format(key.getPrefix(), nextNum(entity));
@@ -128,7 +129,7 @@ public abstract class AbstractSerialNumber {
 	}
 
 	private SerialNumberEntity getSerialNumberEntityFromCache(
-			SerialNumberKey key) throws Exception {
+			SerialNumberKey key) throws ServiceException {
 		SerialNumberEntity entity = cache.get(key);
 		if (entity == null) {
 			initSerialNumber(key);

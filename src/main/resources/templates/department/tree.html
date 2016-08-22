@@ -1,5 +1,4 @@
 <script type="text/javascript">
-	
 	function do_open_layout(event, treeId, treeNode) {
 		$(event.target).bjuiajax('doLoad', {
 			url : treeNode.url,
@@ -12,9 +11,8 @@
 <div class="bjui-pageContent">
 	<!-- tree -->
 	<div style="float: left; width: 230px;">
-		<ul id="layout-tree" class="ztree" data-toggle="ztree"
-			data-expand-all="true" data-on-click="do_open_layout" th:attr="data-nodes=${tree}" >
-			<li>${tree}</li>
+		<ul id="depart-layout-tree" class="ztree" data-toggle="ztree" selectId="1"
+			data-expand-all="true" data-on-click="do_open_layout" th:attr="data-nodes=${tree}">
 		</ul>
 	</div>
 	<!-- page -->

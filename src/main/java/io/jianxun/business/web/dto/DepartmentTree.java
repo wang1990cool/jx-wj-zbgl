@@ -9,7 +9,7 @@ public class DepartmentTree extends BaseTree {
 	 * @return the url
 	 */
 	public String getUrl() {
-		return url;
+		return url + "/" + this.getId();
 	}
 
 	/**

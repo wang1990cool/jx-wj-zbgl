@@ -4,25 +4,23 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import io.jianxun.common.domain.IdEntity;
+import io.jianxun.common.domain.TreeableEntity;
 
 @Entity
 @Table(name = "wj_zb_departs")
-public class Department extends IdEntity {
+public class Department extends TreeableEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6530993116143960507L;
 
+	private String code;
+
 	@NotNull
 	private String name;
 
-	// 上级代码
-	private Long pId;
-
-	// 机构层级代码
-	private String levelCode;
+	private String descrip;
 
 	/**
 	 * @return the name
@@ -39,27 +37,20 @@ public class Department extends IdEntity {
 		this.name = name;
 	}
 
-	/**
-	 * @return the pId
-	 */
-	public Long getpId() {
-		return pId;
+	public String getCode() {
+		return code;
 	}
 
-	/**
-	 * @param pId
-	 *            the pId to set
-	 */
-	public void setpId(Long pId) {
-		this.pId = pId;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
-	public String getLevelCode() {
-		return levelCode;
+	public String getDescrip() {
+		return descrip;
 	}
 
-	public void setLevelCode(String levelCode) {
-		this.levelCode = levelCode;
+	public void setDescrip(String descrip) {
+		this.descrip = descrip;
 	}
 
 }
