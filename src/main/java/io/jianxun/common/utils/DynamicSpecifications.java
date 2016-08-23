@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -34,7 +35,23 @@ public class DynamicSpecifications {
 						}
 						Path expression = root.get(names[0]);
 						for (int i = 1; i < names.length; i++) {
-							expression = expression.get(names[i]);
+							if (Collection.class.isAssignableFrom(expression.getJavaType())) {
+								Join parentJoin = null;
+								for (int j = 0; j < i; j++) {
+									if (j == 0) {
+										parentJoin = root.join(names[j]);
+									} else {
+										parentJoin = parentJoin.join(names[j]);
+									}
+								}
+								expression = parentJoin.get(names[i]);
+							} else {
+								expression = expression.get(names[i]);
+							}
+						}
+
+						if (expression.getJavaType().isEnum()) {
+							filter.value = Enum.valueOf(expression.getJavaType(), filter.value.toString());
 						}
 
 						// logic operator

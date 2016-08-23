@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import io.jianxun.business.domain.DepartmentEntity;
 import io.jianxun.business.domain.Weapon;
 import io.jianxun.common.domain.user.UserDetails;
@@ -39,7 +41,8 @@ public class RequestForm extends DepartmentEntity {
 	@JoinColumn(name = "c_user_id")
 	private UserDetails createUser;
 	// 领用日期
-	private LocalDate requiredDate;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private LocalDate requiredDate = LocalDate.now();
 	// 领用人信息
 	private String requiredUser;
 	// 备注
@@ -104,5 +107,21 @@ public class RequestForm extends DepartmentEntity {
 	public void setDescrip(String descrip) {
 		this.descrip = descrip;
 	}
+
+	/**
+	 * @return the status
+	 */
+	public RequestFormStatus getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(RequestFormStatus status) {
+		this.status = status;
+	}
+	
+	
 
 }

@@ -1,0 +1,90 @@
+<div class="bjui-pageHeader">
+	<form id="pagerForm" data-toggle="ajaxsearch"
+		th:action="@{/business/requestform/page}" action="#" method="POST">
+		<input type="hidden" id="dId" name="dId" th:value="${dId}" value="-1" />
+		<input type="hidden" name="size" th:value="${size}" value="30" /> <input
+			type="hidden" name="page" th:value="${page}" value="1" /> <input
+			type="hidden" name="orderField" th:value="${orderField}" value="id" />
+		<input type="hidden" name="orderDirection"
+			th:value="${orderDirection}" value="DESC" />
+		<div class="bjui-searchBar">
+			<label>名称：</label><input type="text"
+				th:value="${{param.search_LIKE_name}}" value=""
+				name="search_LIKE_name" class="form-control" size="10" />&nbsp;
+			<button type="submit" class="btn-default" data-icon="search">查询</button>
+		</div>
+	</form>
+	<hr style="margin: 5px 0" />
+	<div class="pull-left">
+		<button type="button" data-toggle="navtab" class="btn-red"
+			data-id="requestform-form-new"
+			data-url="business/requestform/create/{#dId}">新增--领用申请信息</button>
+		<div class="btn-group">
+			<button type="button" class="btn-default dropdown-toggle"
+				data-toggle="dropdown" data-icon="copy">
+				批量操作<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu right" role="menu">
+				<li><a th:href="@{/business/requestform/up}" href="#"
+					data-toggle="doajaxchecked" data-confirm-msg="确定要提交选中项吗？"
+					data-idname="ids" data-group="ids">提交选中</a></li>
+					<li><a th:href="@{/business/requestform/commit}" href="#"
+					data-toggle="doajaxchecked" data-confirm-msg="确定要审核选中项吗？"
+					data-idname="ids" data-group="ids">审核选中</a></li>
+				<li><a th:href="@{/business/requestform/remove}" href="#"
+					data-toggle="doajaxchecked" data-confirm-msg="确定要删除选中项吗？"
+					data-idname="ids" data-group="ids">删除选中</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="bjui-pageContent tableContent">
+	<table data-toggle="tablefixed" data-width="100%" data-nowrap="true"
+		data-selected-multi="true">
+		<thead>
+			<tr>
+				<th width="26"><input type="checkbox" class="checkboxCtrl"
+					data-group="ids" data-toggle="icheck" /></th>
+				<th>状态</th>
+				<th data-order-field="depart.name">所属机构</th>
+				<th data-order-field="weapon.name">装备信息</th>
+				<th data-order-field="capacity">申请数量</th>
+				<th data-order-field="requiredDate">领用日期</th>
+				<th data-order-field="requiredUser">领用人</th>
+				<th>状态</th>
+				<th width="100">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="e : ${content}" th:attr="data-id=${e.id}">
+				<td><input type="checkbox" name="ids" data-toggle="icheck"
+					th:value="${e.id}" value="-1" /></td>
+				<td th:text="${e.status}">状态</td>
+				<td th:text="${e.depart.name}">所属机构</td>
+				<td th:text="${e.weapon.name}">装备信息</td>
+				<td th:text="${e.capacity}">申请数量</td>
+				<td th:text="${e.requiredDate}">领用日期</td>
+				<td th:text="${e.requiredUser}">领用人</td>
+				<td><a
+					th:href="@{/business/requestform/modify/{id}(id=${e.id})}" href="#"
+					class="btn btn-green" data-toggle="navtab"
+					data-id="requestform-modify-form" data-title="修改-器械信息">修改</a> <a
+					th:href="@{/business/requestform/remove/{id}(id=${e.id})}" href="#"
+					class="btn btn-red" data-toggle="doajax"
+					data-confirm-msg="确定要删除该行信息吗？">删除</a> <a
+					th:href="@{/business/requestform/out/{id}(id=${e.id})}" href="#"
+					class="btn btn-orange" data-toggle="navtab"
+					data-id="requestform-out-form" data-title="出库领用-器械信息">领用登记</a></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="bjui-pageFooter">
+	<div class="pages">
+		<span th:text="'每页 '+${size}+' 条 '">每页 0 条</span> &nbsp; <span
+			th:text="',共 '+${total}+' 条 '">共 0 条</span>
+	</div>
+	<div class="pagination-box" data-toggle="pagination"
+		th:attrappend="data-total=${total},data-page-size=${size},data-page-current=${page}">
+	</div>
+</div>
