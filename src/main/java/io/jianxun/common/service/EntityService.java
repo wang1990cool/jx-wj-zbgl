@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.jianxun.common.domain.IdEntity;
-import io.jianxun.common.domain.user.User;
+import io.jianxun.common.domain.user.UserDetails;
 import io.jianxun.common.repository.EntityRepository;
 import io.jianxun.common.service.exception.ServiceException;
 import io.jianxun.common.utils.DynamicSpecifications;
@@ -45,7 +45,7 @@ public class EntityService<T extends IdEntity, ID extends Serializable> {
 	/*
 	 * 获取当前登陆用户名称信息
 	 */
-	public User getCurrentUser() {
+	public UserDetails getCurrentUser() {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -53,7 +53,7 @@ public class EntityService<T extends IdEntity, ID extends Serializable> {
 			return null;
 		}
 
-		return ((User) authentication.getPrincipal());
+		return ((UserDetails) authentication.getPrincipal());
 	}
 
 	/**

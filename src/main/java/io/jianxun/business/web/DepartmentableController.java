@@ -98,7 +98,6 @@ public class DepartmentableController<T extends DepartmentEntity, ID extends Ser
 		return getTemplePrefix() + "/form";
 	}
 	
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/modify/{id}", method = RequestMethod.GET)
 	public <S extends ID> String modify(@PathVariable("id") S id, Model model) {
 		model.addAttribute(getDomainName(), entityService.findOne(id));
