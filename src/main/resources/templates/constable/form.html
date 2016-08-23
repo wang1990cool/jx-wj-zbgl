@@ -1,0 +1,45 @@
+<div class="bjui-pageContent">
+	<form action="#" id="constable_form"
+		th:action="@{/business/constable/{path}(path=${action})}" method="POST"
+		th:object="${constable}" data-toggle="validate" data-alertmsg="false">
+		<table class="table table-condensed table-hover" width="100%">
+			<tbody>
+			
+				<tr>
+					<td><label for="j_custom_name" class="control-label x95">所属机构信息：</label>
+						<input type="text" disabled="disabled" th:value="${department.name}" size="15" /> <input type="hidden" name="id"
+						th:value="${id}" /><input type="hidden" name="depart.id"
+						th:value="${department.id}" /></td>
+				</tr>
+				
+				<tr>
+					<td><label for="j_custom_name" class="control-label x95">编号：</label>
+						<input type="text" th:field="*{code}" name="code" size="15" /> </td>
+				</tr>
+				<tr>
+					<td><label for="j_custom_name" class="control-label x95">姓名：</label>
+						<input type="text" th:field="*{name}" name="name"
+						data-rule="required" size="15" /> </td>
+				</tr>
+				<tr>
+					<td><label for="j_custom_fname" class="control-label x95">性别：</label>
+                                <select th:field="*{grender}" name="grender" data-toggle="selectpicker"  data-width="150">
+                                    <option value="男">男</option>
+                                    <option value="女">女</option>
+                                </select>
+                            </td>
+				</tr>
+				<tr>
+					<td><label for="j_custom_fname" class="control-label x95">身份证信息：</label>
+						<input type="text" th:field="*{card}" name="card" size="18" /></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
+<div class="bjui-pageFooter">
+	<ul>
+		<li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+		<li><button type="submit" class="btn-default" data-icon="save">保存</button></li>
+	</ul>
+</div>
