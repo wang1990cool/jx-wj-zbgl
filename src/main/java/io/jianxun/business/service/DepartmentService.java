@@ -81,7 +81,7 @@ public class DepartmentService extends TreeableEntityService<Department, Long> {
 			Department root = createRoot();
 			for (int i = 1; i < 5; i++) {
 				Department d = new Department();
-				d.setName("特警" + i + "大队");
+				d.setName("马鞍山市特警支队" + i + "大队");
 				d.setpId(root.getId());
 				d.setLevelCode(serialNamer.getSerialNumber(root.getLevelCode()));
 				d.setXxsx(i);

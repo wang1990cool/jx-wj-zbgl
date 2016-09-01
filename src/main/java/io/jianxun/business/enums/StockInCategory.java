@@ -5,7 +5,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 public enum StockInCategory {
-	ROOT("root", "总库"), NO_ROOT("noRoot", "非总库");
+	ROOT("root", "总队购置"), NO_ROOT("noRoot", "支队购置");
 
 	private String code;
 	private String name;
