@@ -3,20 +3,36 @@
 <head>
 <meta charset="UTF-8" />
 <title>马鞍山市特警支队器械管理系统</title>
+	<link th:href="@{css/login.css}" rel="stylesheet" />
 </head>
 <body>
-	<div class="content">
-		<p th:if="${param.logout}" class="alert">You have been logged out</p>
-		<p th:if="${param.error}" class="alert alert-error">There was an
-			error, please try again</p>
-		<h2>Login with Username and Password</h2>
-		<form name="form" th:action="@{/login}" action="#" method="POST">
-			<fieldset>
-				<input type="text" name="username" value="" placeholder="Username" />
-				<input type="password" name="password" placeholder="Password" />
-			</fieldset>
-			<input type="submit" id="login" value="Login" class="btn btn-primary" />
+		<form id="loginform" name="loginform" th:action="@{/login}" action="#"
+			method="POST">
+			<table align="center" border="0" cellspacing="0" cellpadding="0"
+				class="logintb">
+				<tr>
+					<td height="314px" colspan="4"></td>
+				</tr>
+				<tr>
+					<td width="1060px">
+						<table align="center" cellpadding="0" cellspacing="0" width="100%"
+							border="0">
+							<tr>
+								<td class="inputleft"><input type="text" name="username"
+									class="inputtxt" /></td>
+							</tr>
+							<tr>
+								<td class="inputleft"><input type="password"
+									name="password" class="inputtxt" /></td>
+							</tr>
+							<tr>
+								<td class="inputleft"><input type="image" th:src="@{images/loginbutton.png}" /> &nbsp;&nbsp; <input
+									type="image" th:src="@{images/loginbutton.png}"  id="" onclick="" /></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
 		</form>
-	</div>
 </body>
 </html>

@@ -26,7 +26,7 @@ public class WebSecuritConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/static/**", "/favicon.ico").permitAll()
+		http.authorizeRequests().antMatchers("/BJUI/**","/css/**","/images/**", "/favicon.ico").permitAll()
 				.antMatchers("/pc/{domain}/{operate}/**").access("@webSecurity.check(authentication,#domain,#operate)")
 				.anyRequest().authenticated().and().formLogin().usernameParameter("username").loginPage("/login")
 				.defaultSuccessUrl("/main",true).permitAll().and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
