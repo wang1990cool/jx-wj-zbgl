@@ -45,7 +45,7 @@ public class DepartmentService extends TreeableEntityService<Department, Long> {
 	@Transactional(readOnly = false)
 	public Department createRoot() {
 		Department root = new Department();
-		root.setName("武警总队");
+		root.setName("马鞍山市武警总队");
 		root.setLevelCode("0000");
 		root.setXxsx(1);
 		entityRepository.saveAndFlush(root);
@@ -79,12 +79,12 @@ public class DepartmentService extends TreeableEntityService<Department, Long> {
 	public void createTestData() {
 		if (findAll().size() == 0) {
 			Department root = createRoot();
-			for (int i = 0; i < 20; i++) {
+			for (int i = 1; i < 5; i++) {
 				Department d = new Department();
 				d.setName("武警" + i + "大队");
 				d.setpId(root.getId());
 				d.setLevelCode(serialNamer.getSerialNumber(root.getLevelCode()));
-				d.setXxsx(1);
+				d.setXxsx(i);
 				entityRepository.saveAndFlush(d);
 
 			}
