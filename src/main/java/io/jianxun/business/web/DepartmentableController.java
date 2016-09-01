@@ -70,9 +70,12 @@ public class DepartmentableController<T extends DepartmentEntity, ID extends Ser
 	public String pageWithPid(Model model, Pageable pageable, @PathVariable("depart") Long depart,
 			@RequestParam(value = "orderField", defaultValue = "id") String orderField,
 			@RequestParam(value = "orderDirection", defaultValue = "DESC") String orderDirection) {
+		Department parent = departmentService.findOne(depart);
+		if(parent==null)
+			throw new ServiceException("获取机构仓库信息失败！");
 		Sort sort = createSort(orderField, orderDirection);
 		Map<String, Object> searchParams = getSearchParam();
-		searchParams.put("EQ_depart.id", Long.toString(depart));
+		searchParams.put("LIKE_depart.levelCode", parent.getLevelCode()+"%");
 		Page<T> page = entityService.findAll(buildPageable(pageable, sort), searchParams);
 		model.addAttribute("content", page.getContent());
 		model.addAttribute("page", page.getNumber() + 1);

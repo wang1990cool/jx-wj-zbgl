@@ -7,9 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import io.jianxun.business.domain.DepartmentEntity;
 import io.jianxun.business.domain.Weapon;
+import io.jianxun.business.enums.StockInCategory;
 import io.jianxun.common.domain.user.UserDetails;
 
 /**
@@ -37,7 +41,10 @@ public class StockIn extends DepartmentEntity {
 	private String descrip;
 
 	// 生产日期 用于计算保养和维护提醒时间
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate productionDate;
+
+	private String stockInCategory = StockInCategory.ROOT.getCode();
 
 	@ManyToOne
 	@JoinColumn(name = "weapon_id")
@@ -89,6 +96,26 @@ public class StockIn extends DepartmentEntity {
 
 	public void setProductionDate(LocalDate productionDate) {
 		this.productionDate = productionDate;
+	}
+
+	/**
+	 * @return the stockInCategory
+	 */
+	public String getStockInCategory() {
+		return stockInCategory;
+	}
+
+	/**
+	 * @param stockInCategory
+	 *            the stockInCategory to set
+	 */
+	public void setStockInCategory(String stockInCategory) {
+		this.stockInCategory = stockInCategory;
+	}
+
+	@Transient
+	public String getStockInCategoryName() {
+		return StockInCategory.parse(this.getStockInCategory());
 	}
 
 }

@@ -45,7 +45,7 @@ public class StockInController extends DepartmentableController<StockIn, Long> {
 		Sort sort = createSort(orderField, orderDirection);
 		Stock stock = stockService.findOne(stockId);
 		Map<String, Object> searchParams = getSearchParam();
-		searchParams.put("EQ_depart.id", Long.toString(stock.getDepart().getId()));
+		searchParams.put("STARTWITH_depart.levelCode", stock.getDepart().getLevelCode()+"%");
 		searchParams.put("EQ_weapon.id", Long.toString(stock.getWeapon().getId()));
 		Page<StockIn> page = entityService.findAll(buildPageable(pageable, sort), searchParams);
 		model.addAttribute("content", page.getContent());

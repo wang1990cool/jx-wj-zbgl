@@ -59,6 +59,12 @@ public class DynamicSpecifications {
 						case EQ:
 							predicates.add(builder.equal(expression, filter.value));
 							break;
+						case STARTWITH:
+							predicates.add(builder.like(expression, filter.value + "%"));
+							break;
+						case ENDWITH:
+							predicates.add(builder.like(expression, "%" + filter.value));
+							break;
 						case LIKE:
 							predicates.add(builder.like(expression, "%" + filter.value + "%"));
 							break;
