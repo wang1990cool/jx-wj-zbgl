@@ -27,7 +27,7 @@ public class StockIn extends DepartmentEntity {
 	// 对应装备
 	private Weapon weapon;
 	// 入库数量
-	private BigDecimal capacity = BigDecimal.ZERO;
+	private BigDecimal capacity = BigDecimal.ONE;
 	// 入库时间
 	private LocalDate createDate;
 	// 入库用户
@@ -35,6 +35,9 @@ public class StockIn extends DepartmentEntity {
 
 	// 描述
 	private String descrip;
+
+	// 生产日期 用于计算保养和维护提醒时间
+	private LocalDate productionDate;
 
 	@ManyToOne
 	@JoinColumn(name = "weapon_id")
@@ -78,6 +81,14 @@ public class StockIn extends DepartmentEntity {
 
 	public void setDescrip(String descrip) {
 		this.descrip = descrip;
+	}
+
+	public LocalDate getProductionDate() {
+		return productionDate;
+	}
+
+	public void setProductionDate(LocalDate productionDate) {
+		this.productionDate = productionDate;
 	}
 
 }

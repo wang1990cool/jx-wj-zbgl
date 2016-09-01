@@ -24,6 +24,7 @@
 					data-group="ids" data-toggle="icheck" /></th>
 				<th>所属机构</th>
 				<th data-order-field="name">装备器械名称</th>
+				<th data-order-field="productionDate">生产日期</th>
 				<th>入库数量</th>
 				<th data-order-field="createDate">入库时间</th>
 				<th>操作用户</th>
@@ -35,6 +36,7 @@
 					th:value="${e.id}" value="-1" /></td>
 				<td th:text="${e.depart.name}">所属机构</td>
 				<td th:text="${e.weapon.name}">装备器械名称</td>
+				<td th:text="${e.productionDate}">生产日期</td>
 				<td th:text="${e.capacity}">库存数量</td>
 				<td th:text="${e.createDate}">入库时间</td>
 				<td th:text="${e.createUser.name}">操作用户</td>
