@@ -27,17 +27,16 @@ public class StockOut extends IdEntity {
 	 */
 	private static final long serialVersionUID = -3351408479622117159L;
 	// 对应装备
-	@ManyToOne
-	@JoinColumn(name = "weapon_id")
 	private Weapon weapon;
 	// 领用数量
 	private BigDecimal capacity = BigDecimal.ZERO;
 
 	// 领用的下级部门
-	@ManyToOne
-	@JoinColumn(name = "to_id")
 	private Department to;
 
+	
+	@ManyToOne
+	@JoinColumn(name = "weapon_id")
 	public Weapon getWeapon() {
 		return weapon;
 	}
@@ -54,6 +53,8 @@ public class StockOut extends IdEntity {
 		this.capacity = capacity;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "to_id")
 	public Department getTo() {
 		return to;
 	}

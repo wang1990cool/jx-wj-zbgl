@@ -3,16 +3,12 @@ package io.jianxun.business.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import io.jianxun.business.enums.Unit;
 import io.jianxun.common.domain.IdEntity;
 
-/**
- * 器械信息
- * 
- * @author tt
- *
- */
 @Entity
 @Table(name = "wj_zb_weapons")
 public class Weapon extends IdEntity {
@@ -27,6 +23,13 @@ public class Weapon extends IdEntity {
 	private String code;
 	// 条形码
 	private String barcode;
+	// 维护周期
+	private int maintenanceCycle = -1;
+	private String maintenanceCycleUnit = Unit.MONTH.getCode();
+	// 报废周期
+	private int retirementPeriod = -1;
+
+	private String retirementPeriodUnit = Unit.YEAR.getCode();
 
 	/**
 	 * @return the name
@@ -72,6 +75,54 @@ public class Weapon extends IdEntity {
 
 	public void setBarcode(String barcode) {
 		this.barcode = barcode;
+	}
+
+	public int getMaintenanceCycle() {
+		return maintenanceCycle;
+	}
+
+	public void setMaintenanceCycle(int maintenanceCycle) {
+		this.maintenanceCycle = maintenanceCycle;
+	}
+
+	public String getMaintenanceCycleUnit() {
+		return maintenanceCycleUnit;
+	}
+
+	public void setMaintenanceCycleUnit(String maintenanceCycleUnit) {
+		this.maintenanceCycleUnit = maintenanceCycleUnit;
+	}
+
+	public int getRetirementPeriod() {
+		return retirementPeriod;
+	}
+
+	public void setRetirementPeriod(int retirementPeriod) {
+		this.retirementPeriod = retirementPeriod;
+	}
+
+	public String getRetirementPeriodUnit() {
+		return retirementPeriodUnit;
+	}
+
+	public void setRetirementPeriodUnit(String retirementPeriodUnit) {
+		this.retirementPeriodUnit = retirementPeriodUnit;
+	}
+
+	@Transient
+	public String getMaintenanceCycleDisplay() {
+		if (this.getMaintenanceCycle() == -1)
+			return "无期限";
+		else
+			return this.getMaintenanceCycle() + Unit.parse(this.getMaintenanceCycleUnit());
+	}
+	
+	@Transient
+	public String getRetirementPeriodDisplay(){
+		if (this.getRetirementPeriod() == -1)
+			return "无期限";
+		else
+			return this.getRetirementPeriod() + Unit.parse(this.getRetirementPeriodUnit());
 	}
 
 }

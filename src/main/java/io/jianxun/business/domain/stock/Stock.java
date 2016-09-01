@@ -19,12 +19,12 @@ public class Stock extends DepartmentEntity {
 	 */
 	private static final long serialVersionUID = 7053189892198693246L;
 	// 装备
-	@ManyToOne
-	@JoinColumn(name = "weapon_id")
 	private Weapon weapon;
 	// 库存量
 	private BigDecimal inventory = BigDecimal.ZERO;
 
+	@ManyToOne
+	@JoinColumn(name = "weapon_id")
 	public Weapon getWeapon() {
 		return weapon;
 	}

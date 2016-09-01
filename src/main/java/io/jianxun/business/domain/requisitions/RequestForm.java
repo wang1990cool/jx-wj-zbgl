@@ -14,6 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import io.jianxun.business.domain.DepartmentEntity;
 import io.jianxun.business.domain.Weapon;
+import io.jianxun.business.enums.RequestFormStatus;
 import io.jianxun.common.domain.user.UserDetails;
 
 /**
@@ -28,8 +29,6 @@ import io.jianxun.common.domain.user.UserDetails;
 public class RequestForm extends DepartmentEntity {
 
 	private static final long serialVersionUID = 1057179651112200284L;
-	@ManyToOne
-	@JoinColumn(name = "weapon_id")
 	private Weapon weapon;
 	// 申请数量
 	private BigDecimal capacity = BigDecimal.ZERO;
@@ -37,8 +36,6 @@ public class RequestForm extends DepartmentEntity {
 	// 申请单创创建时间
 	private LocalDate createDate;
 	// 申请单创建用户
-	@ManyToOne
-	@JoinColumn(name = "c_user_id")
 	private UserDetails createUser;
 	// 领用日期
 	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -49,9 +46,10 @@ public class RequestForm extends DepartmentEntity {
 	private String descrip;
 
 	// 申请单状态 create,back 可修改，up commit 锁定
-	@Enumerated(EnumType.ORDINAL)
 	private RequestFormStatus status = RequestFormStatus.CREATE;
 
+	@ManyToOne
+	@JoinColumn(name = "weapon_id")
 	public Weapon getWeapon() {
 		return weapon;
 	}
@@ -76,6 +74,8 @@ public class RequestForm extends DepartmentEntity {
 		this.createDate = createDate;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "c_user_id")
 	public UserDetails getCreateUser() {
 		return createUser;
 	}
@@ -111,6 +111,7 @@ public class RequestForm extends DepartmentEntity {
 	/**
 	 * @return the status
 	 */
+	@Enumerated(EnumType.ORDINAL)
 	public RequestFormStatus getStatus() {
 		return status;
 	}

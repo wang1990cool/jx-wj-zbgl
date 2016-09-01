@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import io.jianxun.business.domain.requisitions.RequestForm;
-import io.jianxun.business.domain.requisitions.RequestFormStatus;
+import io.jianxun.business.enums.RequestFormStatus;
 import io.jianxun.business.service.DepartmentService;
 import io.jianxun.business.service.DepartmentableService;
 import io.jianxun.business.service.RequestFormService;

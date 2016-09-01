@@ -25,21 +25,19 @@ public class StockIn extends DepartmentEntity {
 
 	private static final long serialVersionUID = -7860940500788914635L;
 	// 对应装备
-	@ManyToOne
-	@JoinColumn(name = "weapon_id")
 	private Weapon weapon;
 	// 入库数量
 	private BigDecimal capacity = BigDecimal.ZERO;
 	// 入库时间
 	private LocalDate createDate;
 	// 入库用户
-	@ManyToOne
-	@JoinColumn(name = "user_id")
 	private UserDetails createUser;
 
 	// 描述
 	private String descrip;
 
+	@ManyToOne
+	@JoinColumn(name = "weapon_id")
 	public Weapon getWeapon() {
 		return weapon;
 	}
@@ -64,6 +62,8 @@ public class StockIn extends DepartmentEntity {
 		this.createDate = createDate;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "user_id")
 	public UserDetails getCreateUser() {
 		return createUser;
 	}

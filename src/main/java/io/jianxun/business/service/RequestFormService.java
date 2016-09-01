@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.jianxun.business.domain.requisitions.RequestForm;
-import io.jianxun.business.domain.requisitions.RequestFormStatus;
+import io.jianxun.business.enums.RequestFormStatus;
 
 @Service
 @Transactional(readOnly = true)

@@ -19,10 +19,10 @@ public class DepartmentEntity extends IdEntity {
 	private static final long serialVersionUID = 6595351983088428196L;
 
 	// 所属单位Id
-	@ManyToOne
-	@JoinColumn(name = "depart_id")
 	private Department depart;
 
+	@ManyToOne
+	@JoinColumn(name = "depart_id")
 	public Department getDepart() {
 		return depart;
 	}

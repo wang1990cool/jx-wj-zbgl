@@ -3,7 +3,11 @@ package io.jianxun.common.domain.user;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -19,7 +23,7 @@ public class UserDetails extends User implements org.springframework.security.co
 	private static final long serialVersionUID = -6278197000645900257L;
 
 	private String password;
-	@Transient
+	
 	private List<String> permissions = Lists.newArrayList();
 
 	// 用户失效
@@ -54,17 +58,17 @@ public class UserDetails extends User implements org.springframework.security.co
 		this.password = password;
 	}
 
-	
-
 	/**
 	 * @return the permissions
 	 */
+	@Transient
 	public List<String> getPermissions() {
 		return permissions;
 	}
 
 	/**
-	 * @param permissions the permissions to set
+	 * @param permissions
+	 *            the permissions to set
 	 */
 	public void setPermissions(List<String> permissions) {
 		this.permissions = permissions;

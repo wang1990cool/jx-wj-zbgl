@@ -5,21 +5,47 @@
 		<table class="table table-condensed table-hover" width="100%">
 			<tbody>
 				<tr>
-					<td><label for="j_custom_name" class="control-label x95">装备器械代码：</label>
-						<input type="text" th:field="*{code}" name="code"
-						data-rule="required" size="15" /> <input type="hidden" name="id"
-						th:value="${id}" /></td>
+					<td><label class="control-label x95">代码：</label> <input
+						type="text" th:field="*{code}" name="code" data-rule="required"
+						size="15" /> <input type="hidden" name="id" th:value="${id}" /></td>
 				</tr>
 				<tr>
-					<td><label for="j_custom_fname" class="control-label x95">装备器械名称：</label>
-						<input type="text" th:field="*{name}" name="name"
-						data-rule="required" size="15" /></td>
+					<td><label class="control-label x95">名称：</label> <input
+						type="text" th:field="*{name}" name="name" data-rule="required"
+						size="15" /></td>
 				</tr>
 				<tr>
-					<td colspan="4"><label for="j_custom_note"
-						class="control-label x95">备注：</label> <textarea name="descrip"
-							th:field="*{descrip}" data-toggle="autoheight" cols="60" rows="8"></textarea>
+					<td><label class="control-label x95">维护周期：</label> <input
+						type="text" th:field="*{maintenanceCycle}" name="{maintenanceCycle" data-rule="required"
+						size="15" /></td>
+				</tr>
+				<tr>
+					<td><label class="control-label x95">维护周期单位：</label> 
+					<select
+						th:field="*{maintenanceCycleUnit}" name="maintenanceCycleUnit" data-toggle="selectpicker"
+						data-width="150">
+						<option th:each="u : ${units}" th:value="${u.code}" th:text="${u.name}">月</option>
+					</select>
 					</td>
+				</tr>
+				<tr>
+					<td><label class="control-label x95">报废周期：</label> <input
+						type="text" th:field="*{retirementPeriod}" name="retirementPeriod" data-rule="required"
+						size="15" /></td>
+				</tr>
+				<tr>
+					<td><label class="control-label x95">报废周期单位：</label> 
+					<select
+						th:field="*{retirementPeriodUnit}" name="retirementPeriodUnit" data-toggle="selectpicker"
+						data-width="150">
+						<option th:each="u : ${units}" th:value="${u.code}" th:text="${u.name}">年</option>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4"><label class="control-label x95">备注：</label> <textarea
+							name="descrip" th:field="*{descrip}" data-toggle="autoheight"
+							cols="60" rows="8"></textarea></td>
 				</tr>
 			</tbody>
 		</table>

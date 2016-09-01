@@ -1,4 +1,4 @@
-package io.jianxun.business.domain.requisitions;
+package io.jianxun.business.enums;
 
 public enum RequestFormStatus {
 

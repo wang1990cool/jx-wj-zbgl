@@ -11,10 +11,11 @@ import javax.persistence.MappedSuperclass;
 public class IdEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+
 	protected Long id = null;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}

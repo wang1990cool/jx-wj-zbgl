@@ -44,6 +44,8 @@
 					data-group="ids" data-toggle="icheck" /></th>
 				<th data-order-field="code">器械编码</th>
 				<th data-order-field="name">器械名称</th>
+				<th>维护周期</th>
+				<th>报废周期</th>
 				<th>器械描述</th>
 				<th width="100">操作</th>
 			</tr>
@@ -54,7 +56,9 @@
 					th:value="${e.id}" value="-1" /></td>
 				<td th:text="${e.code}">编码</td>
 				<td th:text="${e.name}">名称</td>
-				<td th:text="${e.descrip}">名称</td>
+				<td th:text="${e.maintenanceCycleDisplay}">维护周期</td>
+				<td th:text="${e.retirementPeriodDisplay}">报废周期</td>
+				<td th:text="${e.descrip}">描述</td>
 				<td><a th:href="@{/business/weapon/modify/{id}(id=${e.id})}"
 					href="#" class="btn btn-green" data-toggle="navtab" data-id="form" data-title="修改-器械信息">修改</a>
 					<a th:href="@{/business/weapon/remove/{id}(id=${e.id})}" href="#"
