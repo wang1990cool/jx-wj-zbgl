@@ -17,7 +17,7 @@ import io.jianxun.business.enums.StockInCategory;
 import io.jianxun.common.domain.user.UserDetails;
 
 /**
- * 总库入库明细
+ * 入库单
  * 
  * @author tongtn
  *
@@ -41,10 +41,13 @@ public class StockIn extends DepartmentEntity {
 	private String descrip;
 
 	// 生产日期 用于计算保养和维护提醒时间
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate productionDate;
 
 	private String stockInCategory = StockInCategory.ROOT.getCode();
+
+	// 记录部分装备自带编号
+	private String weaponCodes;
 
 	@ManyToOne
 	@JoinColumn(name = "weapon_id")
@@ -116,6 +119,21 @@ public class StockIn extends DepartmentEntity {
 	@Transient
 	public String getStockInCategoryName() {
 		return StockInCategory.parse(this.getStockInCategory());
+	}
+
+	/**
+	 * @return the weaponCodes
+	 */
+	public String getWeaponCodes() {
+		return weaponCodes;
+	}
+
+	/**
+	 * @param weaponCodes
+	 *            the weaponCodes to set
+	 */
+	public void setWeaponCodes(String weaponCodes) {
+		this.weaponCodes = weaponCodes;
 	}
 
 }

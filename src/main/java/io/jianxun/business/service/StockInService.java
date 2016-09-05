@@ -16,6 +16,8 @@ public class StockInService extends DepartmentableService<StockIn, Long> {
 
 	@Autowired
 	private StockService stockService;
+	@Autowired
+	private StockInDetailService stockInDetailService;
 
 	@Override
 	@Transactional(readOnly = false)
@@ -28,6 +30,8 @@ public class StockInService extends DepartmentableService<StockIn, Long> {
 		Department d = stock.getDepart();
 		if (1L != d.getId())
 			stock.setStockInCategory(StockInCategory.NO_ROOT.getCode());
+		// TODO 记录库存明细
+		stockInDetailService.save(stock);
 		// 更新库存
 		stockService.refrashStock(stock);
 		return super.save(stock);
