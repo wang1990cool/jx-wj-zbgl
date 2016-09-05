@@ -31,6 +31,12 @@ public class Weapon extends IdEntity {
 
 	private String retirementPeriodUnit = Unit.YEAR.getCode();
 
+	// 获取数据字典中装备大类
+	private String category;
+
+	// 型号（一种装备可以有多种型号）
+	private String type;
+
 	/**
 	 * @return the name
 	 */
@@ -109,6 +115,36 @@ public class Weapon extends IdEntity {
 		this.retirementPeriodUnit = retirementPeriodUnit;
 	}
 
+	/**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category
+	 *            the category to set
+	 */
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type
+	 *            the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@Transient
 	public String getMaintenanceCycleDisplay() {
 		if (this.getMaintenanceCycle() == -1)
@@ -116,9 +152,9 @@ public class Weapon extends IdEntity {
 		else
 			return this.getMaintenanceCycle() + Unit.parse(this.getMaintenanceCycleUnit());
 	}
-	
+
 	@Transient
-	public String getRetirementPeriodDisplay(){
+	public String getRetirementPeriodDisplay() {
 		if (this.getRetirementPeriod() == -1)
 			return "无期限";
 		else

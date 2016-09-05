@@ -5,9 +5,12 @@
 		<table class="table table-condensed table-hover" width="100%">
 			<tbody>
 				<tr>
-					<td><label class="control-label x95">代码：</label> <input
-						type="text" th:field="*{code}" name="code" data-rule="required"
-						size="15" /> <input type="hidden" name="id" th:value="${id}" /></td>
+					<td><label class="control-label x95">类别：</label> <select
+						th:field="*{category}" name="category" data-toggle="selectpicker"
+						data-width="150">
+							<option th:each="u : ${categories}" th:value="${u.name}"
+								th:text="${u.name}">类别</option>
+					</select> <input type="hidden" name="id" th:value="${id}" /></td>
 				</tr>
 				<tr>
 					<td><label class="control-label x95">名称：</label> <input
@@ -15,32 +18,35 @@
 						size="15" /></td>
 				</tr>
 				<tr>
-					<td><label class="control-label x95">维护周期：</label> <input
-						type="text" th:field="*{maintenanceCycle}" name="{maintenanceCycle" data-rule="required"
+					<td><label class="control-label x95">型号：</label> <input
+						type="text" th:field="*{type}" name="type"
 						size="15" /></td>
 				</tr>
 				<tr>
-					<td><label class="control-label x95">维护周期单位：</label> 
-					<select
-						th:field="*{maintenanceCycleUnit}" name="maintenanceCycleUnit" data-toggle="selectpicker"
-						data-width="150">
-						<option th:each="u : ${units}" th:value="${u.code}" th:text="${u.name}">月</option>
-					</select>
-					</td>
+					<td><label class="control-label x95">维护周期：</label> <input
+						type="text" th:field="*{maintenanceCycle}"
+						name="{maintenanceCycle" data-rule="required" size="15" /></td>
+				</tr>
+				<tr>
+					<td><label class="control-label x95">维护周期单位：</label> <select
+						th:field="*{maintenanceCycleUnit}" name="maintenanceCycleUnit"
+						data-toggle="selectpicker" data-width="150">
+							<option th:each="u : ${units}" th:value="${u.code}"
+								th:text="${u.name}">月</option>
+					</select></td>
 				</tr>
 				<tr>
 					<td><label class="control-label x95">报废周期：</label> <input
-						type="text" th:field="*{retirementPeriod}" name="retirementPeriod" data-rule="required"
-						size="15" /></td>
+						type="text" th:field="*{retirementPeriod}" name="retirementPeriod"
+						data-rule="required" size="15" /></td>
 				</tr>
 				<tr>
-					<td><label class="control-label x95">报废周期单位：</label> 
-					<select
-						th:field="*{retirementPeriodUnit}" name="retirementPeriodUnit" data-toggle="selectpicker"
-						data-width="150">
-						<option th:each="u : ${units}" th:value="${u.code}" th:text="${u.name}">年</option>
-					</select>
-					</td>
+					<td><label class="control-label x95">报废周期单位：</label> <select
+						th:field="*{retirementPeriodUnit}" name="retirementPeriodUnit"
+						data-toggle="selectpicker" data-width="150">
+							<option th:each="u : ${units}" th:value="${u.code}"
+								th:text="${u.name}">年</option>
+					</select></td>
 				</tr>
 				<tr>
 					<td colspan="4"><label class="control-label x95">备注：</label> <textarea
