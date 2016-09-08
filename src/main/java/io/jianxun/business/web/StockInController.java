@@ -45,7 +45,7 @@ public class StockInController extends DepartmentableController<StockIn, Long> {
 		Sort sort = createSort(orderField, orderDirection);
 		Stock stock = stockService.findOne(stockId);
 		Map<String, Object> searchParams = getSearchParam();
-		searchParams.put("STARTWITH_depart.levelCode", stock.getDepart().getLevelCode()+"%");
+		searchParams.put("STARTWITH_depart.levelCode", stock.getDepart().getLevelCode() + "%");
 		searchParams.put("EQ_weapon.id", Long.toString(stock.getWeapon().getId()));
 		Page<StockIn> page = entityService.findAll(buildPageable(pageable, sort), searchParams);
 		model.addAttribute("content", page.getContent());
@@ -62,13 +62,13 @@ public class StockInController extends DepartmentableController<StockIn, Long> {
 	@Override
 	protected void prepareCreateForm(Model model) {
 		super.prepareCreateForm(model);
-		model.addAttribute("weapons", weaponService.findAll());
+		model.addAttribute("weapons", weaponService.getSelectData(weaponService.findAll()));
 	}
 
 	@Override
 	protected void prepareModifyForm(Model model) {
 		super.prepareModifyForm(model);
-		model.addAttribute("weapons", weaponService.findAll());
+		model.addAttribute("weapons", weaponService.getSelectData(weaponService.findAll()));
 	}
 
 	@Override

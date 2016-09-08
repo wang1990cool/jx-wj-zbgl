@@ -9,7 +9,7 @@
 					<td colspan="4"><label class="control-label x95">入库装备：</label>
 						<select data-toggle="selectpicker" data-width="150"
 						th:field="*{weapon}">
-							<option th:each="w : ${weapons}" th:value="${w.id}"
+							<option th:each="w : ${weapons}" th:value="${w.code}"
 								th:text="${w.name}">装备名称</option>
 					</select></td>
 				</tr>

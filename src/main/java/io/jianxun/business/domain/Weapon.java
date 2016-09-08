@@ -161,4 +161,23 @@ public class Weapon extends IdEntity {
 			return this.getRetirementPeriod() + Unit.parse(this.getRetirementPeriodUnit());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see io.jianxun.common.domain.IdEntity#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(this.category);
+		sb.append("-");
+		sb.append(this.name);
+		if (this.type != null) {
+			sb.append("-");
+			sb.append(this.type);
+		}
+		return sb.toString();
+
+	}
+
 }
