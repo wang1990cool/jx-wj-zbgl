@@ -21,7 +21,7 @@ public class Stock extends DepartmentEntity {
 	// 装备
 	private Weapon weapon;
 	// 库存量
-	private BigDecimal inventory = BigDecimal.ZERO;
+	private Integer inventory = 0;
 
 	@ManyToOne
 	@JoinColumn(name = "weapon_id")
@@ -33,11 +33,18 @@ public class Stock extends DepartmentEntity {
 		this.weapon = weapon;
 	}
 
-	public BigDecimal getInventory() {
+	/**
+	 * @return the inventory
+	 */
+	public Integer getInventory() {
 		return inventory;
 	}
 
-	public void setInventory(BigDecimal inventory) {
+	/**
+	 * @param inventory
+	 *            the inventory to set
+	 */
+	public void setInventory(Integer inventory) {
 		this.inventory = inventory;
 	}
 

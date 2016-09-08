@@ -17,10 +17,10 @@ public class StockService extends DepartmentableService<Stock, Long> {
 	public void refrashStock(StockIn stockIn) {
 		Stock stock = findByWeapon(stockIn.getWeapon());
 		if (stock != null) {
-			
+
 			// TODO 库存更新 思路当日更新
-			BigDecimal inventory = stock.getInventory();
-			stock.setInventory(inventory.add(stockIn.getCapacity()));
+			Integer inventory = stock.getInventory();
+			stock.setInventory(inventory + stockIn.getCapacity());
 		} else {
 			stock = new Stock();
 			stock.setWeapon(stockIn.getWeapon());

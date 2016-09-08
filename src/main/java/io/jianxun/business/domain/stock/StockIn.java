@@ -31,7 +31,7 @@ public class StockIn extends DepartmentEntity {
 	// 对应装备
 	private Weapon weapon;
 	// 入库数量
-	private BigDecimal capacity = BigDecimal.ONE;
+	private Integer capacity = 1;
 	// 入库时间
 	private LocalDate createDate;
 	// 入库用户
@@ -59,11 +59,18 @@ public class StockIn extends DepartmentEntity {
 		this.weapon = weapon;
 	}
 
-	public BigDecimal getCapacity() {
+	/**
+	 * @return the capacity
+	 */
+	public int getCapacity() {
 		return capacity;
 	}
 
-	public void setCapacity(BigDecimal capacity) {
+	/**
+	 * @param capacity
+	 *            the capacity to set
+	 */
+	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
 
