@@ -5,5 +5,6 @@ import io.jianxun.common.repository.EntityRepository;
 
 public interface StockInDetailRepository extends EntityRepository<StockInDetail, Long> {
 
+	StockInDetail findTopByStockCodePrefixOrderBySNoDesc(String stockCode);
 
 }

@@ -31,7 +31,7 @@ public class DataDicService extends EntityService<DataDictionary, Long> {
 
 	private SelectOptionDto convert2SelectOption(DataDictionary u) {
 		SelectOptionDto s = new SelectOptionDto();
-		s.setCode(u.getName());
+		s.setCode(u.getId().toString());
 		s.setName(u.getName());
 		return s;
 	}

@@ -2,6 +2,8 @@ package io.jianxun.business.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -32,10 +34,12 @@ public class Weapon extends IdEntity {
 	private String retirementPeriodUnit = Unit.YEAR.getCode();
 
 	// 获取数据字典中装备大类
-	private String category;
+	private DataDictionary category;
 
 	// 型号（一种装备可以有多种型号）
 	private String type;
+	// 型号代码
+	private String typeCode;
 
 	/**
 	 * @return the name
@@ -118,15 +122,24 @@ public class Weapon extends IdEntity {
 	/**
 	 * @return the category
 	 */
-	public String getCategory() {
+	@ManyToOne
+	@JoinColumn(name = "category_id")
+	public DataDictionary getCategory() {
 		return category;
+	}
+
+	@Transient
+	public String getCategoryName() {
+		if (this.getCategory() != null)
+			return this.getCategory().getName();
+		return "";
 	}
 
 	/**
 	 * @param category
 	 *            the category to set
 	 */
-	public void setCategory(String category) {
+	public void setCategory(DataDictionary category) {
 		this.category = category;
 	}
 
@@ -143,6 +156,21 @@ public class Weapon extends IdEntity {
 	 */
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	/**
+	 * @return the typeCode
+	 */
+	public String getTypeCode() {
+		return typeCode;
+	}
+
+	/**
+	 * @param typeCode
+	 *            the typeCode to set
+	 */
+	public void setTypeCode(String typeCode) {
+		this.typeCode = typeCode;
 	}
 
 	@Transient

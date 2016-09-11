@@ -30,11 +30,13 @@ public class StockInService extends DepartmentableService<StockIn, Long> {
 		Department d = stock.getDepart();
 		if (1L != d.getId())
 			stock.setStockInCategory(StockInCategory.NO_ROOT.getCode());
-		// TODO 记录库存明细
-		stockInDetailService.save(stock);
-		// 更新库存
-		stockService.refrashStock(stock);
-		return super.save(stock);
+		StockIn si = super.save(stock);
+		this.entityRepository.flush();
+		// 更新库存详表，此处可用事件发布优化
+		stockInDetailService.save(si);
+		// 更新库存数量表
+		stockService.refrashStock(si);
+		return si;
 
 	}
 

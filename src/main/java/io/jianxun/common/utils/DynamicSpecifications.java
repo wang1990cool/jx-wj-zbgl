@@ -28,11 +28,7 @@ public class DynamicSpecifications {
 					for (SearchFilter filter : filters) {
 						// nested path translate, 如Task的名为"user.name"的filedName,
 						// 转换为Task.user.name属性
-						String[] names = StringUtils.split(filter.fieldName, ".");
-						if (names == null) {
-							names = new String[1];
-							names[0] = filter.fieldName;
-						}
+						String[] names = org.apache.commons.lang3.StringUtils.split(filter.fieldName, ".");
 						Path expression = root.get(names[0]);
 						for (int i = 1; i < names.length; i++) {
 							if (Collection.class.isAssignableFrom(expression.getJavaType())) {

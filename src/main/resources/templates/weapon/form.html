@@ -8,7 +8,7 @@
 					<td><label class="control-label x95">类别：</label> <select
 						th:field="*{category}" name="category" data-toggle="selectpicker"
 						data-width="150">
-							<option th:each="u : ${categories}" th:value="${u.name}"
+							<option th:each="u : ${categories}" th:value="${u.code}"
 								th:text="${u.name}">类别</option>
 					</select> <input type="hidden" name="id" th:value="${id}" /></td>
 				</tr>

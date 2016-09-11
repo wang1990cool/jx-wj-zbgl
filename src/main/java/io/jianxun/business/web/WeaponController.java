@@ -5,10 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.jianxun.business.domain.DataDictionary;
 import io.jianxun.business.domain.Weapon;
+import io.jianxun.business.domain.editor.DataDictionaryEditor;
 import io.jianxun.business.enums.DataCategory;
 import io.jianxun.business.enums.Unit;
 import io.jianxun.business.service.DataDicService;
@@ -22,6 +25,13 @@ public class WeaponController extends EntityController<Weapon, Long> {
 
 	@Autowired
 	private DataDicService dataDicService;
+	@Autowired
+	private DataDictionaryEditor dataDictionaryEditor;
+	
+	@InitBinder
+	public void initBinder(WebDataBinder b) {
+		b.registerCustomEditor(DataDictionary.class, "category", dataDictionaryEditor);
+	}
 
 	public WeaponController(EntityService<Weapon, Long> entityService) {
 		super(entityService);
