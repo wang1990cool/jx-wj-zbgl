@@ -18,7 +18,7 @@ import io.jianxun.common.utils.DepartLevelCodeSerialNumber;
 
 @Service
 @Transactional(readOnly = true)
-public class DepartmentService extends TreeableEntityService<Department, Long> {
+public class DepartmentService extends TreeableEntityService<Department> {
 
 	@Autowired
 	public DepartLevelCodeSerialNumber serialNamer;

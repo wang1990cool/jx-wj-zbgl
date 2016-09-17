@@ -21,7 +21,7 @@ import io.jianxun.common.web.EntityController;
 
 @Controller
 @RequestMapping("/business/weapon")
-public class WeaponController extends EntityController<Weapon, Long> {
+public class WeaponController extends EntityController<Weapon> {
 
 	@Autowired
 	private DataDicService dataDicService;
@@ -33,7 +33,7 @@ public class WeaponController extends EntityController<Weapon, Long> {
 		b.registerCustomEditor(DataDictionary.class, "category", dataDictionaryEditor);
 	}
 
-	public WeaponController(EntityService<Weapon, Long> entityService) {
+	public WeaponController(EntityService<Weapon> entityService) {
 		super(entityService);
 	}
 

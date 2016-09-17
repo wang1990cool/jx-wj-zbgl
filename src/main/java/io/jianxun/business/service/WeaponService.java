@@ -18,7 +18,7 @@ import io.jianxun.common.service.exception.ServiceException;
 
 @Service
 @Transactional(readOnly = true)
-public class WeaponService extends EntityService<Weapon, Long> {
+public class WeaponService extends EntityService<Weapon> {
 
 	/*
 	 * (non-Javadoc)

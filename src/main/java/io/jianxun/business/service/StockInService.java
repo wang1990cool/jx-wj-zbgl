@@ -12,7 +12,7 @@ import io.jianxun.business.enums.StockInCategory;
 
 @Service
 @Transactional(readOnly = true)
-public class StockInService extends DepartmentableService<StockIn, Long> {
+public class StockInService extends DepartmentableService<StockIn> {
 
 	@Autowired
 	private StockService stockService;

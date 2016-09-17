@@ -1,6 +1,5 @@
 package io.jianxun.common.web;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -29,16 +28,16 @@ import io.jianxun.common.domain.IdEntity;
 import io.jianxun.common.service.EntityService;
 import io.jianxun.common.utils.Servlets;
 
-public class EntityController<T extends IdEntity, ID extends Serializable> {
+public class EntityController<T extends IdEntity> {
 
 	@Autowired
 	protected HttpServletRequest request;
 	@Autowired
 	protected HttpServletResponse response;
 
-	protected final EntityService<T, ID> entityService;
+	protected final EntityService<T> entityService;
 
-	public EntityService<T, ID> getEntityService() {
+	public EntityService<T> getEntityService() {
 		return entityService;
 	}
 
@@ -49,7 +48,7 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 	}
 
 	@Autowired
-	public EntityController(EntityService<T, ID> entityService) {
+	public EntityController(EntityService<T> entityService) {
 		Assert.notNull(entityService, "Service must not be null!");
 		this.entityService = entityService;
 	}
@@ -155,7 +154,7 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 	}
 
 	@RequestMapping(value = "/modify/{id}", method = RequestMethod.GET)
-	public <S extends ID> String modify(@PathVariable("id") S id, Model model) {
+	public String modify(@PathVariable("id") Long id, Model model) {
 		model.addAttribute(getDomainName(), entityService.findOne(id));
 		model.addAttribute("action", "modify");
 		prepareModifyForm(model);
@@ -165,7 +164,7 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	@ResponseBody
-	public ReturnDto modifySave(@Valid @ModelAttribute T entity, Model model) {
+	public ReturnDto modifySave(@Valid @ModelAttribute(name = "domain") T entity, Model model) {
 		entityService.save(entity);
 		return getSaveReturn();
 	}
@@ -176,15 +175,15 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 
 	@RequestMapping(value = "/remove/{id}")
 	@ResponseBody
-	public ReturnDto remove(@PathVariable("id") ID id) {
+	public ReturnDto remove(@PathVariable("id") Long id) {
 		entityService.delete(id);
 		return ReturnDto.ok("操作成功!");
 	}
 
 	@RequestMapping("/remove")
 	@ResponseBody
-	public ReturnDto batchRemove(@RequestParam("ids") ID[] ids) {
-		for (ID id : ids) {
+	public ReturnDto batchRemove(@RequestParam("ids") Long[] ids) {
+		for (Long id : ids) {
 			entityService.delete(id);
 		}
 		return ReturnDto.ok("操作成功!");
@@ -200,11 +199,11 @@ public class EntityController<T extends IdEntity, ID extends Serializable> {
 	}
 
 	@ModelAttribute
-	public void getMode(@RequestParam(value = "id", defaultValue = "-1") ID id, Model model) {
+	public void getMode(@RequestParam(value = "id", defaultValue = "-1") Long id, Model model) {
 		if (id != null) {
 			T entity = entityService.findOne(id);
 			if (entity != null)
-				model.addAttribute(getDomainName(), entity);
+				model.addAttribute("domain", entity);
 		}
 	}
 

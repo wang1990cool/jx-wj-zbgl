@@ -11,8 +11,8 @@ import io.jianxun.business.web.dto.DepartmentTree;
 import io.jianxun.common.domain.TreeableEntity;
 
 @Transactional(readOnly = true)
-public abstract class TreeableEntityService<T extends TreeableEntity, ID extends Serializable>
-		extends EntityService<T, ID> {
+public abstract class TreeableEntityService<T extends TreeableEntity>
+		extends EntityService<T> {
 
 	public List<T> findAll(Sort sort) {
 		return entityRepository.findAll(sort);

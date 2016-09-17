@@ -7,6 +7,6 @@ import io.jianxun.business.domain.Constable;
 
 @Service
 @Transactional(readOnly = true)
-public class ConstableService extends DepartmentableService<Constable, Long> {
+public class ConstableService extends DepartmentableService<Constable> {
 
 }

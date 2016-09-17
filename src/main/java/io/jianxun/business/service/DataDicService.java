@@ -10,11 +10,10 @@ import com.google.common.collect.Lists;
 import io.jianxun.business.domain.DataDictionary;
 import io.jianxun.business.repository.DataDicRepository;
 import io.jianxun.business.web.dto.SelectOptionDto;
-import io.jianxun.common.service.EntityService;
 
 @Service
 @Transactional(readOnly = true)
-public class DataDicService extends EntityService<DataDictionary, Long> {
+public class DataDicService extends BusinessBaseEntityService<DataDictionary> {
 
 	public List<DataDictionary> findByCategory(String category) {
 		return ((DataDicRepository) entityRepository).findByCategory(category);

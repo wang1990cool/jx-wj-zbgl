@@ -8,7 +8,7 @@ import io.jianxun.business.enums.RequestFormStatus;
 
 @Service
 @Transactional(readOnly = true)
-public class RequestFormService extends DepartmentableService<RequestForm, Long> {
+public class RequestFormService extends DepartmentableService<RequestForm> {
 	@Transactional(readOnly = false)
 	public void up(Long id) {
 		RequestForm r = findOne(id);

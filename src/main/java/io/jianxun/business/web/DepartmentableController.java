@@ -1,6 +1,5 @@
 package io.jianxun.business.web;
 
-import java.io.Serializable;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +26,12 @@ import io.jianxun.common.service.exception.ServiceException;
 import io.jianxun.common.utils.Servlets;
 import io.jianxun.common.web.EntityController;
 
-public class DepartmentableController<T extends DepartmentEntity, ID extends Serializable>
-		extends EntityController<T, ID> {
+public class DepartmentableController<T extends DepartmentEntity>
+		extends EntityController<T> {
 
 	ObjectMapper mapper = new ObjectMapper();
 
-	public DepartmentableController(DepartmentableService<T, ID> entityService) {
+	public DepartmentableController(DepartmentableService<T> entityService) {
 		super(entityService);
 	}
 
@@ -92,7 +91,7 @@ public class DepartmentableController<T extends DepartmentEntity, ID extends Ser
 	}
 
 	@RequestMapping(value = "/create/{d_id}", method = RequestMethod.GET)
-	public String create(Model model, @PathVariable("d_id") ID dId) {
+	public String create(Model model, @PathVariable("d_id") Long dId) {
 		model.addAttribute(getDomainName(), entityService.getDomain());
 		model.addAttribute("action", "create");
 		Department parent = departmentService.findOne((Long) dId);
@@ -102,7 +101,7 @@ public class DepartmentableController<T extends DepartmentEntity, ID extends Ser
 	}
 	
 	@RequestMapping(value = "/modify/{id}", method = RequestMethod.GET)
-	public <S extends ID> String modify(@PathVariable("id") S id, Model model) {
+	public String modify(@PathVariable("id") Long id, Model model) {
 		model.addAttribute(getDomainName(), entityService.findOne(id));
 		model.addAttribute("action", "modify");
 		T entity = entityService.findOne(id);

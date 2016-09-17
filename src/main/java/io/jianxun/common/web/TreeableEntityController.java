@@ -1,6 +1,5 @@
 package io.jianxun.common.web;
 
-import java.io.Serializable;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
@@ -22,12 +21,12 @@ import io.jianxun.common.service.TreeableEntityService;
 import io.jianxun.common.service.exception.ServiceException;
 import io.jianxun.common.utils.Servlets;
 
-public class TreeableEntityController<T extends TreeableEntity, ID extends Serializable>
-		extends EntityController<T, ID> {
+public class TreeableEntityController<T extends TreeableEntity>
+		extends EntityController<T> {
 
 	ObjectMapper mapper = new ObjectMapper();
 
-	public TreeableEntityController(TreeableEntityService<T, ID> entityService) {
+	public TreeableEntityController(TreeableEntityService<T> entityService) {
 		super(entityService);
 	}
 
@@ -37,7 +36,7 @@ public class TreeableEntityController<T extends TreeableEntity, ID extends Seria
 		((DepartmentService) entityService).createTestData();
 		try {
 			model.addAttribute("tree", mapper.writeValueAsString(
-					((TreeableEntityService<T, ID>) entityService).getTree(createSort(orderField, orderDirection))));
+					((TreeableEntityService<T>) entityService).getTree(createSort(orderField, orderDirection))));
 			otherTreeData(model);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -74,7 +73,7 @@ public class TreeableEntityController<T extends TreeableEntity, ID extends Seria
 	}
 
 	@RequestMapping(value = "/create/{pId}", method = RequestMethod.GET)
-	public String create(Model model, @PathVariable("pId") ID pId) {
+	public String create(Model model, @PathVariable("pId") Long pId) {
 		model.addAttribute(getDomainName(), entityService.getDomain());
 		model.addAttribute("action", "create");
 		model.addAttribute("pId", pId);
@@ -84,14 +83,13 @@ public class TreeableEntityController<T extends TreeableEntity, ID extends Seria
 		return getTemplePrefix() + "/form";
 	}
 
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/modify/{id}", method = RequestMethod.GET)
-	public <S extends ID> String modify(@PathVariable("id") S id, Model model) {
+	public  String modify(@PathVariable("id") Long id, Model model) {
 		model.addAttribute(getDomainName(), entityService.findOne(id));
 		model.addAttribute("action", "modify");
 		T entity = entityService.findOne(id);
-		T parent = entityService.findOne((S) entity.getpId());
-		model.addAttribute("pId", (S) entity.getpId());
+		T parent = entityService.findOne(entity.getpId());
+		model.addAttribute("pId", entity.getpId());
 		model.addAttribute("parentInfo", parent);
 		prepareModifyForm(model);
 		return getTemplePrefix() + "/form";

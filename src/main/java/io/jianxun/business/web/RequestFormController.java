@@ -28,7 +28,7 @@ import io.jianxun.common.utils.Servlets;
 
 @Controller
 @RequestMapping("business/requestform")
-public class RequestFormController extends DepartmentableController<RequestForm, Long> {
+public class RequestFormController extends DepartmentableController<RequestForm> {
 
 	@Autowired
 	private WeaponService weaponService;
@@ -36,7 +36,7 @@ public class RequestFormController extends DepartmentableController<RequestForm,
 	@Autowired
 	private DepartmentService departmentService;
 
-	public RequestFormController(DepartmentableService<RequestForm, Long> entityService) {
+	public RequestFormController(DepartmentableService<RequestForm> entityService) {
 		super(entityService);
 	}
 

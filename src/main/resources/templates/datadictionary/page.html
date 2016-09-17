@@ -48,6 +48,10 @@
 				<th data-order-field="category">类别</th>
 				<th data-order-field="code">编码</th>
 				<th data-order-field="name">名称</th>
+				<th data-order-field="createUser.name">创建人</th>
+				<th data-order-field="createTime">创建时间</th>
+				<th data-order-field="lastModifedBy.name">修改人</th>
+				<th data-order-field="lastModifiedDate">修改时间</th>
 				<th width="100">操作</th>
 			</tr>
 		</thead>
@@ -58,6 +62,10 @@
 				<td th:text="${e.categoryName}">类别</td>
 				<td th:text="${e.code}">编码</td>
 				<td th:text="${e.name}">名称</td>
+				<td th:text="${e.createUser.name}">创建人</td>
+				<td th:text="${#temporals.format(e.createTime, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
+				<td th:text="${e.lastModifedBy.name}">最后修改人</td>
+				<td th:text="${#temporals.format(e.lastModifiedDate, 'yyyy-MM-dd HH:mm:ss')}">最后修改时间</td>
 				<td><a th:href="@{/business/datadic/modify/{id}(id=${e.id})}"
 					href="#" class="btn btn-green" data-toggle="navtab" data-id="form" data-title="修改-器械信息">修改</a>
 					<a th:href="@{/business/datadic/remove/{id}(id=${e.id})}" href="#"

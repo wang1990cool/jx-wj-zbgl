@@ -8,9 +8,9 @@ import io.jianxun.business.service.DepartmentableService;
 
 @Controller
 @RequestMapping("business/stock")
-public class StockController extends DepartmentableController<Stock, Long> {
+public class StockController extends DepartmentableController<Stock> {
 
-	public StockController(DepartmentableService<Stock, Long> entityService) {
+	public StockController(DepartmentableService<Stock> entityService) {
 		super(entityService);
 	}
 

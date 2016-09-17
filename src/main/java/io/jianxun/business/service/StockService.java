@@ -1,7 +1,5 @@
 package io.jianxun.business.service;
 
-import java.math.BigDecimal;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +10,7 @@ import io.jianxun.business.repository.StockRepository;
 
 @Service
 @Transactional(readOnly = true)
-public class StockService extends DepartmentableService<Stock, Long> {
+public class StockService extends DepartmentableService<Stock> {
 	@Transactional(readOnly = false)
 	public void refrashStock(StockIn stockIn) {
 		Stock stock = findByWeapon(stockIn.getWeapon());

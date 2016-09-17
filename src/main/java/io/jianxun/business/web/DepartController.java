@@ -9,9 +9,9 @@ import io.jianxun.common.web.TreeableEntityController;
 
 @Controller
 @RequestMapping(value = "/business/department")
-public class DepartController extends TreeableEntityController<Department, Long> {
+public class DepartController extends TreeableEntityController<Department> {
 
-	public DepartController(TreeableEntityService<Department, Long> entityService) {
+	public DepartController(TreeableEntityService<Department> entityService) {
 		super(entityService);
 	}
 

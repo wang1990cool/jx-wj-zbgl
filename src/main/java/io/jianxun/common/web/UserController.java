@@ -18,9 +18,9 @@ import io.jianxun.common.service.UserDetailsService;
 
 @Controller
 @RequestMapping("/business/user")
-public class UserController extends EntityController<UserDetails, Long> {
+public class UserController extends EntityController<UserDetails> {
 
-	public UserController(EntityService<UserDetails, Long> entityService) {
+	public UserController(EntityService<UserDetails> entityService) {
 		super(entityService);
 	}
 

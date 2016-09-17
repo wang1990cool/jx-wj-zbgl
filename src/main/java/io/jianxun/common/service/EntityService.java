@@ -1,6 +1,5 @@
 package io.jianxun.common.service;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -20,10 +19,10 @@ import io.jianxun.common.utils.DynamicSpecifications;
 import io.jianxun.common.utils.SearchFilter;
 
 @Transactional(readOnly = true)
-public class EntityService<T extends IdEntity, ID extends Serializable> {
+public class EntityService<T extends IdEntity> {
 
 	@Autowired
-	protected EntityRepository<T, ID> entityRepository;
+	protected EntityRepository<T, Long> entityRepository;
 
 	public Class<T> getDomainClass() {
 		return entityRepository.getDomainClazz();
@@ -62,7 +61,7 @@ public class EntityService<T extends IdEntity, ID extends Serializable> {
 	 * @param id
 	 * @return
 	 */
-	public T findOne(ID id) {
+	public T findOne(Long id) {
 		return entityRepository.findOne(id);
 	}
 
@@ -96,7 +95,7 @@ public class EntityService<T extends IdEntity, ID extends Serializable> {
 	}
 
 	@Transactional(readOnly = false)
-	public ID delete(ID id) {
+	public Long delete(Long id) {
 		T entity = findOne(id);
 		delete(entity);
 		return id;

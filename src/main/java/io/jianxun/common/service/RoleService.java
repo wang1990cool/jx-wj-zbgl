@@ -7,6 +7,6 @@ import io.jianxun.common.domain.user.Role;
 
 @Service
 @Transactional(readOnly = true)
-public class RoleService extends EntityService<Role, Long> {
+public class RoleService extends EntityService<Role> {
 
 }

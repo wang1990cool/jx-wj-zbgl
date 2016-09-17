@@ -17,7 +17,7 @@ import io.jianxun.common.service.EntityService;
 
 @Service
 @Transactional(readOnly = true)
-public class StockInDetailService extends EntityService<StockInDetail, Long> {
+public class StockInDetailService extends EntityService<StockInDetail> {
 
 	public String getMaxSno(String prefix) {
 		StockInDetail detail = ((StockInDetailRepository) entityRepository)

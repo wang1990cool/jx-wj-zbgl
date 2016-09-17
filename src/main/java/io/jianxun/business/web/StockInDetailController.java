@@ -21,9 +21,9 @@ import io.jianxun.common.web.EntityController;
 
 @Controller
 @RequestMapping("business/stockindetail")
-public class StockInDetailController extends EntityController<StockInDetail, Long> {
+public class StockInDetailController extends EntityController<StockInDetail> {
 
-	public StockInDetailController(EntityService<StockInDetail, Long> entityService) {
+	public StockInDetailController(EntityService<StockInDetail> entityService) {
 		super(entityService);
 	}
 

@@ -22,7 +22,7 @@ import io.jianxun.common.service.exception.ServiceException;
 
 @Service
 @Transactional(readOnly = true)
-public class UserDetailsService extends EntityService<UserDetails, Long>
+public class UserDetailsService extends EntityService<UserDetails>
 		implements org.springframework.security.core.userdetails.UserDetailsService {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());

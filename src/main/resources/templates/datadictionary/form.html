@@ -2,6 +2,7 @@
 	<form action="#" id="datadic_form"
 		th:action="@{/business/datadic/{path}(path=${action})}" method="POST"
 		th:object="${datadictionary}" data-toggle="validate" data-alertmsg="false">
+		<input type="hidden" name="id" th:value="${id}"/>
 		<table class="table table-condensed table-hover" width="100%">
 			<tbody>
 				<tr>
@@ -14,8 +15,8 @@
 				</tr>
 				<tr>
 					<td><label class="control-label x95">代码：</label> <input
-						type="text" th:field="*{code}" name="code" data-rule="required"
-						size="15" /> <input type="hidden" name="id" th:value="${id}" /></td>
+						type="text" th:field="*{code}" name="code" data-rule="required;remote[business/datadic/check/codeunique, id]"
+						size="15" /> </td>
 				</tr>
 				<tr>
 					<td><label class="control-label x95">名称：</label> <input

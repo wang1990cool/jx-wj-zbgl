@@ -8,9 +8,9 @@ import io.jianxun.business.service.DepartmentableService;
 
 @Controller
 @RequestMapping("business/constable")
-public class ConstableController extends DepartmentableController<Constable, Long> {
+public class ConstableController extends DepartmentableController<Constable> {
 
-	public ConstableController(DepartmentableService<Constable, Long> entityService) {
+	public ConstableController(DepartmentableService<Constable> entityService) {
 		super(entityService);
 	}
 

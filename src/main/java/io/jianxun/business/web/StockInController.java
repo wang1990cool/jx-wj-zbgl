@@ -26,14 +26,14 @@ import io.jianxun.common.utils.Servlets;
 
 @Controller
 @RequestMapping("business/stockin")
-public class StockInController extends DepartmentableController<StockIn, Long> {
+public class StockInController extends DepartmentableController<StockIn> {
 
 	@Autowired
 	private WeaponService weaponService;
 	@Autowired
 	private StockService stockService;
 
-	public StockInController(DepartmentableService<StockIn, Long> entityService) {
+	public StockInController(DepartmentableService<StockIn> entityService) {
 		super(entityService);
 	}
 
