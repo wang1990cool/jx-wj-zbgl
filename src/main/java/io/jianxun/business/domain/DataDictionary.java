@@ -5,6 +5,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.StringUtils;
 
@@ -46,6 +47,7 @@ public class DataDictionary extends BusinessBaseEntity {
 	/**
 	 * @return the name
 	 */
+	@Length(min = 2, max = 4, message = "{dataDic.name.length.illegal}")
 	public String getName() {
 		return name;
 	}
