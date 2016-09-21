@@ -6,6 +6,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -45,6 +46,7 @@ public abstract class BusinessBaseEntity extends IdEntity {
 	/**
 	 * @return the code
 	 */
+	@NotNull(message="code.illegal")
 	public String getCode() {
 		return code;
 	}

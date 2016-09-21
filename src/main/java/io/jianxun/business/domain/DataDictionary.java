@@ -28,6 +28,7 @@ public class DataDictionary extends BusinessBaseEntity {
 	private static final long serialVersionUID = 214211644452120954L;
 	private String category = DataCategory.WEAPON.getCode();
 	private String name;
+	private String t;
 
 	/**
 	 * @return the category
@@ -44,10 +45,19 @@ public class DataDictionary extends BusinessBaseEntity {
 		this.category = category;
 	}
 
+	@Length(min = 2, max = 4, message = "dataDic.name.length.illegal")
+	public String getT() {
+		return t;
+	}
+
+	public void setT(String t) {
+		this.t = t;
+	}
+
 	/**
 	 * @return the name
 	 */
-	@Length(min = 2, max = 4, message = "{dataDic.name.length.illegal}")
+	@Length(min = 2, max = 4, message = "dataDic.name.length.illegal")
 	public String getName() {
 		return name;
 	}

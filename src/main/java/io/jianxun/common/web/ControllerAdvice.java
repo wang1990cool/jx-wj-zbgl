@@ -1,5 +1,6 @@
 package io.jianxun.common.web;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +26,19 @@ public class ControllerAdvice {
 	@ResponseBody
 	public ReturnDto processValidationError(BindException ex) {
 		BindingResult result = ex.getBindingResult();
-		FieldError error = result.getFieldError();
-
-		return processFieldError(error);
+		return processFieldError(result.getFieldErrors());
 	}
 
-	private ReturnDto processFieldError(FieldError error) {
+	private ReturnDto processFieldError(List<FieldError> errors) {
 		ReturnDto re = null;
-		if (error != null) {
-			String code = error.getDefaultMessage();
-			String msg = message.getMessage(code, null, Locale.CHINA);
-			re = ReturnDto.error(msg);
+		if (errors != null && errors.size() > 0) {
+			StringBuilder sb = new StringBuilder();
+			for (FieldError error : errors) {
+				String msg = message.getMessage(error.getCode(), error.getArguments(), Locale.CHINA);
+				sb.append(msg + "<br />");
+
+			}
+			re = ReturnDto.error(sb.toString());
 		}
 		return re;
 	}
