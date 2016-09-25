@@ -4,8 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.StringUtils;
 
@@ -28,7 +29,6 @@ public class DataDictionary extends BusinessBaseEntity {
 	private static final long serialVersionUID = 214211644452120954L;
 	private String category = DataCategory.WEAPON.getCode();
 	private String name;
-	private String t;
 
 	/**
 	 * @return the category
@@ -45,19 +45,11 @@ public class DataDictionary extends BusinessBaseEntity {
 		this.category = category;
 	}
 
-	@Length(min = 2, max = 4, message = "dataDic.name.length.illegal")
-	public String getT() {
-		return t;
-	}
-
-	public void setT(String t) {
-		this.t = t;
-	}
-
 	/**
 	 * @return the name
 	 */
-	@Length(min = 2, max = 4, message = "dataDic.name.length.illegal")
+	@NotEmpty(message = "{datadic.name.notnull}")
+	@Size(min = 2, max = 10, message = "{datadic.name.size}")
 	public String getName() {
 		return name;
 	}

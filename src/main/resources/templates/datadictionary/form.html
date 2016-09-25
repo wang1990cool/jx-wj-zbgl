@@ -1,32 +1,29 @@
 <div class="bjui-pageContent">
 	<form action="#" id="datadic_form"
 		th:action="@{/business/datadic/{path}(path=${action})}" method="POST"
-		th:object="${datadictionary}" data-toggle="validate" data-alertmsg="false">
-		<input type="hidden" name="id" th:value="${id}"/>
+		th:object="${datadictionary}" data-toggle="validate"
+		data-alertmsg="false">
+		<input type="hidden" name="id" th:value="${id}" />
 		<table class="table table-condensed table-hover" width="100%">
 			<tbody>
 				<tr>
 					<td><label class="control-label x95">类别：</label> <select
-						th:field="*{category}" name="category"
-						data-toggle="selectpicker" data-width="150">
+						th:field="*{category}" name="category" data-toggle="selectpicker"
+						data-width="150">
 							<option th:each="u : ${categories}" th:value="${u.code}"
 								th:text="${u.name}">类别</option>
 					</select></td>
 				</tr>
 				<tr>
 					<td><label class="control-label x95">代码：</label> <input
-						type="text" th:field="*{code}" name="code" 
-						size="15" /> </td>
-				</tr>
-				<tr>
-					<td><label class="control-label x95">名称：</label> <input
-						type="text" th:field="*{name}" name="name" 
+						type="text" th:field="*{code}" name="code"
+						data-rule="required;remote[business/datadic/check/codeunique, id]"
 						size="15" /></td>
 				</tr>
 				<tr>
 					<td><label class="control-label x95">名称：</label> <input
-						type="text" th:field="*{t}" name="t" 
-						size="15" /></td>
+						type="text" th:field="*{name}" name="name"
+						data-rule="required;length[2~10]" size="15" /></td>
 				</tr>
 			</tbody>
 		</table>

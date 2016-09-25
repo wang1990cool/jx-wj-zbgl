@@ -1,10 +1,7 @@
 package io.jianxun.common.web;
 
 import java.util.List;
-import java.util.Locale;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -17,9 +14,6 @@ import io.jianxun.business.web.dto.ReturnDto;
 
 @org.springframework.web.bind.annotation.ControllerAdvice
 public class ControllerAdvice {
-
-	@Autowired
-	private MessageSource message;
 
 	@ExceptionHandler(BindException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -34,8 +28,8 @@ public class ControllerAdvice {
 		if (errors != null && errors.size() > 0) {
 			StringBuilder sb = new StringBuilder();
 			for (FieldError error : errors) {
-				String msg = message.getMessage(error.getCode(), error.getArguments(), Locale.CHINA);
-				sb.append(msg + "<br />");
+				String msg = error.getDefaultMessage();
+				sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + msg + "<br />");
 
 			}
 			re = ReturnDto.error(sb.toString());
