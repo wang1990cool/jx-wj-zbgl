@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
 import io.jianxun.business.domain.DataDictionary;
 import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.repository.WeaponRepository;
-import io.jianxun.business.web.dto.SelectOptionDto;
+import io.jianxun.business.web.dto.CodeNameDto;
 import io.jianxun.common.service.EntityService;
 import io.jianxun.common.service.exception.ServiceException;
 
@@ -45,8 +45,8 @@ public class WeaponService extends EntityService<Weapon> {
 		return ((WeaponRepository) entityRepository).countByNameAndId(name, id);
 	}
 
-	public List<SelectOptionDto> getSelectData(List<Weapon> weapons) {
-		List<SelectOptionDto> r = Lists.newArrayList();
+	public List<CodeNameDto> getSelectData(List<Weapon> weapons) {
+		List<CodeNameDto> r = Lists.newArrayList();
 		for (Weapon w : weapons) {
 			r.add(convert2SelectDto(w));
 		}
@@ -54,8 +54,8 @@ public class WeaponService extends EntityService<Weapon> {
 
 	}
 
-	public SelectOptionDto convert2SelectDto(Weapon weapon) {
-		SelectOptionDto dto = new SelectOptionDto();
+	public CodeNameDto convert2SelectDto(Weapon weapon) {
+		CodeNameDto dto = new CodeNameDto();
 		dto.setCode(weapon.getId().toString());
 		dto.setName(weapon.toString());
 		return dto;

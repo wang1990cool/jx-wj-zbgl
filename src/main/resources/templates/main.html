@@ -268,6 +268,14 @@
 
 			
 
+									
+
+			
+
+						
+
+			
+
 		}
 		/*<![CDATA[*/
 		if (treeNode.target && treeNode.target == 'dialog')
@@ -300,7 +308,7 @@
 					data-toggle="collapse" data-target="#bjui-navbar-collapse">
 					<i class="fa fa-bars"></i>
 				</button>
-				<h3 style="color:#FFF !important;padding-left:20px">马鞍山市特警支队器械管理系统</h3>
+				<h3 style="color: #FFF !important; padding-left: 20px">马鞍山市特警支队器械管理系统</h3>
 			</div>
 			<nav id="bjui-navbar-collapse">
 				<ul class="bjui-navbar-right">
@@ -311,9 +319,9 @@
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">我的账户 <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#" th:href="@{/business/user/changepassword}" data-toggle="dialog"
-								data-id="changepwd_page" data-mask="true" data-width="480"
-								data-height="260">&nbsp;<span
+							<li><a href="#" th:href="@{/business/user/changepassword}"
+								data-toggle="dialog" data-id="changepwd_page" data-mask="true"
+								data-width="480" data-height="260">&nbsp;<span
 									class="glyphicon glyphicon-lock"></span> 修改密码&nbsp;
 							</a></li>
 							<li class="divider"></li>
@@ -321,7 +329,7 @@
 									class="glyphicon glyphicon-off"></span> 注销登陆
 							</a></li>
 						</ul></li>
-						<li class="divider"></li>
+					<li class="divider"></li>
 				</ul>
 			</nav>
 			<div id="bjui-hnav" class="hide">
@@ -331,41 +339,62 @@
 				</button>
 				<div id="bjui-hnav-navbar-box">
 					<ul id="bjui-hnav-navbar">
-					
-						 <li class="active"><a href="javascript:;" data-toggle="slidebar"><i class="fa fa-check-square-o"></i> 器械信息管理</a>
-                        <div class="items hide" data-noinit="true">
-                            <ul class="menu-items" data-faicon="star-o">
-                                <li><a href="#" th:href="@{/business/weapon/page/}" data-fresh="true" data-options="{id:'weapon-page', faicon:'caret-right'}">基本信息</a></li>
-                                <li><a href="#" th:href="@{/business/stock/tree/}" data-options="{id:'stock-page', faicon:'caret-right'}">入库单信息</a></li>
-                            </ul>
-                            <ul class="menu-items" data-tit="器械领用管理" data-faicon="spinner">
-                               <li><a href="#" th:href="@{/business/requestform/tree/}" data-fresh="true" data-options="{id:'requestform-page', faicon:'caret-right'}">申请</a></li>
-                                <li><a href="#" th:href="@{/business/requestform/commit/tree/}" data-fresh="true" data-options="{id:'requestform-page', faicon:'caret-right'}">待审批</a></li>
-                                <li><a href="#" th:href="@{/business/requestform/finish/tree/}" data-options="{id:'requestform-page', faicon:'caret-right'}">待登记</a></li>
-                                <li><a href="table-edit.html" data-options="{id:'table-edit', faicon:'caret-right'}">归还</a></li>
-                            </ul>
-                            
-                             <ul class="menu-items" data-tit="器械报废管理" data-faicon="image">
-                                <li><a href="tabs.html" data-options="{id:'tabs', faicon:'caret-right'}">申请</a></li>
-                                <li><a href="tabs.html" data-options="{id:'tabs', faicon:'caret-right'}">审批</a></li>
-                                <li><a href="tabs.html" data-options="{id:'tabs', faicon:'caret-right'}">查询</a></li>
-                            </ul>
-                            
-                             <ul class="menu-items" data-tit="机构及人员设置" data-faicon="bug" >
-                                <li><a href="#" th:href="@{/business/department/tree/}" data-fresh="true" data-options="{id:'department-page', faicon:'caret-right'}">机构管理</a></li>
-                                <li><a href="#" th:href="@{/business/constable/tree/}" data-options="{id:'constable-page', faicon:'caret-right'}">警员信息管理</a></li>
-                            </ul>
-                            
-                            <ul class="menu-items" data-tit="系统设置" data-faicon="bug" >
-                            <li><a href="#" th:href="@{/business/datadic/page/}" data-fresh="true" data-options="{id:'datadictionary-page', faicon:'caret-right'}">数据字典</a></li>
-                            <!--     <li><a href="#" data-options="{id:'doc-ztree', faicon:'caret-right'}">用户管理</a></li>
-                                <li><a href="#" data-options="{id:'doc-icheck', faicon:'caret-right'}">角色管理</a></li>
-                                <li><a href="#" data-options="{id:'doc-selectpicker', faicon:'caret-right'}">权限管理</a></li> -->
-                            </ul>
-                             
-                        </div>
-                    </li>						
-				</ul>
+
+						<li class="active"><a href="javascript:;"
+							data-toggle="slidebar"><i class="fa fa-check-square-o"></i>
+								器械信息管理</a>
+							<div class="items hide" data-noinit="true">
+								<ul class="menu-items" data-faicon="star-o">
+									<li><a href="#" th:href="@{/business/weapon/page/}"
+										data-fresh="true"
+										data-options="{id:'weapon-page', faicon:'caret-right'}">基本信息</a></li>
+									<li><a href="#" th:href="@{/business/stock/tree/}"
+										data-options="{id:'stock-page', faicon:'caret-right'}">入库单信息</a></li>
+								</ul>
+								<ul class="menu-items" data-tit="器械领用管理" data-faicon="spinner">
+									<li><a href="#" th:href="@{/business/requestform/tree/}"
+										data-fresh="true"
+										data-options="{id:'requestform-page', faicon:'caret-right'}">申请</a></li>
+									<li><a href="#"
+										th:href="@{/business/requestform/commit/tree/}"
+										data-fresh="true"
+										data-options="{id:'requestform-page', faicon:'caret-right'}">待审批</a></li>
+									<li><a href="#"
+										th:href="@{/business/requestform/finish/tree/}"
+										data-options="{id:'requestform-page', faicon:'caret-right'}">待登记</a></li>
+									<li><a href="table-edit.html"
+										data-options="{id:'table-edit', faicon:'caret-right'}">归还</a></li>
+								</ul>
+
+								<ul class="menu-items" data-tit="器械报废管理" data-faicon="image">
+									<li><a href="tabs.html"
+										data-options="{id:'tabs', faicon:'caret-right'}">申请</a></li>
+									<li><a href="tabs.html"
+										data-options="{id:'tabs', faicon:'caret-right'}">审批</a></li>
+									<li><a href="tabs.html"
+										data-options="{id:'tabs', faicon:'caret-right'}">查询</a></li>
+								</ul>
+
+								<ul class="menu-items" data-tit="机构及人员设置" data-faicon="bug">
+									<li><a href="#" th:href="@{/business/department/tree/}"
+										data-fresh="true"
+										data-options="{id:'department-page', faicon:'caret-right'}">机构管理</a></li>
+									<li><a href="#" th:href="@{/business/constable/tree/}"
+										data-options="{id:'constable-page', faicon:'caret-right'}">警员信息管理</a></li>
+								</ul>
+
+								<ul class="menu-items" data-tit="系统设置" data-faicon="bug">
+									<li><a href="#" th:href="@{/business/datadic/page/}"
+										data-fresh="true"
+										data-options="{id:'datadictionary-page', faicon:'caret-right'}">数据字典</a></li>
+									<li><a href="#"
+										data-options="{id:'doc-ztree', faicon:'caret-right'}">用户管理</a></li>
+									<li><a href="#" th:href="@{/business/role/page/}"
+										data-options="{id:'doc-icheck', faicon:'caret-right'}">角色管理</a></li>
+								</ul>
+
+							</div></li>
+					</ul>
 				</div>
 				<button type="button" class="btn-default bjui-hnav-more-right"
 					title="导航菜单右移">
@@ -373,40 +402,50 @@
 				</button>
 			</div>
 		</header>
-		 <div id="bjui-container" class="clearfix">
-        <div id="bjui-leftside">
-            <div id="bjui-sidebar-s">
-                <div class="collapse"></div>
-            </div>
-            <div id="bjui-sidebar">
-                <div class="toggleCollapse"><h2><i class="fa fa-bars"></i> 导航栏 <i class="fa fa-bars"></i></h2><a href="javascript:;" class="lock"><i class="fa fa-lock"></i></a></div>
-                <div class="panel-group panel-main" data-toggle="accordion" id="bjui-accordionmenu">
-                </div>
-            </div>
-        </div>
-        <div id="bjui-navtab" class="tabsPage">
-            <div class="tabsPageHeader">
-                <div class="tabsPageHeaderContent">
-                    <ul class="navtab-tab nav nav-tabs">
-                        <li data-url="" data-faicon="home"><a href="javascript:;"><span><i class="fa fa-home"></i> #maintab#</span></a></li>
-                    </ul>
-                </div>
-                <div class="tabsLeft"><i class="fa fa-angle-double-left"></i></div>
-                <div class="tabsRight"><i class="fa fa-angle-double-right"></i></div>
-                <div class="tabsMore"><i class="fa fa-angle-double-down"></i></div>
-            </div>
-            <ul class="tabsMoreList">
-                <li><a href="javascript:;">#maintab#</a></li>
-            </ul>
-            <div class="navtab-panel tabsPageContent">
-                <div class="navtabPage unitBox">
-                    <div class="bjui-pageContent" style="background:#FFF;">
-                       
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+		<div id="bjui-container" class="clearfix">
+			<div id="bjui-leftside">
+				<div id="bjui-sidebar-s">
+					<div class="collapse"></div>
+				</div>
+				<div id="bjui-sidebar">
+					<div class="toggleCollapse">
+						<h2>
+							<i class="fa fa-bars"></i> 导航栏 <i class="fa fa-bars"></i>
+						</h2>
+						<a href="javascript:;" class="lock"><i class="fa fa-lock"></i></a>
+					</div>
+					<div class="panel-group panel-main" data-toggle="accordion"
+						id="bjui-accordionmenu"></div>
+				</div>
+			</div>
+			<div id="bjui-navtab" class="tabsPage">
+				<div class="tabsPageHeader">
+					<div class="tabsPageHeaderContent">
+						<ul class="navtab-tab nav nav-tabs">
+							<li data-url="" data-faicon="home"><a href="javascript:;"><span><i
+										class="fa fa-home"></i> #maintab#</span></a></li>
+						</ul>
+					</div>
+					<div class="tabsLeft">
+						<i class="fa fa-angle-double-left"></i>
+					</div>
+					<div class="tabsRight">
+						<i class="fa fa-angle-double-right"></i>
+					</div>
+					<div class="tabsMore">
+						<i class="fa fa-angle-double-down"></i>
+					</div>
+				</div>
+				<ul class="tabsMoreList">
+					<li><a href="javascript:;">#maintab#</a></li>
+				</ul>
+				<div class="navtab-panel tabsPageContent">
+					<div class="navtabPage unitBox">
+						<div class="bjui-pageContent" style="background: #FFF;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<footer id="bjui-footer">
 			Copyright &copy; 2013 - 2016 <a href="#" target="_blank">马鞍山简迅软件科技</a>

@@ -6,7 +6,7 @@ import java.util.Map;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import io.jianxun.business.web.dto.SelectOptionDto;
+import io.jianxun.business.web.dto.CodeNameDto;
 
 public enum Unit {
 
@@ -44,17 +44,17 @@ public enum Unit {
 		this.name = name;
 	}
 
-	public static List<SelectOptionDto> getSelectOptions() {
-		List<SelectOptionDto> options = Lists.newArrayList();
+	public static List<CodeNameDto> getSelectOptions() {
+		List<CodeNameDto> options = Lists.newArrayList();
 		for (Unit u : Unit.values()) {
-			SelectOptionDto e = convert2SelectOption(u);
+			CodeNameDto e = convert2SelectOption(u);
 			options.add(e);
 		}
 		return options;
 	}
 
-	private static SelectOptionDto convert2SelectOption(Unit u) {
-		SelectOptionDto s = new SelectOptionDto();
+	private static CodeNameDto convert2SelectOption(Unit u) {
+		CodeNameDto s = new CodeNameDto();
 		s.setCode(u.getCode());
 		s.setName(u.getName());
 		return s;

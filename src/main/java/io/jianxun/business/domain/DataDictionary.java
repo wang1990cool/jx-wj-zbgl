@@ -1,13 +1,11 @@
 package io.jianxun.business.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.StringUtils;
 
 import io.jianxun.business.enums.DataCategory;
@@ -20,7 +18,6 @@ import io.jianxun.business.enums.DataCategory;
  */
 @Entity
 @Table(name = "jx_zb_dataDics")
-@EntityListeners(AuditingEntityListener.class)
 public class DataDictionary extends BusinessBaseEntity {
 
 	/**

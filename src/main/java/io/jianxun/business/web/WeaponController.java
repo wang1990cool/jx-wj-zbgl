@@ -15,7 +15,7 @@ import io.jianxun.business.domain.editor.DataDictionaryEditor;
 import io.jianxun.business.enums.DataCategory;
 import io.jianxun.business.enums.Unit;
 import io.jianxun.business.service.DataDicService;
-import io.jianxun.business.web.dto.SelectOptionDto;
+import io.jianxun.business.web.dto.CodeNameDto;
 import io.jianxun.common.service.EntityService;
 import io.jianxun.common.web.EntityController;
 
@@ -51,7 +51,7 @@ public class WeaponController extends EntityController<Weapon> {
 		super.prepareModifyForm(model);
 	}
 
-	private List<SelectOptionDto> getUnitsData() {
+	private List<CodeNameDto> getUnitsData() {
 		return Unit.getSelectOptions();
 	}
 

@@ -2,6 +2,7 @@ package io.jianxun.common.domain.user;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -10,7 +11,10 @@ import javax.persistence.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
+import io.jianxun.business.domain.Role;
+import io.jianxun.business.enums.BooleanStatus;
 
 @Entity
 @Table(name = "jx_sys_users")
@@ -19,8 +23,6 @@ public class UserDetails extends User implements org.springframework.security.co
 	private static final long serialVersionUID = -6278197000645900257L;
 
 	private String password;
-	
-	private List<String> permissions = Lists.newArrayList();
 
 	// 用户失效
 	private boolean accountNonExpired = true;
@@ -31,16 +33,25 @@ public class UserDetails extends User implements org.springframework.security.co
 	// 用户可用
 	private boolean enabled = true;
 
+	// 角色信息
+	private Set<Role> roles = Sets.newHashSet();
+
 	@Override
 	@Transient
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<String> permissions = this.getPermissions();
-		if (permissions == null || permissions.size() < 1) {
+		if (this.roles.size() == 0)
 			return AuthorityUtils.commaSeparatedStringToAuthorityList("");
-		}
 		StringBuilder commaBuilder = new StringBuilder();
-		for (String permission : permissions) {
-			commaBuilder.append(permission).append(",");
+		for (Role role : roles) {
+			if (BooleanStatus.False.equals(role.getDeleted()))
+				continue;
+			List<String> permissions = role.getPermissions();
+			if (permissions == null || permissions.size() < 1) {
+				continue;
+			}
+			for (String permission : permissions) {
+				commaBuilder.append(permission).append(",");
+			}
 		}
 		String authorities = commaBuilder.substring(0, commaBuilder.length() - 1);
 		return AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
@@ -52,22 +63,6 @@ public class UserDetails extends User implements org.springframework.security.co
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	/**
-	 * @return the permissions
-	 */
-	@Transient
-	public List<String> getPermissions() {
-		return permissions;
-	}
-
-	/**
-	 * @param permissions
-	 *            the permissions to set
-	 */
-	public void setPermissions(List<String> permissions) {
-		this.permissions = permissions;
 	}
 
 	/**

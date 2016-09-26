@@ -1,14 +1,18 @@
-package io.jianxun.common.domain.user;
+package io.jianxun.business.domain;
 
+import java.util.List;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import io.jianxun.common.domain.IdEntity;
+import com.google.common.collect.Lists;
 
 @Entity
 @Table(name = "jx_sys_roles")
-public class Role extends IdEntity {
+public class Role extends BusinessBaseEntity {
 
 	private static final long serialVersionUID = -351239566771402447L;
 	/**
@@ -22,8 +26,8 @@ public class Role extends IdEntity {
 	@NotNull
 	private String code;
 
-	// 所属用户id
-	private Long owner = -1L;
+	// 权限列表
+	private List<String> permissions = Lists.newArrayList();
 
 	public String getName() {
 		return name;
@@ -48,19 +52,14 @@ public class Role extends IdEntity {
 		this.code = code;
 	}
 
-	/**
-	 * @return the owner
-	 */
-	public Long getOwner() {
-		return owner;
+	@ElementCollection
+	@CollectionTable(name = "jx_sys_role_pers")
+	public List<String> getPermissions() {
+		return permissions;
 	}
 
-	/**
-	 * @param owner
-	 *            the owner to set
-	 */
-	public void setOwner(Long owner) {
-		this.owner = owner;
+	public void setPermissions(List<String> permissions) {
+		this.permissions = permissions;
 	}
 
 }

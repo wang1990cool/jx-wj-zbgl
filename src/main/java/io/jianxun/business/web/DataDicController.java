@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.jianxun.business.domain.DataDictionary;
 import io.jianxun.business.enums.DataCategory;
-import io.jianxun.common.service.EntityService;
+import io.jianxun.business.service.BusinessBaseEntityService;
 
 @Controller
 @RequestMapping("business/datadic")
 public class DataDicController extends BusinessController<DataDictionary> {
 
-	public DataDicController(EntityService<DataDictionary> entityService) {
+	public DataDicController(BusinessBaseEntityService<DataDictionary> entityService) {
 		super(entityService);
 	}
 

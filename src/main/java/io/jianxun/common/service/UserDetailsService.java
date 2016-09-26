@@ -10,13 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Lists;
-
-import io.jianxun.common.domain.user.Permission;
-import io.jianxun.common.domain.user.Role;
 import io.jianxun.common.domain.user.UserDetails;
-import io.jianxun.common.repository.user.PermissionRepository;
-import io.jianxun.common.repository.user.RoleRepository;
 import io.jianxun.common.repository.user.UserRepository;
 import io.jianxun.common.service.exception.ServiceException;
 
@@ -30,19 +24,15 @@ public class UserDetailsService extends EntityService<UserDetails>
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
-	private RoleRepository roleRepository;
-	@Autowired
-	private PermissionRepository permissionRepository;
-	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDetails user = null;
 		try {
 			List<UserDetails> users = userRepository.findAll();
-			if(users.isEmpty()){
+			if (users.isEmpty()) {
 				UserDetails admin = new UserDetails();
 				admin.setName("管理员");
 				admin.setUsername("admin");
@@ -50,7 +40,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 				register(admin);
 				flush();
 			}
-				
+
 			user = userRepository.findByUsername(username);
 		} catch (Exception e) {
 			logger.debug("db excute error,user found faill | loginname : %s", username);
@@ -61,22 +51,27 @@ public class UserDetailsService extends EntityService<UserDetails>
 			logger.debug("user not found | loginname : %s", username);
 			throw new UsernameNotFoundException("user not found");
 		}
-		// 获取用户权限信息
-		List<Role> roles = roleRepository.findByOwner(user.getId());
-		if (roles != null && roles.size() != 0) {
-			List<String> result = Lists.newArrayList();
-			for (Role role : roles) {
-				List<Permission> permissions = permissionRepository.findByOwner(role.getId());
-				if (permissions == null || permissions.size() < 1) {
-					continue;
-				}
-				for (Permission permission : permissions) {
-					result.add(permission.getValue());
-				}
-			}
-			user.setPermissions(result);
+		// 用户失效
+		if (!user.isAccountNonExpired()) {
+			logger.debug("user is expired | loginname : %s", username);
+			throw new UsernameNotFoundException("user is expired");
 		}
-		
+		// 用户锁定
+		if (!user.isAccountNonLocked()) {
+			logger.debug("user is locked | loginname : %s", username);
+			throw new UsernameNotFoundException("user is locked");
+		}
+		// 密码失效
+		if (!user.isCredentialsNonExpired()) {
+			logger.debug("user credentials is expired | loginname : %s", username);
+			throw new UsernameNotFoundException("user credentials is expired");
+		}
+		// 用户不可用
+		if (!user.isEnabled()) {
+			logger.debug("user not enabled | loginname : %s", username);
+			throw new UsernameNotFoundException("user not enabled");
+		}
+
 		return user;
 	}
 

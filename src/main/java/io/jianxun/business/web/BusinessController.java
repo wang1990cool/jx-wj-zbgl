@@ -10,26 +10,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import io.jianxun.business.domain.BusinessBaseEntity;
 import io.jianxun.business.domain.validator.CodeUniqueValidator;
 import io.jianxun.business.service.BusinessBaseEntityService;
-import io.jianxun.common.service.EntityService;
 import io.jianxun.common.utils.Messages;
 import io.jianxun.common.web.EntityController;
 
 public class BusinessController<T extends BusinessBaseEntity> extends EntityController<T> {
 
-	public BusinessController(EntityService<T> entityService) {
+	public BusinessController(BusinessBaseEntityService<T> entityService) {
 		super(entityService);
-	}
-	
-	@Autowired
-	private CodeUniqueValidator<T> codeUniqueValidator;
-	
-	@InitBinder
-	public void initBinder(WebDataBinder webDataBinder){
-		webDataBinder.addValidators(codeUniqueValidator);
-		
+		this.codeUniqueValidator = new CodeUniqueValidator<T>(entityService);
 	}
 
-	
+	private CodeUniqueValidator<T> codeUniqueValidator;
+
+	@InitBinder
+	public void initBinder(WebDataBinder webDataBinder) {
+		webDataBinder.addValidators(codeUniqueValidator);
+
+	}
+
 	@Autowired
 	private Messages message;
 

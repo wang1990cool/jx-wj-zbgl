@@ -9,7 +9,7 @@ import com.google.common.collect.Lists;
 
 import io.jianxun.business.domain.DataDictionary;
 import io.jianxun.business.repository.DataDicRepository;
-import io.jianxun.business.web.dto.SelectOptionDto;
+import io.jianxun.business.web.dto.CodeNameDto;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,17 +19,17 @@ public class DataDicService extends BusinessBaseEntityService<DataDictionary> {
 		return ((DataDicRepository) entityRepository).findByCategory(category);
 	}
 
-	public List<SelectOptionDto> getSelectOptions(List<DataDictionary> data) {
-		List<SelectOptionDto> options = Lists.newArrayList();
+	public List<CodeNameDto> getSelectOptions(List<DataDictionary> data) {
+		List<CodeNameDto> options = Lists.newArrayList();
 		for (DataDictionary u : data) {
-			SelectOptionDto e = convert2SelectOption(u);
+			CodeNameDto e = convert2SelectOption(u);
 			options.add(e);
 		}
 		return options;
 	}
 
-	private SelectOptionDto convert2SelectOption(DataDictionary u) {
-		SelectOptionDto s = new SelectOptionDto();
+	private CodeNameDto convert2SelectOption(DataDictionary u) {
+		CodeNameDto s = new CodeNameDto();
 		s.setCode(u.getId().toString());
 		s.setName(u.getName());
 		return s;

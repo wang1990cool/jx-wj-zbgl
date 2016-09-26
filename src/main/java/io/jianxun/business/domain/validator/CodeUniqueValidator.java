@@ -1,17 +1,18 @@
 package io.jianxun.business.domain.validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import io.jianxun.business.domain.BusinessBaseEntity;
 import io.jianxun.business.service.BusinessBaseEntityService;
 
-@Component
 public class CodeUniqueValidator<T extends BusinessBaseEntity> implements Validator {
 
-	@Autowired
+	public CodeUniqueValidator(BusinessBaseEntityService<T> service) {
+		super();
+		this.service = service;
+	}
+
 	private BusinessBaseEntityService<T> service;
 
 	@Override
@@ -24,7 +25,7 @@ public class CodeUniqueValidator<T extends BusinessBaseEntity> implements Valida
 		final BusinessBaseEntity e = (BusinessBaseEntity) target;
 		boolean un = service.validateCodeIsUnique(e.getCode(), e.getId());
 		if (!un)
-			errors.rejectValue("code","code.unique","编码重复");
+			errors.rejectValue("code", "code.unique", "编码重复");
 	}
 
 }

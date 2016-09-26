@@ -2,6 +2,7 @@ package io.jianxun.business.domain;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.EntityListeners;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,6 +13,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import io.jianxun.business.enums.BooleanStatus;
 import io.jianxun.common.domain.IdEntity;
@@ -24,6 +26,7 @@ import io.jianxun.common.domain.user.UserDetails;
  *
  */
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public abstract class BusinessBaseEntity extends IdEntity {
 
 	public static final String DELETED_PROPERTY = "deleted";
@@ -46,7 +49,7 @@ public abstract class BusinessBaseEntity extends IdEntity {
 	/**
 	 * @return the code
 	 */
-	@NotNull(message="code.illegal")
+	@NotNull(message = "code.illegal")
 	public String getCode() {
 		return code;
 	}

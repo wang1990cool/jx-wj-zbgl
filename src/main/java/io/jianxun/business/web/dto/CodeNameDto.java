@@ -1,6 +1,6 @@
 package io.jianxun.business.web.dto;
 
-public class SelectOptionDto {
+public class CodeNameDto {
 
 	private String code;
 	private String name;
