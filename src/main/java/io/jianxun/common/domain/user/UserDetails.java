@@ -22,7 +22,6 @@ import com.google.common.collect.Sets;
 
 import io.jianxun.business.domain.Role;
 import io.jianxun.business.enums.BooleanStatus;
-import io.jianxun.common.utils.Hibernates;
 
 @Entity
 @Table(name = "jx_sys_users")

@@ -23,6 +23,22 @@
 		<button type="button" data-toggle="navtab" class="btn-green"
 			data-id="user-form-restpassword"
 			data-url="business/user/resetpassword/{#bjui-selected}">重置密码--用户信息</button>
+		<div class="btn-group">
+			<button type="button" class="btn-default dropdown-toggle"
+				data-toggle="dropdown" data-icon="copy">
+				其他操作<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu right" role="menu">
+				<li><a th:href="@{/business/user/remove}" href="#"
+					data-toggle="doajaxchecked" data-confirm-msg="确定要删除选中项吗？"
+					data-idname="ids" data-group="ids">批量删除</a></li>
+				<li class="divider"></li>
+				<li><a th:href="@{/business/user/locked}" href="#"
+					data-toggle="doajaxchecked"
+					data-confirm-msg="确定要锁定选中用戶吗？锁定后用户将不能使用。" data-idname="ids"
+					data-group="ids">批量锁定</a></li>
+			</ul>
+		</div>
 	</div>
 </div>
 <div class="bjui-pageContent tableContent">

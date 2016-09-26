@@ -104,10 +104,22 @@ public class UserController extends EntityController<UserDetails> {
 	public ReturnDto changepassword(@Valid PasswordDto password) {
 		User user = ((UserDetailsService) getEntityService()).getCurrentUser();
 		if (user == null)
-			throw new UsernameNotFoundException("");
+			throw new UsernameNotFoundException("用户不存在");
 		((UserDetailsService) entityService).changePassword((UserDetails) user, password.getNewPassword());
 		return ReturnDto.ok("操作成功!");
 
+	}
+
+	@RequestMapping("locked")
+	@ResponseBody
+	public ReturnDto batchRemove(@RequestParam("ids") Long[] ids) {
+		for (Long id : ids) {
+			UserDetails user = entityService.findOne(id);
+			if (user == null)
+				throw new UsernameNotFoundException("用户不存在");
+			((UserDetailsService) entityService).accountLocked(user, true);
+		}
+		return ReturnDto.ok("操作成功!");
 	}
 
 	@Override
