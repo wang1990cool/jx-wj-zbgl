@@ -18,22 +18,24 @@
 	</form>
 	<hr style="margin: 5px 0" />
 	<div class="pull-left">
-		<button type="button" data-toggle="navtab" class="btn-red"
-			data-id="user-form-new" data-url="business/user/create">新增--用户信息</button>
-		<button type="button" data-toggle="navtab" class="btn-green"
+		<button sec:authorize="hasAnyAuthority('ALL','USER_CREATE')" type="button"
+			data-toggle="navtab" class="btn-red" data-id="user-form-new"
+			data-url="business/user/create">新增--用户信息</button>
+		<button sec:authorize="hasAnyAuthority('ALL','USER_RESETPASSWORD')"
+			type="button" data-toggle="navtab" class="btn-green"
 			data-id="user-form-restpassword"
 			data-url="business/user/resetpassword/{#bjui-selected}">重置密码--用户信息</button>
 		<div class="btn-group">
-			<button type="button" class="btn-default dropdown-toggle"
+			<button sec:authorize="hasAnyAuthority('ALL','USER_DELETE','USER_LOCKED')"
+				type="button" class="btn-default dropdown-toggle"
 				data-toggle="dropdown" data-icon="copy">
 				其他操作<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu right" role="menu">
-				<li><a th:href="@{/business/user/remove}" href="#"
+				<li sec:authorize="hasAnyAuthority('ALL','USER_REMOVE')"><a th:href="@{/business/user/remove}" href="#"
 					data-toggle="doajaxchecked" data-confirm-msg="确定要删除选中项吗？"
 					data-idname="ids" data-group="ids">批量删除</a></li>
-				<li class="divider"></li>
-				<li><a th:href="@{/business/user/locked}" href="#"
+				<li sec:authorize="hasAnyAuthority('ALL','USER_LOCKED')"><a th:href="@{/business/user/locked}" href="#"
 					data-toggle="doajaxchecked"
 					data-confirm-msg="确定要锁定选中用戶吗？锁定后用户将不能使用。" data-idname="ids"
 					data-group="ids">批量锁定</a></li>
@@ -65,9 +67,9 @@
 				<td th:text="${!e.accountNonExpired}">是否失效</td>
 				<td th:text="${!e.accountNonLocked}">是否锁定</td>
 				<td th:text="${!e.credentialsNonExpired}">是否密码失效</td>
-				<td><a th:href="@{/business/user/modify/{id}(id=${e.id})}"
+				<td><a sec:authorize="hasAnyAuthority('ALL','USER_MODIFY')" th:href="@{/business/user/modify/{id}(id=${e.id})}"
 					href="#" class="btn btn-green" data-toggle="navtab"
-					data-id="user-modify-form" data-title="修改-用户信息">修改</a> <a
+					data-id="user-modify-form" data-title="修改-用户信息">修改</a> <a sec:authorize="hasAnyAuthority('ALL','USER_REMOVE')"
 					th:href="@{/business/user/remove/{id}(id=${e.id})}" href="#"
 					class="btn btn-red" data-toggle="doajax"
 					data-confirm-msg="确定要删除该行信息吗？">删除</a></td>

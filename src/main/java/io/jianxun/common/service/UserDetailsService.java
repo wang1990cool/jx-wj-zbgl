@@ -10,6 +10,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
+import io.jianxun.business.domain.Role;
+import io.jianxun.business.service.RoleService;
 import io.jianxun.common.domain.user.UserDetails;
 import io.jianxun.common.repository.user.UserRepository;
 import io.jianxun.common.service.exception.ServiceException;
@@ -24,6 +29,8 @@ public class UserDetailsService extends EntityService<UserDetails>
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
+	private RoleService roleService;
+	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
@@ -33,12 +40,20 @@ public class UserDetailsService extends EntityService<UserDetails>
 		try {
 			List<UserDetails> users = userRepository.findAll();
 			if (users.isEmpty()) {
+				Role role = new Role();
+				role.setCode("001");
+				role.setName("系统所有权限");
+				role.setPermissions(Lists.newArrayList("ALL"));
+				roleService.save(role);
+				roleService.flush();
 				UserDetails admin = new UserDetails();
 				admin.setName("管理员");
 				admin.setUsername("admin");
 				admin.setPassword("admin");
+				admin.setRoles(Sets.newHashSet(role));
 				register(admin);
 				flush();
+
 			}
 
 			user = userRepository.findByUsername(username);
@@ -71,7 +86,6 @@ public class UserDetailsService extends EntityService<UserDetails>
 			logger.debug("user not enabled | loginname : %s", username);
 			throw new UsernameNotFoundException("user not enabled");
 		}
-
 		return user;
 	}
 

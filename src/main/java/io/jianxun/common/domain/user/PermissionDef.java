@@ -12,17 +12,20 @@ import io.jianxun.business.web.dto.CodeNameDto;
 public enum PermissionDef {
 	// 用户管理相关权限
 	USER_PAGE("user_page", "用户列表", ModuleDef.SYS, DomainDef.SYS_USER), USER_CREATE("user_create", "用户新增", ModuleDef.SYS,
-			DomainDef.SYS_USER), USER_MODIFY("user_modify", "用户修改", ModuleDef.SYS,
-					DomainDef.SYS_USER), USER_REMOVE("user_remove", "用户删除", ModuleDef.SYS, DomainDef.SYS_USER),
-	//角色
-	ROLE_PAGE("role_page", "角色列表", ModuleDef.SYS, DomainDef.SYS_ROLE), ROLE_CREATE("role_create", "角色新增", ModuleDef.SYS,
-			DomainDef.SYS_ROLE), ROLE_MODIFY("role_modify", "角色修改", ModuleDef.SYS,
-					DomainDef.SYS_ROLE), ROLE_REMOVE("role_remove", "角色删除", ModuleDef.SYS, DomainDef.SYS_ROLE),
-	//数据字典
-	DATADIC_PAGE("datadic_page", "字典列表", ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_CREATE("datadic_create", "字典新增", ModuleDef.SYS,
-				DomainDef.SYS_DATADIC), DATADIC_MODIFY("datadic_modify", "字典修改", ModuleDef.SYS,
-						DomainDef.SYS_DATADIC), DATADIC_REMOVE("datadic_remove", "字典删除", ModuleDef.SYS, DomainDef.SYS_DATADIC);
-	//;
+			DomainDef.SYS_USER), USER_MODIFY("user_modify", "用户修改", ModuleDef.SYS, DomainDef.SYS_USER), USER_REMOVE(
+					"user_remove", "用户删除", ModuleDef.SYS, DomainDef.SYS_USER), USER_RESETPASSWORD("user_resetpassword",
+							"重置密码", ModuleDef.SYS, DomainDef.SYS_USER), USER_LOCKED("user_locked", "用户锁定",
+									ModuleDef.SYS, DomainDef.SYS_USER),
+	// 角色
+	ROLE_PAGE("roleT_page", "角色列表", ModuleDef.SYS, DomainDef.SYS_ROLE), ROLE_CREATE("roleT_create", "角色新增",
+			ModuleDef.SYS, DomainDef.SYS_ROLE), ROLE_MODIFY("roleT_modify", "角色修改", ModuleDef.SYS,
+					DomainDef.SYS_ROLE), ROLE_REMOVE("roleT_remove", "角色删除", ModuleDef.SYS, DomainDef.SYS_ROLE),
+	// 数据字典
+	DATADIC_PAGE("datadic_page", "字典列表", ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_CREATE("datadic_create", "字典新增",
+			ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_MODIFY("datadic_modify", "字典修改", ModuleDef.SYS,
+					DomainDef.SYS_DATADIC), DATADIC_REMOVE("datadic_remove", "字典删除", ModuleDef.SYS,
+							DomainDef.SYS_DATADIC);
+	// ;
 
 	// 操作代码
 	private String code;

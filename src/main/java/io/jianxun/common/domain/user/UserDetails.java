@@ -57,7 +57,7 @@ public class UserDetails extends User implements org.springframework.security.co
 				continue;
 			}
 			for (String permission : permissions) {
-				commaBuilder.append(permission).append(",");
+				commaBuilder.append(permission.toUpperCase()).append(",");
 			}
 		}
 		String authorities = commaBuilder.substring(0, commaBuilder.length() - 1);
