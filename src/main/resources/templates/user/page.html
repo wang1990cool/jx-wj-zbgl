@@ -8,8 +8,8 @@
 		<input type="hidden" name="orderDirection"
 			th:value="${orderDirection}" value="DESC" />
 		<div class="bjui-searchBar">
-			<label>登录名：</label><input
-				type="text" th:value="${{param.search_LIKE_username}}" value=""
+			<label>登录名：</label><input type="text"
+				th:value="${{param.search_LIKE_username}}" value=""
 				name="search_LIKE_username" class="form-control" size="10" />&nbsp;<label>用户名：</label><input
 				type="text" th:value="${{param.search_LIKE_name}}" value=""
 				name="search_LIKE_name" class="form-control" size="10" />&nbsp;
@@ -20,6 +20,9 @@
 	<div class="pull-left">
 		<button type="button" data-toggle="navtab" class="btn-red"
 			data-id="user-form-new" data-url="business/user/create">新增--用户信息</button>
+		<button type="button" data-toggle="navtab" class="btn-green"
+			data-id="user-form-restpassword"
+			data-url="business/user/resetpassword/{#bjui-selected}">重置密码--用户信息</button>
 	</div>
 </div>
 <div class="bjui-pageContent tableContent">
@@ -31,9 +34,9 @@
 					data-group="ids" data-toggle="icheck" /></th>
 				<th data-order-field="username">登录名</th>
 				<th data-order-field="name">用户名</th>
-				<th >是否失效</th>
-				<th >是否锁定</th>
-				<th >是否密码失效</th>
+				<th>是否失效</th>
+				<th>是否锁定</th>
+				<th>是否密码失效</th>
 				<th width="100">操作</th>
 			</tr>
 		</thead>

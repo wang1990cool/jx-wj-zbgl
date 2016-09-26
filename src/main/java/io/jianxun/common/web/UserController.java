@@ -55,7 +55,6 @@ public class UserController extends EntityController<UserDetails> {
 	protected String getDomainName() {
 		return "user";
 	}
-	
 
 	@RequestMapping(value = "/modify/{id}", method = RequestMethod.GET)
 	public String modify(@PathVariable("id") Long id, Model model) {
@@ -76,15 +75,33 @@ public class UserController extends EntityController<UserDetails> {
 		model.addAttribute("roledata", roleService.findAll());
 	}
 
+	@RequestMapping(value = "resetpassword/{id}", method = RequestMethod.GET)
+	public String resetPassword(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("pwd", new PasswordDto());
+		model.addAttribute("id", id);
+		return getTemplePrefix() + "/resetpassword";
+	}
+
+	@RequestMapping(value = "resetpassword", method = RequestMethod.POST)
+	@ResponseBody
+	public ReturnDto resetpassword(@RequestParam("id") Long id, PasswordDto password) {
+		User user = ((UserDetailsService) getEntityService()).findOne(id);
+		if (user == null)
+			throw new UsernameNotFoundException("");
+		((UserDetailsService) entityService).changePassword((UserDetails) user, password.getNewPassword());
+		return ReturnDto.ok("操作成功!");
+
+	}
+
 	@RequestMapping(value = "changepassword", method = RequestMethod.GET)
 	public String changePassword(Model model) {
 		model.addAttribute("pwd", new PasswordDto());
-		return getTemplePrefix() + "/changePassword";
+		return getTemplePrefix() + "/changepassword";
 	}
 
 	@RequestMapping(value = "changepassword", method = RequestMethod.POST)
 	@ResponseBody
-	public ReturnDto entityService(@Valid PasswordDto password) {
+	public ReturnDto changepassword(@Valid PasswordDto password) {
 		User user = ((UserDetailsService) getEntityService()).getCurrentUser();
 		if (user == null)
 			throw new UsernameNotFoundException("");
