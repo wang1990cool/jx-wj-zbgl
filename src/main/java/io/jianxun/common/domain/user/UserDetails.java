@@ -5,9 +5,16 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import io.jianxun.business.domain.Role;
 import io.jianxun.business.enums.BooleanStatus;
+import io.jianxun.common.utils.Hibernates;
 
 @Entity
 @Table(name = "jx_sys_users")
@@ -43,7 +51,7 @@ public class UserDetails extends User implements org.springframework.security.co
 			return AuthorityUtils.commaSeparatedStringToAuthorityList("");
 		StringBuilder commaBuilder = new StringBuilder();
 		for (Role role : roles) {
-			if (BooleanStatus.False.equals(role.getDeleted()))
+			if (BooleanStatus.TRUE.equals(role.getDeleted()))
 				continue;
 			List<String> permissions = role.getPermissions();
 			if (permissions == null || permissions.size() < 1) {
@@ -114,7 +122,7 @@ public class UserDetails extends User implements org.springframework.security.co
 	 * @return the enabled
 	 */
 	public boolean isEnabled() {
-		return enabled;
+		return this.accountNonExpired && this.accountNonLocked && this.credentialsNonExpired;
 	}
 
 	/**
@@ -123,6 +131,21 @@ public class UserDetails extends User implements org.springframework.security.co
 	 */
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "jx_sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "role_id") })
+	// Fecth策略定义
+	@Fetch(FetchMode.SUBSELECT)
+	// 集合按id排序.
+	@OrderBy("id")
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 }

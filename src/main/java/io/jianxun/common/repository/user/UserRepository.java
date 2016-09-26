@@ -7,4 +7,8 @@ public interface UserRepository extends EntityRepository<UserDetails, Long> {
 
 	UserDetails findByUsername(String username);
 
+	Long countByUsernameAndIdNotAndEnabled(String username, Long id, boolean enabled);
+
+	Long countByUsernameAndEnabled(String username, boolean enabled);
+
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -52,7 +53,7 @@ public class Role extends BusinessBaseEntity {
 		this.code = code;
 	}
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "jx_sys_role_pers")
 	public List<String> getPermissions() {
 		return permissions;

@@ -1,0 +1,35 @@
+<div class="bjui-pageContent">
+	<form action="#" id="user_form"
+		th:action="@{/business/user/{path}(path=${action})}" method="POST"
+		th:object="${user}" data-toggle="validate" data-alertmsg="false">
+		<input type="hidden" name="id" th:value="${id}" />
+		<table class="table table-condensed table-hover" width="100%">
+			<tbody>
+				<tr>
+					<td><label class="control-label x95">登录名：</label> <input
+						type="text" th:field="*{username}" name="username"
+						data-rule="required;remote[business/user/check/usernameunique, id]"
+						size="15" /></td>
+				</tr>
+				<tr>
+					<td><label class="control-label x95">用户名称：</label> <input
+						type="text" th:field="*{name}" name="name"
+						data-rule="required;length[2~10]" size="15" /></td>
+				</tr>
+				<tr>
+					<td><label class="control-label x95">权限角色：</label><span
+						th:each="item : ${roledata}"><input type="checkbox"
+							th:field="*{roles}" th:value="${item.id}" value=""
+							data-toggle="icheck" th:attr="data-label=${item.name}" />
+							&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
+<div class="bjui-pageFooter">
+	<ul>
+		<li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+		<li><button type="submit" class="btn-default" data-icon="save">保存</button></li>
+	</ul>
+</div>

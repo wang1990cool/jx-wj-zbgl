@@ -75,6 +75,20 @@ public class UserDetailsService extends EntityService<UserDetails>
 		return user;
 	}
 
+	@Override
+	@Transactional(readOnly = false)
+	public UserDetails save(UserDetails entity) {
+		if (userRepository.isNew(entity))
+			return register(entity);
+		if (entity.getId() != null && isAdmin(entity))
+			throw new ServiceException("超级管理员用户不能修改");
+		return super.save(entity);
+	}
+
+	public boolean isAdmin(UserDetails entity) {
+		return 1L == entity.getId();
+	}
+
 	/*
 	 * 用户注册 新注册用户进行密码加密
 	 */
@@ -98,7 +112,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 	public UserDetails changePassword(UserDetails user, String newPassword) {
 		logger.info("[当前用户 %s] -- 修改%s用户密码 -- ", getCurrentUser(), user);
 		user.setPassword(bCryptPasswordEncoder.encode(newPassword));
-		return super.save(user);
+		return save(user);
 	}
 
 	/*
@@ -108,7 +122,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 	public UserDetails accountExpired(UserDetails user, boolean accountExpired) {
 		logger.info("[当前用户 %s] -- 修改%s用户失效状态 %b -- ", getCurrentUser(), user, accountExpired);
 		user.setAccountNonExpired(!accountExpired);
-		return super.save(user);
+		return save(user);
 	}
 
 	/*
@@ -118,7 +132,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 	public UserDetails accountLocked(UserDetails user, boolean accountLocked) {
 		logger.info("[当前用户 %s] -- 修改%s用户锁定状态 %b -- ", getCurrentUser(), user, accountLocked);
 		user.setAccountNonLocked(!accountLocked);
-		return super.save(user);
+		return save(user);
 	}
 
 	/*
@@ -128,7 +142,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 	public UserDetails credentialsExpired(UserDetails user, boolean credentialsExpired) {
 		logger.info("[当前用户 %s] -- 修改%s用户密码失效状态 %b -- ", getCurrentUser(), user, credentialsExpired);
 		user.setCredentialsNonExpired(!credentialsExpired);
-		return super.save(user);
+		return save(user);
 	}
 
 	/*
@@ -138,7 +152,22 @@ public class UserDetailsService extends EntityService<UserDetails>
 	public UserDetails enabled(UserDetails user, boolean enabled) {
 		logger.info("[当前用户 %s] -- 修改%s用户可用状态 %b -- ", getCurrentUser(), user, enabled);
 		user.setEnabled(enabled);
-		return super.save(user);
+		return save(user);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void delete(UserDetails entity) {
+		enabled(entity, false);
+	}
+
+	public boolean validateUsernameIsUnique(String username, Long id) {
+		Long count = 0L;
+		if (id != null && id != -1)
+			count = userRepository.countByUsernameAndIdNotAndEnabled(username, id, true);
+		else
+			count = userRepository.countByUsernameAndEnabled(username, true);
+		return count == 0;
 	}
 
 }
