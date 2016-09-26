@@ -22,7 +22,7 @@ public class ControllerAdvice {
 		BindingResult result = ex.getBindingResult();
 		return processFieldError(result.getFieldErrors());
 	}
-
+	
 	private ReturnDto processFieldError(List<FieldError> errors) {
 		ReturnDto re = null;
 		if (errors != null && errors.size() > 0) {
