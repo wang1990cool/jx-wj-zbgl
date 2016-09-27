@@ -4,8 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import io.jianxun.common.domain.TreeableEntity;
-
 @Entity
 @Table(name = "wj_zb_departs")
 public class Department extends TreeableEntity {

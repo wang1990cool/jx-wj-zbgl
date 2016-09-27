@@ -4,14 +4,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OrderBy;
-import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -22,12 +22,16 @@ import com.google.common.collect.Sets;
 
 import io.jianxun.business.domain.Role;
 import io.jianxun.business.enums.BooleanStatus;
+import io.jianxun.common.domain.IdEntity;
 
-@Entity
-@Table(name = "jx_sys_users")
-public class UserDetails extends User implements org.springframework.security.core.userdetails.UserDetails {
+@MappedSuperclass
+public class UserDetails extends IdEntity implements org.springframework.security.core.userdetails.UserDetails {
 
 	private static final long serialVersionUID = -6278197000645900257L;
+
+	private String username;
+
+	private String name;
 
 	private String password;
 
@@ -62,6 +66,24 @@ public class UserDetails extends User implements org.springframework.security.co
 		}
 		String authorities = commaBuilder.substring(0, commaBuilder.length() - 1);
 		return AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
+	}
+
+	@NotNull
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@NotNull
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPassword() {

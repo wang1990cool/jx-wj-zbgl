@@ -32,7 +32,7 @@ public class BusinessController<T extends BusinessBaseEntity> extends EntityCont
 	private Messages message;
 
 	// ajax 验证 code 是否重复
-	@RequestMapping("check/codeunique")
+	@RequestMapping(AJAX_PREFIX + "/check/codeunique")
 	@ResponseBody
 	public String checkCodeIsUnique(@RequestParam("code") String code, @RequestParam("id") Long id) {
 		if (!((BusinessBaseEntityService<T>) this.entityService).validateCodeIsUnique(code, id))

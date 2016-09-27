@@ -8,13 +8,21 @@
 				<tr>
 					<td><label class="control-label x95">登录名：</label> <input
 						type="text" th:field="*{username}" name="username"
-						data-rule="required;remote[business/user/check/usernameunique, id]"
+						data-rule="required;remote[business/user/ajax/check/usernameunique, id]"
 						size="15" /></td>
 				</tr>
 				<tr>
 					<td><label class="control-label x95">用户名称：</label> <input
 						type="text" th:field="*{name}" name="name"
 						data-rule="required;length[2~10]" size="15" /></td>
+				</tr>
+				<tr>
+					<td><label class="control-label x95">所属警员：</label> <select
+						th:field="*{constable}" name="constable" data-toggle="selectpicker"
+						data-width="150">
+							<option th:each="u : ${constables}" th:value="${u.id}"
+								th:text="${u.depart.name + '-'+ u.name}">类别</option>
+					</select></td>
 				</tr>
 				<tr>
 					<td><label for="j_pwschange_newpassword"
@@ -29,12 +37,12 @@
 						id="j_pwschange_secpassword" value="" placeholder="确认新密码"
 						size="15" /></td>
 				</tr>
-				<tr >
-					<td><label 
-						class="control-label x95">权限角色：</label><span th:each="item : ${roledata}"><input type="checkbox"
-						th:field="*{roles}" th:value="${item.id}" value=""
-						data-toggle="icheck" th:attr="data-label=${item.name}" />
-						&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+				<tr>
+					<td><label class="control-label x95">权限角色：</label><span
+						th:each="item : ${roledata}"><input type="checkbox"
+							th:field="*{roles}" th:value="${item.id}" value=""
+							data-toggle="icheck" th:attr="data-label=${item.name}" />
+							&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
 				</tr>
 			</tbody>
 		</table>

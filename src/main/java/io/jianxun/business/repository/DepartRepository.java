@@ -14,4 +14,7 @@ public interface DepartRepository extends EntityRepository<Department, Long> {
 	String findMaxLevelCode(@Param("levelCode") String levelCode, @Param("len") Integer len);
 
 	List<Department> findByPId(Long pId);
+
+	List<Department> findByLevelCodeStartingWith(String levelCode);
+
 }

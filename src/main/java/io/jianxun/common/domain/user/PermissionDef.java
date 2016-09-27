@@ -17,9 +17,9 @@ public enum PermissionDef {
 							"重置密码", ModuleDef.SYS,
 							DomainDef.SYS_USER), USER_LOCKED("user_locked", "锁定", ModuleDef.SYS, DomainDef.SYS_USER),
 	// 角色
-	ROLE_PAGE("roleT_page", "列表", ModuleDef.SYS, DomainDef.SYS_ROLE), ROLE_CREATE("roleT_create", "新增",
-			ModuleDef.SYS, DomainDef.SYS_ROLE), ROLE_MODIFY("roleT_modify", "修改", ModuleDef.SYS,
-					DomainDef.SYS_ROLE), ROLE_REMOVE("roleT_remove", "删除", ModuleDef.SYS, DomainDef.SYS_ROLE),
+	ROLE_PAGE("role_page", "列表", ModuleDef.SYS, DomainDef.SYS_ROLE), ROLE_CREATE("role_create", "新增",
+			ModuleDef.SYS, DomainDef.SYS_ROLE), ROLE_MODIFY("role_modify", "修改", ModuleDef.SYS,
+					DomainDef.SYS_ROLE), ROLE_REMOVE("role_remove", "删除", ModuleDef.SYS, DomainDef.SYS_ROLE),
 	// 数据字典
 	DATADIC_PAGE("datadic_page", "列表", ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_CREATE("datadic_create", "新增",
 			ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_MODIFY("datadic_modify", "修改", ModuleDef.SYS,

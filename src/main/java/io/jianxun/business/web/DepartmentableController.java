@@ -26,8 +26,7 @@ import io.jianxun.common.service.exception.ServiceException;
 import io.jianxun.common.utils.Servlets;
 import io.jianxun.common.web.EntityController;
 
-public class DepartmentableController<T extends DepartmentEntity>
-		extends EntityController<T> {
+public class DepartmentableController<T extends DepartmentEntity> extends EntityController<T> {
 
 	ObjectMapper mapper = new ObjectMapper();
 
@@ -42,8 +41,8 @@ public class DepartmentableController<T extends DepartmentEntity>
 	public String tree(Model model, @RequestParam(value = "orderField", defaultValue = "id") String orderField,
 			@RequestParam(value = "orderDirection", defaultValue = "ASC") String orderDirection) {
 		try {
-			model.addAttribute("tree", mapper.writeValueAsString(departmentService
-					.getDepartTree(createSort(orderField, orderDirection), getUrl(), getRefrashDiv())));
+			model.addAttribute("tree",
+					mapper.writeValueAsString(departmentService.getDepartTree(getUrl(), getRefrashDiv())));
 			otherTreeData(model);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -70,11 +69,11 @@ public class DepartmentableController<T extends DepartmentEntity>
 			@RequestParam(value = "orderField", defaultValue = "id") String orderField,
 			@RequestParam(value = "orderDirection", defaultValue = "DESC") String orderDirection) {
 		Department parent = departmentService.findOne(depart);
-		if(parent==null)
+		if (parent == null)
 			throw new ServiceException("获取机构仓库信息失败！");
 		Sort sort = createSort(orderField, orderDirection);
 		Map<String, Object> searchParams = getSearchParam();
-		searchParams.put("LIKE_depart.levelCode", parent.getLevelCode()+"%");
+		searchParams.put("LIKE_depart.levelCode", parent.getLevelCode() + "%");
 		Page<T> page = entityService.findAll(buildPageable(pageable, sort), searchParams);
 		model.addAttribute("content", page.getContent());
 		model.addAttribute("page", page.getNumber() + 1);
@@ -99,7 +98,7 @@ public class DepartmentableController<T extends DepartmentEntity>
 		prepareCreateForm(model);
 		return getTemplePrefix() + "/form";
 	}
-	
+
 	@RequestMapping(value = "/modify/{id}", method = RequestMethod.GET)
 	public String modify(@PathVariable("id") Long id, Model model) {
 		model.addAttribute(getDomainName(), entityService.findOne(id));

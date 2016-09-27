@@ -1,9 +1,9 @@
-package io.jianxun.common.domain;
+package io.jianxun.business.domain;
 
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class TreeableEntity extends IdEntity {
+public class TreeableEntity extends BusinessBaseEntity {
 
 	/**
 	 * 
@@ -11,10 +11,10 @@ public class TreeableEntity extends IdEntity {
 	private static final long serialVersionUID = -525047097965064302L;
 
 	// 上级代码
-	private Long pId;
+	protected Long pId;
 
 	// 层级代码
-	private String levelCode;
+	protected String levelCode;
 
 	// 显示顺序
 	private int xxsx = 9999;

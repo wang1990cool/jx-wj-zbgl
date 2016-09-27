@@ -65,9 +65,8 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 	public String committree(Model model, @RequestParam(value = "orderField", defaultValue = "id") String orderField,
 			@RequestParam(value = "orderDirection", defaultValue = "ASC") String orderDirection) {
 		try {
-			model.addAttribute("tree",
-					mapper.writeValueAsString(departmentService.getDepartTree(createSort(orderField, orderDirection),
-							"business/" + getTemplePrefix() + "/commit/page", getRefrashDiv())));
+			model.addAttribute("tree", mapper.writeValueAsString(departmentService
+					.getDepartTree("business/" + getTemplePrefix() + "/commit/page", getRefrashDiv())));
 			otherTreeData(model);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -100,14 +99,13 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		otherPageDate(model);
 		return getTemplePrefix() + "/page";
 	}
-	
-	
+
 	@RequestMapping(value = "finish/tree", method = RequestMethod.GET)
 	public String finishtree(Model model, @RequestParam(value = "orderField", defaultValue = "id") String orderField,
 			@RequestParam(value = "orderDirection", defaultValue = "ASC") String orderDirection) {
 		try {
 			model.addAttribute("tree",
-					mapper.writeValueAsString(departmentService.getDepartTree(createSort(orderField, orderDirection),
+					mapper.writeValueAsString(departmentService.getDepartTree(
 							"business/" + getTemplePrefix() + "/finish/page", getRefrashDiv())));
 			otherTreeData(model);
 		} catch (JsonProcessingException e) {
@@ -117,7 +115,7 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		return getTemplePrefix() + "/tree";
 
 	}
-	
+
 	@RequestMapping("finish/page/{depart}")
 	public String finishpage(Model model, Pageable pageable, @PathVariable("depart") Long depart,
 			@RequestParam(value = "orderField", defaultValue = "id") String orderField,
@@ -150,9 +148,9 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		}
 		return ReturnDto.ok("操作成功!");
 	}
-	
+
 	@RequestMapping(value = "/out/{id}", method = RequestMethod.GET)
-	public  String modify(@PathVariable("id") Long id, Model model) {
+	public String modify(@PathVariable("id") Long id, Model model) {
 		RequestForm f = entityService.findOne(id);
 		model.addAttribute(getDomainName(), f);
 		return getTemplePrefix() + "/outform";

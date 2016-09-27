@@ -30,6 +30,8 @@ import io.jianxun.common.utils.Servlets;
 
 public class EntityController<T extends IdEntity> {
 
+	public static final String AJAX_PREFIX = "/ajax";
+
 	@Autowired
 	protected HttpServletRequest request;
 	@Autowired

@@ -369,7 +369,7 @@
 										data-options="{id:'constable-page', faicon:'caret-right'}">警员信息管理</a></li>
 								</ul>
 
-								<ul sec:authorize="hasAnyAuthority('ALL','DATADIC_PAGE','DATADIC_CREATE','DATADIC_MODIFY','DATADIC_REMOVE','USER_PAGE','USER_CREATE','USER_MODIFY','USER_REMOVE','USER_RESTPASSWORD','USER_LOCKED','ROLET_PAGE','ROLET_CREATE','ROLET_MODIFY','ROLET_REMOVE')" class="menu-items" data-tit="系统设置" data-faicon="bug">
+								<ul sec:authorize="hasAnyAuthority('ALL','DATADIC_PAGE','DATADIC_CREATE','DATADIC_MODIFY','DATADIC_REMOVE','USER_PAGE','USER_CREATE','USER_MODIFY','USER_REMOVE','USER_RESTPASSWORD','USER_LOCKED','ROLE_PAGE','ROLE_CREATE','ROLE_MODIFY','ROLE_REMOVE')" class="menu-items" data-tit="系统设置" data-faicon="bug">
 									<li
 										sec:authorize="hasAnyAuthority('ALL','DATADIC_PAGE','DATADIC_CREATE','DATADIC_MODIFY','DATADIC_REMOVE')"><a
 										href="#" th:href="@{/business/datadic/page/}"
@@ -377,7 +377,7 @@
 										data-options="{id:'datadictionary-page', faicon:'caret-right'}">数据字典</a></li>
 									<li sec:authorize="hasAnyAuthority('ALL','USER_PAGE','USER_CREATE','USER_MODIFY','USER_REMOVE','USER_RESTPASSWORD','USER_LOCKED')"><a href="#" th:href="@{/business/user/page/}"
 										data-options="{id:'user-page', faicon:'caret-right'}">用户管理</a></li>
-									<li sec:authorize="hasAnyAuthority('ALL','ROLET_PAGE','ROLET_CREATE','ROLET_MODIFY','ROLET_REMOVE')"><a href="#" th:href="@{/business/role/page/}"
+									<li sec:authorize="hasAnyAuthority('ALL','ROLE_PAGE','ROLE_CREATE','ROLE_MODIFY','ROLE_REMOVE')"><a href="#" th:href="@{/business/role/page/}"
 										data-options="{id:'role-page', faicon:'caret-right'}">角色管理</a></li>
 								</ul>
 

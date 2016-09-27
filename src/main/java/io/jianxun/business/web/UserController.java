@@ -1,4 +1,4 @@
-package io.jianxun.common.web;
+package io.jianxun.business.web;
 
 import javax.validation.Valid;
 
@@ -14,28 +14,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import io.jianxun.business.domain.Constable;
 import io.jianxun.business.domain.Role;
+import io.jianxun.business.domain.User;
+import io.jianxun.business.domain.editor.ConstableEditor;
 import io.jianxun.business.domain.editor.RoleEditor;
+import io.jianxun.business.domain.validator.UserValidator;
+import io.jianxun.business.service.ConstableService;
 import io.jianxun.business.service.RoleService;
+import io.jianxun.business.service.UserDetailsService;
 import io.jianxun.business.web.dto.PasswordDto;
 import io.jianxun.business.web.dto.ReturnDto;
-import io.jianxun.common.domain.user.User;
-import io.jianxun.common.domain.user.UserDetails;
 import io.jianxun.common.service.EntityService;
-import io.jianxun.common.service.UserDetailsService;
 import io.jianxun.common.utils.Messages;
+import io.jianxun.common.web.EntityController;
 
 @Controller
 @RequestMapping("/business/user")
-public class UserController extends EntityController<UserDetails> {
+public class UserController extends EntityController<User> {
 
-	public UserController(EntityService<UserDetails> entityService) {
+	public UserController(EntityService<User> entityService) {
 		super(entityService);
 	}
 
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
+		webDataBinder.registerCustomEditor(Constable.class, "constable", constableEditor);
 		webDataBinder.registerCustomEditor(Role.class, "roles", roleEditor);
+		webDataBinder.addValidators(userValidator);
 
 	}
 
@@ -43,17 +49,12 @@ public class UserController extends EntityController<UserDetails> {
 	private Messages message;
 
 	// ajax 验证 code 是否重复
-	@RequestMapping("check/usernameunique")
+	@RequestMapping(AJAX_PREFIX + "/check/usernameunique")
 	@ResponseBody
 	public String checkCodeIsUnique(@RequestParam("username") String username, @RequestParam("id") Long id) {
 		if (!((UserDetailsService) this.entityService).validateUsernameIsUnique(username, id))
 			return message.get("code.unique");
 		return "";
-	}
-
-	@Override
-	protected String getDomainName() {
-		return "user";
 	}
 
 	@RequestMapping(value = "/modify/{id}", method = RequestMethod.GET)
@@ -67,11 +68,13 @@ public class UserController extends EntityController<UserDetails> {
 
 	@Override
 	protected void prepareCreateForm(Model model) {
+		model.addAttribute("constables", constableService.findAll());
 		model.addAttribute("roledata", roleService.findAll());
 	}
 
 	@Override
 	protected void prepareModifyForm(Model model) {
+		model.addAttribute("constables", constableService.findAll());
 		model.addAttribute("roledata", roleService.findAll());
 	}
 
@@ -88,7 +91,7 @@ public class UserController extends EntityController<UserDetails> {
 		User user = ((UserDetailsService) getEntityService()).findOne(id);
 		if (user == null)
 			throw new UsernameNotFoundException("");
-		((UserDetailsService) entityService).changePassword((UserDetails) user, password.getNewPassword());
+		((UserDetailsService) entityService).changePassword((User) user, password.getNewPassword());
 		return ReturnDto.ok("操作成功!");
 
 	}
@@ -105,7 +108,7 @@ public class UserController extends EntityController<UserDetails> {
 		User user = ((UserDetailsService) getEntityService()).getCurrentUser();
 		if (user == null)
 			throw new UsernameNotFoundException("用户不存在");
-		((UserDetailsService) entityService).changePassword((UserDetails) user, password.getNewPassword());
+		((UserDetailsService) entityService).changePassword((User) user, password.getNewPassword());
 		return ReturnDto.ok("操作成功!");
 
 	}
@@ -114,7 +117,7 @@ public class UserController extends EntityController<UserDetails> {
 	@ResponseBody
 	public ReturnDto batchRemove(@RequestParam("ids") Long[] ids) {
 		for (Long id : ids) {
-			UserDetails user = entityService.findOne(id);
+			User user = entityService.findOne(id);
 			if (user == null)
 				throw new UsernameNotFoundException("用户不存在");
 			((UserDetailsService) entityService).accountLocked(user, true);
@@ -122,15 +125,19 @@ public class UserController extends EntityController<UserDetails> {
 		return ReturnDto.ok("操作成功!");
 	}
 
-	@Override
-	protected String getTemplePrefix() {
-		return "user";
-	}
-
 	@Autowired
 	private RoleService roleService;
 
 	@Autowired
+	private ConstableService constableService;
+
+	@Autowired
 	private RoleEditor roleEditor;
+
+	@Autowired
+	private ConstableEditor constableEditor;
+
+	@Autowired
+	private UserValidator userValidator;
 
 }

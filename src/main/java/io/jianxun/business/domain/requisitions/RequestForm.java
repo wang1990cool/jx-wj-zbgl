@@ -13,9 +13,9 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import io.jianxun.business.domain.DepartmentEntity;
+import io.jianxun.business.domain.User;
 import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.enums.RequestFormStatus;
-import io.jianxun.common.domain.user.UserDetails;
 
 /**
  * 领用申请单
@@ -36,7 +36,7 @@ public class RequestForm extends DepartmentEntity {
 	// 申请单创创建时间
 	private LocalDate createDate;
 	// 申请单创建用户
-	private UserDetails createUser;
+	private User createUser;
 	// 领用日期
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate requiredDate = LocalDate.now();
@@ -76,11 +76,11 @@ public class RequestForm extends DepartmentEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "c_user_id")
-	public UserDetails getCreateUser() {
+	public User getCreateUser() {
 		return createUser;
 	}
 
-	public void setCreateUser(UserDetails createUser) {
+	public void setCreateUser(User createUser) {
 		this.createUser = createUser;
 	}
 

@@ -1,4 +1,4 @@
-package io.jianxun.common.service;
+package io.jianxun.business.service;
 
 import java.util.List;
 
@@ -13,15 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+import io.jianxun.business.domain.Constable;
 import io.jianxun.business.domain.Role;
-import io.jianxun.business.service.RoleService;
+import io.jianxun.business.domain.User;
 import io.jianxun.common.domain.user.UserDetails;
 import io.jianxun.common.repository.user.UserRepository;
+import io.jianxun.common.service.EntityService;
 import io.jianxun.common.service.exception.ServiceException;
 
 @Service
 @Transactional(readOnly = true)
-public class UserDetailsService extends EntityService<UserDetails>
+public class UserDetailsService extends EntityService<User>
 		implements org.springframework.security.core.userdetails.UserDetailsService {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -38,7 +40,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDetails user = null;
 		try {
-			List<UserDetails> users = userRepository.findAll();
+			List<User> users = userRepository.findAll();
 			if (users.isEmpty()) {
 				Role role = new Role();
 				role.setCode("001");
@@ -46,7 +48,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 				role.setPermissions(Lists.newArrayList("ALL"));
 				roleService.save(role);
 				roleService.flush();
-				UserDetails admin = new UserDetails();
+				User admin = new User();
 				admin.setName("管理员");
 				admin.setUsername("admin");
 				admin.setPassword("admin");
@@ -91,7 +93,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 
 	@Override
 	@Transactional(readOnly = false)
-	public UserDetails save(UserDetails entity) {
+	public User save(User entity) {
 		if (userRepository.isNew(entity))
 			return register(entity);
 		if (entity.getId() != null && isAdmin(entity))
@@ -107,7 +109,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 	 * 用户注册 新注册用户进行密码加密
 	 */
 	@Transactional(readOnly = false)
-	public UserDetails register(UserDetails user) {
+	public User register(User user) {
 		if (userRepository.isNew(user)) {
 			logger.info("用户注册");
 			// 密码加密
@@ -123,7 +125,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 	 * 修改密码
 	 */
 	@Transactional(readOnly = false)
-	public UserDetails changePassword(UserDetails user, String newPassword) {
+	public User changePassword(User user, String newPassword) {
 		logger.info("[当前用户 %s] -- 修改%s用户密码 -- ", getCurrentUser(), user);
 		user.setPassword(bCryptPasswordEncoder.encode(newPassword));
 		return save(user);
@@ -133,7 +135,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 	 * 用户失效设置
 	 */
 	@Transactional(readOnly = false)
-	public UserDetails accountExpired(UserDetails user, boolean accountExpired) {
+	public User accountExpired(User user, boolean accountExpired) {
 		logger.info("[当前用户 %s] -- 修改%s用户失效状态 %b -- ", getCurrentUser(), user, accountExpired);
 		user.setAccountNonExpired(!accountExpired);
 		return save(user);
@@ -143,7 +145,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 	 * 用户锁定设置
 	 */
 	@Transactional(readOnly = false)
-	public UserDetails accountLocked(UserDetails user, boolean accountLocked) {
+	public User accountLocked(User user, boolean accountLocked) {
 		logger.info("[当前用户 %s] -- 修改%s用户锁定状态 %b -- ", getCurrentUser(), user, accountLocked);
 		user.setAccountNonLocked(!accountLocked);
 		return save(user);
@@ -153,7 +155,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 	 * 密码失效设置
 	 */
 	@Transactional(readOnly = false)
-	public UserDetails credentialsExpired(UserDetails user, boolean credentialsExpired) {
+	public User credentialsExpired(User user, boolean credentialsExpired) {
 		logger.info("[当前用户 %s] -- 修改%s用户密码失效状态 %b -- ", getCurrentUser(), user, credentialsExpired);
 		user.setCredentialsNonExpired(!credentialsExpired);
 		return save(user);
@@ -163,7 +165,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 	 * 用户可用设置
 	 */
 	@Transactional(readOnly = false)
-	public UserDetails enabled(UserDetails user, boolean enabled) {
+	public User enabled(User user, boolean enabled) {
 		logger.info("[当前用户 %s] -- 修改%s用户可用状态 %b -- ", getCurrentUser(), user, enabled);
 		user.setEnabled(enabled);
 		return save(user);
@@ -171,7 +173,7 @@ public class UserDetailsService extends EntityService<UserDetails>
 
 	@Override
 	@Transactional(readOnly = false)
-	public void delete(UserDetails entity) {
+	public void delete(User entity) {
 		enabled(entity, false);
 	}
 
@@ -181,6 +183,15 @@ public class UserDetailsService extends EntityService<UserDetails>
 			count = userRepository.countByUsernameAndIdNotAndEnabled(username, id, true);
 		else
 			count = userRepository.countByUsernameAndEnabled(username, true);
+		return count == 0;
+	}
+
+	public boolean validatConstableIsUnique(Constable constable, Long id) {
+		Long count = 0L;
+		if (id != null && id != -1)
+			count = userRepository.countByConstableAndIdNotAndEnabled(constable, id, true);
+		else
+			count = userRepository.countByConstableAndEnabled(constable, true);
 		return count == 0;
 	}
 

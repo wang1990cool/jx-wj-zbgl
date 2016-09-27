@@ -1,6 +1,5 @@
 package io.jianxun.business.domain.stock;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
@@ -12,6 +11,7 @@ import javax.persistence.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import io.jianxun.business.domain.DepartmentEntity;
+import io.jianxun.business.domain.User;
 import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.enums.StockInCategory;
 import io.jianxun.common.domain.user.UserDetails;
@@ -35,7 +35,7 @@ public class StockIn extends DepartmentEntity {
 	// 入库时间
 	private LocalDate createDate;
 	// 入库用户
-	private UserDetails createUser;
+	private User createUser;
 
 	// 描述
 	private String descrip;
@@ -84,11 +84,11 @@ public class StockIn extends DepartmentEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	public UserDetails getCreateUser() {
+	public User getCreateUser() {
 		return createUser;
 	}
 
-	public void setCreateUser(UserDetails createUser) {
+	public void setCreateUser(User createUser) {
 		this.createUser = createUser;
 	}
 

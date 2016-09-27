@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 
 import io.jianxun.business.domain.Department;
+import io.jianxun.business.domain.User;
 import io.jianxun.business.repository.DepartRepository;
 import io.jianxun.business.web.dto.BaseTree;
 import io.jianxun.business.web.dto.DepartmentTree;
-import io.jianxun.common.service.TreeableEntityService;
 import io.jianxun.common.utils.DepartLevelCodeSerialNumber;
 
 @Service
@@ -21,11 +21,22 @@ import io.jianxun.common.utils.DepartLevelCodeSerialNumber;
 public class DepartmentService extends TreeableEntityService<Department> {
 
 	@Autowired
-	public DepartLevelCodeSerialNumber serialNamer;
+	private DepartLevelCodeSerialNumber serialNamer;
+	@Autowired
+	private UserDetailsService userDetailsService;
 
 	public String getMaxLevelCode(String parenetLevelCode, int levelCodeLength) {
 		String max = ((DepartRepository) entityRepository).findMaxLevelCode(parenetLevelCode + "%", levelCodeLength);
 		return max;
+	}
+
+	@Override
+	protected List<Department> getCurrentUserTreeData() {
+		User user = userDetailsService.getCurrentUser();
+		if (userDetailsService.isAdmin(user))
+			return findAll();
+		Department depart = user.getConstable().getDepart();
+		return ((DepartRepository) entityRepository).findByLevelCodeStartingWith(depart.getLevelCode());
 	}
 
 	@Override
@@ -70,7 +81,8 @@ public class DepartmentService extends TreeableEntityService<Department> {
 	@Override
 	@Transactional(readOnly = false)
 	public void delete(Department entity) {
-		List<Department> children = ((DepartRepository) entityRepository).findByPId(entity.getId());
+		List<Department> children = ((DepartRepository) entityRepository)
+				.findByLevelCodeStartingWith(entity.getLevelCode());
 		deleteInBatch(children);
 		super.delete(entity);
 	}

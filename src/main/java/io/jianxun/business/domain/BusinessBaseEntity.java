@@ -38,9 +38,9 @@ public abstract class BusinessBaseEntity extends IdEntity {
 	// unique
 	private String code;
 	// auditor
-	private UserDetails createUser;
+	private User createUser;
 	private LocalDateTime createTime;
-	private UserDetails lastModifedBy;
+	private User lastModifedBy;
 	private LocalDateTime lastModifiedDate;
 	// 逻辑删除标记
 	private BooleanStatus deleted = BooleanStatus.False;
@@ -66,7 +66,7 @@ public abstract class BusinessBaseEntity extends IdEntity {
 	@CreatedBy
 	@ManyToOne
 	@JoinColumn(name = "created_id")
-	public UserDetails getCreateUser() {
+	public User getCreateUser() {
 		return createUser;
 	}
 
@@ -74,7 +74,7 @@ public abstract class BusinessBaseEntity extends IdEntity {
 	 * @param createUser
 	 *            the createUser to set
 	 */
-	public void setCreateUser(UserDetails createUser) {
+	public void setCreateUser(User createUser) {
 		this.createUser = createUser;
 	}
 
@@ -100,7 +100,7 @@ public abstract class BusinessBaseEntity extends IdEntity {
 	@LastModifiedBy
 	@ManyToOne
 	@JoinColumn(name = "last_modified_id")
-	public UserDetails getLastModifedBy() {
+	public User getLastModifedBy() {
 		return lastModifedBy;
 	}
 
@@ -108,7 +108,7 @@ public abstract class BusinessBaseEntity extends IdEntity {
 	 * @param lastModifedBy
 	 *            the lastModifedBy to set
 	 */
-	public void setLastModifedBy(UserDetails lastModifedBy) {
+	public void setLastModifedBy(User lastModifedBy) {
 		this.lastModifedBy = lastModifedBy;
 	}
 

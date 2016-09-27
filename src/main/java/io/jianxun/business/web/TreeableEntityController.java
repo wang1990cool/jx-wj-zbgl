@@ -1,4 +1,4 @@
-package io.jianxun.common.web;
+package io.jianxun.business.web;
 
 import java.util.Map;
 
@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.jianxun.business.domain.TreeableEntity;
 import io.jianxun.business.service.DepartmentService;
+import io.jianxun.business.service.TreeableEntityService;
 import io.jianxun.business.web.dto.ReturnDto;
-import io.jianxun.common.domain.TreeableEntity;
-import io.jianxun.common.service.TreeableEntityService;
 import io.jianxun.common.service.exception.ServiceException;
 import io.jianxun.common.utils.Servlets;
+import io.jianxun.common.web.EntityController;
 
-public class TreeableEntityController<T extends TreeableEntity>
-		extends EntityController<T> {
+public class TreeableEntityController<T extends TreeableEntity> extends EntityController<T> {
 
 	ObjectMapper mapper = new ObjectMapper();
 
@@ -35,8 +35,8 @@ public class TreeableEntityController<T extends TreeableEntity>
 			@RequestParam(value = "orderDirection", defaultValue = "ASC") String orderDirection) {
 		((DepartmentService) entityService).createTestData();
 		try {
-			model.addAttribute("tree", mapper.writeValueAsString(
-					((TreeableEntityService<T>) entityService).getTree(createSort(orderField, orderDirection))));
+			model.addAttribute("tree",
+					mapper.writeValueAsString(((TreeableEntityService<T>) entityService).getCurrentUserTree()));
 			otherTreeData(model);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -84,7 +84,7 @@ public class TreeableEntityController<T extends TreeableEntity>
 	}
 
 	@RequestMapping(value = "/modify/{id}", method = RequestMethod.GET)
-	public  String modify(@PathVariable("id") Long id, Model model) {
+	public String modify(@PathVariable("id") Long id, Model model) {
 		model.addAttribute(getDomainName(), entityService.findOne(id));
 		model.addAttribute("action", "modify");
 		T entity = entityService.findOne(id);
