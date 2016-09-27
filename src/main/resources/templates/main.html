@@ -369,7 +369,7 @@
 										data-options="{id:'constable-page', faicon:'caret-right'}">警员信息管理</a></li>
 								</ul>
 
-								<ul class="menu-items" data-tit="系统设置" data-faicon="bug">
+								<ul sec:authorize="hasAnyAuthority('ALL','DATADIC_PAGE','DATADIC_CREATE','DATADIC_MODIFY','DATADIC_REMOVE','USER_PAGE','USER_CREATE','USER_MODIFY','USER_REMOVE','USER_RESTPASSWORD','USER_LOCKED','ROLET_PAGE','ROLET_CREATE','ROLET_MODIFY','ROLET_REMOVE')" class="menu-items" data-tit="系统设置" data-faicon="bug">
 									<li
 										sec:authorize="hasAnyAuthority('ALL','DATADIC_PAGE','DATADIC_CREATE','DATADIC_MODIFY','DATADIC_REMOVE')"><a
 										href="#" th:href="@{/business/datadic/page/}"
