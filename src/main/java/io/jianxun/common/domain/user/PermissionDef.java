@@ -11,25 +11,36 @@ import io.jianxun.business.web.dto.CodeNameDto;
 //操作定义
 public enum PermissionDef {
 	// 用户管理相关权限
-	USER_PAGE("user_page", "用户列表", ModuleDef.SYS, DomainDef.SYS_USER), USER_CREATE("user_create", "用户新增", ModuleDef.SYS,
-			DomainDef.SYS_USER), USER_MODIFY("user_modify", "用户修改", ModuleDef.SYS, DomainDef.SYS_USER), USER_REMOVE(
-					"user_remove", "用户删除", ModuleDef.SYS, DomainDef.SYS_USER), USER_RESETPASSWORD("user_resetpassword",
+	USER_PAGE("user_page", "列表", ModuleDef.SYS, DomainDef.SYS_USER), USER_CREATE("user_create", "新增", ModuleDef.SYS,
+			DomainDef.SYS_USER), USER_MODIFY("user_modify", "修改", ModuleDef.SYS, DomainDef.SYS_USER), USER_REMOVE(
+					"user_remove", "删除", ModuleDef.SYS, DomainDef.SYS_USER), USER_RESETPASSWORD("user_resetpassword",
 							"重置密码", ModuleDef.SYS,
-							DomainDef.SYS_USER), USER_LOCKED("user_locked", "用户锁定", ModuleDef.SYS, DomainDef.SYS_USER),
+							DomainDef.SYS_USER), USER_LOCKED("user_locked", "锁定", ModuleDef.SYS, DomainDef.SYS_USER),
 	// 角色
-	ROLE_PAGE("roleT_page", "角色列表", ModuleDef.SYS, DomainDef.SYS_ROLE), ROLE_CREATE("roleT_create", "角色新增",
-			ModuleDef.SYS, DomainDef.SYS_ROLE), ROLE_MODIFY("roleT_modify", "角色修改", ModuleDef.SYS,
-					DomainDef.SYS_ROLE), ROLE_REMOVE("roleT_remove", "角色删除", ModuleDef.SYS, DomainDef.SYS_ROLE),
+	ROLE_PAGE("roleT_page", "列表", ModuleDef.SYS, DomainDef.SYS_ROLE), ROLE_CREATE("roleT_create", "新增",
+			ModuleDef.SYS, DomainDef.SYS_ROLE), ROLE_MODIFY("roleT_modify", "修改", ModuleDef.SYS,
+					DomainDef.SYS_ROLE), ROLE_REMOVE("roleT_remove", "删除", ModuleDef.SYS, DomainDef.SYS_ROLE),
 	// 数据字典
-	DATADIC_PAGE("datadic_page", "字典列表", ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_CREATE("datadic_create", "字典新增",
-			ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_MODIFY("datadic_modify", "字典修改", ModuleDef.SYS,
-					DomainDef.SYS_DATADIC), DATADIC_REMOVE("datadic_remove", "字典删除", ModuleDef.SYS,
+	DATADIC_PAGE("datadic_page", "列表", ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_CREATE("datadic_create", "新增",
+			ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_MODIFY("datadic_modify", "修改", ModuleDef.SYS,
+					DomainDef.SYS_DATADIC), DATADIC_REMOVE("datadic_remove", "删除", ModuleDef.SYS,
 							DomainDef.SYS_DATADIC),
 	// 装备基本信息;
-	WEAPON_PAGE("weapon_page", "装备基本信息列表", ModuleDef.STOCK, DomainDef.STOCK_WEAPON), WEAPON_CREATE("weapon_create",
-			"装备基本信息新增", ModuleDef.STOCK, DomainDef.STOCK_WEAPON), WEAPON_MODIFY("weapon_modify", "装备基本信息修改", ModuleDef.STOCK,
-					DomainDef.STOCK_WEAPON), WEAPON_REMOVE("weapon_remove", "装备基本信息删除", ModuleDef.STOCK, DomainDef.STOCK_WEAPON);
-
+	WEAPON_PAGE("weapon_page", "列表", ModuleDef.STOCK, DomainDef.STOCK_WEAPON), WEAPON_CREATE("weapon_create",
+			"新增", ModuleDef.STOCK, DomainDef.STOCK_WEAPON), WEAPON_MODIFY("weapon_modify", "修改",
+					ModuleDef.STOCK, DomainDef.STOCK_WEAPON), WEAPON_REMOVE("weapon_remove", "删除",
+							ModuleDef.STOCK, DomainDef.STOCK_WEAPON),
+	// 库存管理
+	STOCK_PAGE("weapon_page", "列表", ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_CREATE("weapon_create",
+			"新增", ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_MODIFY("weapon_modify", "修改",
+					ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_REMOVE("weapon_remove", "删除", ModuleDef.STOCK,
+							DomainDef.STOCK_STOCK),
+	// ----组织管理
+	// --机构管理
+	DEPARTMENT_PAGE("department_page", "列表", ModuleDef.ORGANIZATION, DomainDef.ORG_DEPART), DEPARTMENT_CREATE(
+			"department_create", "新增", ModuleDef.ORGANIZATION, DomainDef.ORG_DEPART), DEPARTMENT_MODIFY(
+					"department_modify", "修改", ModuleDef.ORGANIZATION, DomainDef.ORG_DEPART), DEPARTMENT_REMOVE(
+							"department_remove", "删除", ModuleDef.ORGANIZATION, DomainDef.ORG_DEPART);
 	// 操作代码
 	private String code;
 	// 描述
@@ -111,8 +122,8 @@ public enum PermissionDef {
 
 	// 模块定义
 	public enum ModuleDef {
-		SYS("sys", "系统设置", 99), DEPART("depart", "机构及警员管理", 7), SCRAP("scrap", "器械报废管理", 5), CONSUMING("consuming",
-				"器械领用(借用)管理", 3), STOCK("stock", "器械库存管理", 0);
+		SYS("sys", "系统设置", 99), ORGANIZATION("org", "组织管理", 7), SCRAP("scrap", "器械报废管理",
+				5), CONSUMING("consuming", "器械领用(借用)管理", 3), STOCK("stock", "器械库存管理", 0);
 		private String code;
 		private String name;
 		private Integer sortNum = 99;
@@ -166,7 +177,9 @@ public enum PermissionDef {
 		// 系统配置
 		SYS_USER("sys_user", "用户管理", 0), SYS_ROLE("sys_role", "角色管理", 10), SYS_DATADIC("sys_datadic", "数据字典", 20),
 		// 库存配置
-		STOCK_WEAPON("stock_weapon", "基本信息", 0);
+		STOCK_WEAPON("stock_weapon", "装备基本信息", 0), STOCK_STOCK("stock_stock", "库存管理", 10),
+		// 组织配置
+		ORG_DEPART("org_department", "机构管理", 0), ORG_CONSTABLE("org_constable", "警员管理", 10);
 		private String code;
 		private String name;
 		private Integer sortNum = 99;

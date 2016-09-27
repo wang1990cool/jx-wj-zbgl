@@ -334,7 +334,7 @@
 									<li sec:authorize="hasAnyAuthority('ALL','WEAPON_PAGE','WEAPON_CREATE','WEAPON_MODIFY','WEAPON_REMOVE')"><a href="#" th:href="@{/business/weapon/page/}"
 										data-fresh="true"
 										data-options="{id:'weapon-page', faicon:'caret-right'}">装备基本信息</a></li>
-									<li><a href="#" th:href="@{/business/stock/tree/}"
+									<li sec:authorize="hasAnyAuthority('ALL','STOCK_PAGE','STOCK_CREATE','STOCK_MODIFY','STOCK_REMOVE')"><a href="#" th:href="@{/business/stock/tree/}"
 										data-options="{id:'stock-page', faicon:'caret-right'}">入库单信息</a></li>
 								</ul>
 								<ul class="menu-items" data-tit="器械领用管理" data-faicon="spinner">
@@ -361,11 +361,11 @@
 										data-options="{id:'tabs', faicon:'caret-right'}">查询</a></li>
 								</ul>
 
-								<ul class="menu-items" data-tit="机构及人员设置" data-faicon="bug">
-									<li><a href="#" th:href="@{/business/department/tree/}"
+								<ul class="menu-items" data-tit="组织管理" data-faicon="bug">
+									<li sec:authorize="hasAnyAuthority('ALL','DEPARTMENT_PAGE','DEPARTMENT_CREATE','DEPARTMENT_MODIFY','DEPARTMENT_REMOVE')"><a href="#" th:href="@{/business/department/tree/}"
 										data-fresh="true"
 										data-options="{id:'department-page', faicon:'caret-right'}">机构管理</a></li>
-									<li><a href="#" th:href="@{/business/constable/tree/}"
+									<li ><a href="#" th:href="@{/business/constable/tree/}"
 										data-options="{id:'constable-page', faicon:'caret-right'}">警员信息管理</a></li>
 								</ul>
 
