@@ -12,28 +12,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import io.jianxun.business.domain.DataDictionary;
 import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.domain.editor.DataDictionaryEditor;
+import io.jianxun.business.domain.validator.WeaponUniqueValidator;
 import io.jianxun.business.enums.DataCategory;
 import io.jianxun.business.enums.Unit;
+import io.jianxun.business.service.BusinessBaseEntityService;
 import io.jianxun.business.service.DataDicService;
 import io.jianxun.business.web.dto.CodeNameDto;
-import io.jianxun.common.service.EntityService;
-import io.jianxun.common.web.EntityController;
 
 @Controller
 @RequestMapping("/business/weapon")
-public class WeaponController extends EntityController<Weapon> {
+public class WeaponController extends BusinessController<Weapon> {
 
 	@Autowired
 	private DataDicService dataDicService;
 	@Autowired
 	private DataDictionaryEditor dataDictionaryEditor;
-	
+	@Autowired
+	private WeaponUniqueValidator weaponUniqueValidator;
+
 	@InitBinder
-	public void initBinder(WebDataBinder b) {
-		b.registerCustomEditor(DataDictionary.class, "category", dataDictionaryEditor);
+	@Override
+	protected void initBinder(WebDataBinder webDataBinder) {
+		webDataBinder.registerCustomEditor(DataDictionary.class, "category", dataDictionaryEditor);
+		webDataBinder.addValidators(weaponUniqueValidator);
 	}
 
-	public WeaponController(EntityService<Weapon> entityService) {
+	public WeaponController(BusinessBaseEntityService<Weapon> entityService) {
 		super(entityService);
 	}
 

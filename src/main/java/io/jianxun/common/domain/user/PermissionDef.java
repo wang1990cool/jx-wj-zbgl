@@ -14,8 +14,8 @@ public enum PermissionDef {
 	USER_PAGE("user_page", "用户列表", ModuleDef.SYS, DomainDef.SYS_USER), USER_CREATE("user_create", "用户新增", ModuleDef.SYS,
 			DomainDef.SYS_USER), USER_MODIFY("user_modify", "用户修改", ModuleDef.SYS, DomainDef.SYS_USER), USER_REMOVE(
 					"user_remove", "用户删除", ModuleDef.SYS, DomainDef.SYS_USER), USER_RESETPASSWORD("user_resetpassword",
-							"重置密码", ModuleDef.SYS, DomainDef.SYS_USER), USER_LOCKED("user_locked", "用户锁定",
-									ModuleDef.SYS, DomainDef.SYS_USER),
+							"重置密码", ModuleDef.SYS,
+							DomainDef.SYS_USER), USER_LOCKED("user_locked", "用户锁定", ModuleDef.SYS, DomainDef.SYS_USER),
 	// 角色
 	ROLE_PAGE("roleT_page", "角色列表", ModuleDef.SYS, DomainDef.SYS_ROLE), ROLE_CREATE("roleT_create", "角色新增",
 			ModuleDef.SYS, DomainDef.SYS_ROLE), ROLE_MODIFY("roleT_modify", "角色修改", ModuleDef.SYS,
@@ -24,8 +24,11 @@ public enum PermissionDef {
 	DATADIC_PAGE("datadic_page", "字典列表", ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_CREATE("datadic_create", "字典新增",
 			ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_MODIFY("datadic_modify", "字典修改", ModuleDef.SYS,
 					DomainDef.SYS_DATADIC), DATADIC_REMOVE("datadic_remove", "字典删除", ModuleDef.SYS,
-							DomainDef.SYS_DATADIC);
-	// ;
+							DomainDef.SYS_DATADIC),
+	// 装备基本信息;
+	WEAPON_PAGE("weapon_page", "装备基本信息列表", ModuleDef.STOCK, DomainDef.STOCK_WEAPON), WEAPON_CREATE("weapon_create",
+			"装备基本信息新增", ModuleDef.STOCK, DomainDef.STOCK_WEAPON), WEAPON_MODIFY("weapon_modify", "装备基本信息修改", ModuleDef.STOCK,
+					DomainDef.STOCK_WEAPON), WEAPON_REMOVE("weapon_remove", "装备基本信息删除", ModuleDef.STOCK, DomainDef.STOCK_WEAPON);
 
 	// 操作代码
 	private String code;
@@ -161,7 +164,9 @@ public enum PermissionDef {
 	// 模型定义
 	public enum DomainDef {
 		// 系统配置
-		SYS_USER("sys_user", "用户管理", 0), SYS_ROLE("sys_role", "角色管理", 10), SYS_DATADIC("sys_datadic", "数据字典", 20);
+		SYS_USER("sys_user", "用户管理", 0), SYS_ROLE("sys_role", "角色管理", 10), SYS_DATADIC("sys_datadic", "数据字典", 20),
+		// 库存配置
+		STOCK_WEAPON("stock_weapon", "基本信息", 0);
 		private String code;
 		private String name;
 		private Integer sortNum = 99;

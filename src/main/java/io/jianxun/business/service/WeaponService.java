@@ -11,14 +11,14 @@ import com.google.common.collect.Lists;
 
 import io.jianxun.business.domain.DataDictionary;
 import io.jianxun.business.domain.Weapon;
+import io.jianxun.business.enums.BooleanStatus;
 import io.jianxun.business.repository.WeaponRepository;
 import io.jianxun.business.web.dto.CodeNameDto;
-import io.jianxun.common.service.EntityService;
 import io.jianxun.common.service.exception.ServiceException;
 
 @Service
 @Transactional(readOnly = true)
-public class WeaponService extends EntityService<Weapon> {
+public class WeaponService extends BusinessBaseEntityService<Weapon> {
 
 	/*
 	 * (non-Javadoc)
@@ -30,14 +30,14 @@ public class WeaponService extends EntityService<Weapon> {
 	@Override
 	@Transactional(readOnly = false)
 	public Weapon save(Weapon entity) {
-		if (entityRepository.isNew(entity)){
+		if (entityRepository.isNew(entity)) {
 			entity.setCode(getNextCode());
 			entity.setTypeCode(getNextTypeCode(entity.getName(), entity.getCategory()));
 		}
 		return super.save(entity);
 	}
 
-	public long countByName(String name) {
+	public long countByNameAnd(String name) {
 		return ((WeaponRepository) entityRepository).countByName(name);
 	}
 
@@ -68,8 +68,8 @@ public class WeaponService extends EntityService<Weapon> {
 			return weapon.getCode();
 		return "";
 	}
-	
-	public String getNextCode(){
+
+	public String getNextCode() {
 		String currentMax = getMaxWeaponCode();
 		if (StringUtils.isEmpty(currentMax))
 			return "00000001";
@@ -107,6 +107,25 @@ public class WeaponService extends EntityService<Weapon> {
 				throw new ServiceException("获取类型流水号错误！");
 			}
 		}
+	}
+
+	public boolean validateNameAndTypeIsUnique(String name, String type, Long id) {
+		Long count = 0L;
+		if (org.apache.commons.lang3.StringUtils.isNotEmpty(type))
+			if (id != null && id != -1)
+				count = ((WeaponRepository) this.entityRepository).countByNameAndTypeAndIdNotAndDeleted(name, type, id,
+						BooleanStatus.False);
+			else
+				count = ((WeaponRepository) this.entityRepository).countByNameAndTypeAndDeleted(name, type,
+						BooleanStatus.False);
+		else
+			if (id != null && id != -1)
+				count = ((WeaponRepository) this.entityRepository).countByNameAndIdNotAndDeleted(name, id,
+						BooleanStatus.False);
+			else
+				count = ((WeaponRepository) this.entityRepository).countByNameAndDeleted(name,
+						BooleanStatus.False);
+		return count == 0;
 	}
 
 }

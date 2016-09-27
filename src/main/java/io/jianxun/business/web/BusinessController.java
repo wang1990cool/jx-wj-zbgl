@@ -23,7 +23,7 @@ public class BusinessController<T extends BusinessBaseEntity> extends EntityCont
 	private CodeUniqueValidator<T> codeUniqueValidator;
 
 	@InitBinder
-	public void initBinder(WebDataBinder webDataBinder) {
+	protected void initBinder(WebDataBinder webDataBinder) {
 		webDataBinder.addValidators(codeUniqueValidator);
 
 	}

@@ -9,11 +9,10 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import io.jianxun.business.enums.Unit;
-import io.jianxun.common.domain.IdEntity;
 
 @Entity
 @Table(name = "wj_zb_weapons")
-public class Weapon extends IdEntity {
+public class Weapon extends BusinessBaseEntity {
 
 	private static final long serialVersionUID = -3815803388244972663L;
 
@@ -21,8 +20,6 @@ public class Weapon extends IdEntity {
 	private String name;
 	@Column(length = 500)
 	private String descrip;
-	// 编号
-	private String code;
 	// 条形码
 	private String barcode;
 	// 维护周期
@@ -69,14 +66,6 @@ public class Weapon extends IdEntity {
 	 */
 	public void setDescrip(String descrip) {
 		this.descrip = descrip;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
 	}
 
 	public String getBarcode() {

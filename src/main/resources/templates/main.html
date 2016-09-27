@@ -261,69 +261,6 @@
 
 			zTree.expandNode(treeNode, !treeNode.open, false, true, true)
 			return
-
-			
-
-						
-
-			
-
-									
-
-			
-
-						
-
-			
-
-												
-
-			
-
-						
-
-			
-
-									
-
-			
-
-						
-
-			
-
-															
-
-			
-
-						
-
-			
-
-									
-
-			
-
-						
-
-			
-
-												
-
-			
-
-						
-
-			
-
-									
-
-			
-
-						
-
-			
-
 		}
 		/*<![CDATA[*/
 		if (treeNode.target && treeNode.target == 'dialog')
@@ -394,9 +331,9 @@
 								器械信息管理</a>
 							<div class="items hide" data-noinit="true">
 								<ul class="menu-items" data-faicon="star-o">
-									<li><a href="#" th:href="@{/business/weapon/page/}"
+									<li sec:authorize="hasAnyAuthority('ALL','WEAPON_PAGE','WEAPON_CREATE','WEAPON_MODIFY','WEAPON_REMOVE')"><a href="#" th:href="@{/business/weapon/page/}"
 										data-fresh="true"
-										data-options="{id:'weapon-page', faicon:'caret-right'}">基本信息</a></li>
+										data-options="{id:'weapon-page', faicon:'caret-right'}">装备基本信息</a></li>
 									<li><a href="#" th:href="@{/business/stock/tree/}"
 										data-options="{id:'stock-page', faicon:'caret-right'}">入库单信息</a></li>
 								</ul>
@@ -433,7 +370,8 @@
 								</ul>
 
 								<ul class="menu-items" data-tit="系统设置" data-faicon="bug">
-									<li sec:authorize="hasAnyAuthority('ALL','DATADIC_PAGE','DATADIC_CREATE','DATADIC_MODIFY','DATADIC_REMOVE')"><a
+									<li
+										sec:authorize="hasAnyAuthority('ALL','DATADIC_PAGE','DATADIC_CREATE','DATADIC_MODIFY','DATADIC_REMOVE')"><a
 										href="#" th:href="@{/business/datadic/page/}"
 										data-fresh="true"
 										data-options="{id:'datadictionary-page', faicon:'caret-right'}">数据字典</a></li>
