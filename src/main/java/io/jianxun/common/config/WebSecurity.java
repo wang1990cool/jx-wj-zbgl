@@ -24,9 +24,9 @@ public class WebSecurity {
 		if (authentication == null || !authentication.isAuthenticated()) {
 			return false;
 		}
-		if(StringUtils.isEmpty(domain))
+		if (StringUtils.isEmpty(domain))
 			return false;
-		if(StringUtils.isEmpty(operate))
+		if (StringUtils.isEmpty(operate))
 			return false;
 		// 路径中business/ajax统一为只要登录就能使用
 		if ("ajax".equals(operate))
@@ -45,7 +45,8 @@ public class WebSecurity {
 	}
 
 	private String getPermissionStr(String domain, String operate) {
-
+		if (operate.equalsIgnoreCase("tree"))
+			operate = "page";
 		return domain.toUpperCase() + "_" + operate.toUpperCase();
 	}
 
