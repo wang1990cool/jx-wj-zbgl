@@ -17,21 +17,15 @@
 	</form>
 	<hr style="margin: 5px 0" />
 	<div class="pull-left">
-		<button type="button" data-toggle="navtab" class="btn-red"
+		<button sec:authorize="hasAnyAuthority('ALL','DATADIC_CREATE')" type="button" data-toggle="navtab" class="btn-red"
 			data-id="datadic-navtab-new" data-url="business/datadic/create">新增--数据字典</button>
-		<div class="btn-group">
-			<button type="button" class="btn-default dropdown-toggle"
+		<div  class="btn-group">
+			<button sec:authorize="hasAnyAuthority('ALL','DATADIC_REMOVE')" type="button" class="btn-default dropdown-toggle"
 				data-toggle="dropdown" data-icon="copy">
 				批量操作<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu right" role="menu">
-				<li><a href="#" data-toggle="doexport"
-					data-confirm-msg="确定要导出信息吗？">导出<span style="color: green;">全部</span></a></li>
-				<li><a href="#" data-toggle="doexportchecked"
-					data-confirm-msg="确定要导出选中项吗？" data-idname="expids" data-group="ids">导出<span
-						style="color: red;">选中</span></a></li>
-				<li class="divider"></li>
-				<li><a th:href="@{/business/datadic/remove}" href="#"
+				<li sec:authorize="hasAnyAuthority('ALL','DATADIC_REMOVE')"><a th:href="@{/business/datadic/remove}" href="#"
 					data-toggle="doajaxchecked" data-confirm-msg="确定要删除选中项吗？"
 					data-idname="ids" data-group="ids">删除选中</a></li>
 			</ul>
@@ -66,9 +60,9 @@
 				<td th:text="${#temporals.format(e.createTime, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
 				<td th:text="${e.lastModifedBy.name}">最后修改人</td>
 				<td th:text="${#temporals.format(e.lastModifiedDate, 'yyyy-MM-dd HH:mm:ss')}">最后修改时间</td>
-				<td><a th:href="@{/business/datadic/modify/{id}(id=${e.id})}"
+				<td><a sec:authorize="hasAnyAuthority('ALL','DATADIC_MODIFY')" th:href="@{/business/datadic/modify/{id}(id=${e.id})}"
 					href="#" class="btn btn-green" data-toggle="navtab" data-id="form" data-title="修改-器械信息">修改</a>
-					<a th:href="@{/business/datadic/remove/{id}(id=${e.id})}" href="#"
+					<a sec:authorize="hasAnyAuthority('ALL','DATADIC_REMOVE')" th:href="@{/business/datadic/remove/{id}(id=${e.id})}" href="#"
 					class="btn btn-red" data-toggle="doajax"
 					data-confirm-msg="确定要删除该行信息吗？">删除</a></td>
 			</tr>
