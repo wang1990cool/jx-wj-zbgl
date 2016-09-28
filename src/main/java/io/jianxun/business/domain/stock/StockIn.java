@@ -11,10 +11,8 @@ import javax.persistence.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import io.jianxun.business.domain.DepartmentEntity;
-import io.jianxun.business.domain.User;
 import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.enums.StockInCategory;
-import io.jianxun.common.domain.user.UserDetails;
 
 /**
  * 入库单
@@ -32,10 +30,6 @@ public class StockIn extends DepartmentEntity {
 	private Weapon weapon;
 	// 入库数量
 	private Integer capacity = 1;
-	// 入库时间
-	private LocalDate createDate;
-	// 入库用户
-	private User createUser;
 
 	// 描述
 	private String descrip;
@@ -74,23 +68,7 @@ public class StockIn extends DepartmentEntity {
 		this.capacity = capacity;
 	}
 
-	public LocalDate getCreateDate() {
-		return createDate;
-	}
 
-	public void setCreateDate(LocalDate createDate) {
-		this.createDate = createDate;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	public User getCreateUser() {
-		return createUser;
-	}
-
-	public void setCreateUser(User createUser) {
-		this.createUser = createUser;
-	}
 
 	public String getDescrip() {
 		return descrip;

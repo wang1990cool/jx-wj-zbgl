@@ -24,9 +24,8 @@ import io.jianxun.business.service.DepartmentService;
 import io.jianxun.business.service.DepartmentableService;
 import io.jianxun.common.service.exception.ServiceException;
 import io.jianxun.common.utils.Servlets;
-import io.jianxun.common.web.EntityController;
 
-public class DepartmentableController<T extends DepartmentEntity> extends EntityController<T> {
+public class DepartmentableController<T extends DepartmentEntity> extends BusinessController<T> {
 
 	ObjectMapper mapper = new ObjectMapper();
 

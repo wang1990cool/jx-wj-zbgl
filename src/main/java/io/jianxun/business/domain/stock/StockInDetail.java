@@ -71,7 +71,7 @@ public class StockInDetail extends IdEntity {
 		if (StringUtils.isEmpty(this.stockIn.getWeapon().getCode()))
 			return "";
 		if (StringUtils.isEmpty(this.stockIn.getWeapon().getTypeCode()))
-			return "";
+			return "0000";
 		if (this.getStockIn().getProductionDate() == null)
 			return "";
 		this.stockCodePrefix = this.getStockIn().getWeapon().getCategory().getCode() + " "

@@ -18,6 +18,7 @@ import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.domain.editor.WeaponEditor;
 import io.jianxun.business.domain.stock.Stock;
 import io.jianxun.business.domain.stock.StockIn;
+import io.jianxun.business.enums.StockInCategory;
 import io.jianxun.business.service.DepartmentableService;
 import io.jianxun.business.service.StockService;
 import io.jianxun.business.service.WeaponService;
@@ -62,12 +63,14 @@ public class StockInController extends DepartmentableController<StockIn> {
 	@Override
 	protected void prepareCreateForm(Model model) {
 		super.prepareCreateForm(model);
+		model.addAttribute("categories", StockInCategory.values());
 		model.addAttribute("weapons", weaponService.getSelectData(weaponService.findAll()));
 	}
 
 	@Override
 	protected void prepareModifyForm(Model model) {
 		super.prepareModifyForm(model);
+		model.addAttribute("categories", StockInCategory.values());
 		model.addAttribute("weapons", weaponService.getSelectData(weaponService.findAll()));
 	}
 

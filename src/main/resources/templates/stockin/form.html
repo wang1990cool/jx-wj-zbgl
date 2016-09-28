@@ -27,10 +27,20 @@
 						data-toggle="spinner" data-rule="required digits"
 						data-max="100000" data-min="1" size="15" /></td>
 				</tr>
-				
+
+				<tr>
+					<td colspan="4"><label class="control-label x95">购置渠道：</label>
+						<select data-toggle="selectpicker" data-width="150"
+						th:field="*{stockInCategory}">
+							<option th:each="w : ${categories}" th:value="${w.code}"
+								th:text="${w.name}">装备名称</option>
+					</select></td>
+				</tr>
+
 				<tr>
 					<td colspan="4"><label class="control-label x95">自带编号：</label>
-						<input type="text" th:field="*{weaponCodes}" name="weaponCodes" size="60" /></td>
+						<input type="text" th:field="*{weaponCodes}" name="weaponCodes"
+						size="60" /></td>
 				</tr>
 
 				<tr>

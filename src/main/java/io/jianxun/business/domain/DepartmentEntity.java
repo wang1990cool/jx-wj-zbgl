@@ -4,8 +4,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
-import io.jianxun.common.domain.IdEntity;
-
 /**
  * 跟机构信息相关的模型继承
  * 
@@ -14,7 +12,7 @@ import io.jianxun.common.domain.IdEntity;
  *         createDate: 2016-08-23
  */
 @MappedSuperclass
-public class DepartmentEntity extends IdEntity {
+public class DepartmentEntity extends BusinessBaseEntity {
 
 	private static final long serialVersionUID = 6595351983088428196L;
 
