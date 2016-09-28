@@ -31,9 +31,9 @@ public enum PermissionDef {
 					DomainDef.STOCK_WEAPON), WEAPON_REMOVE("weapon_remove", "删除", ModuleDef.STOCK,
 							DomainDef.STOCK_WEAPON),
 	// 库存管理
-	STOCK_PAGE("weapon_page", "列表", ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_CREATE("weapon_create", "新增",
-			ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_MODIFY("weapon_modify", "修改", ModuleDef.STOCK,
-					DomainDef.STOCK_STOCK), STOCK_REMOVE("weapon_remove", "删除", ModuleDef.STOCK, DomainDef.STOCK_STOCK),
+	STOCK_PAGE("stock_page", "列表", ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_CREATE("stock_create", "新增",
+			ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_MODIFY("stock_modify", "修改", ModuleDef.STOCK,
+					DomainDef.STOCK_STOCK), STOCK_REMOVE("stock_remove", "删除", ModuleDef.STOCK, DomainDef.STOCK_STOCK),
 	// ----组织管理
 	// --机构管理
 	DEPARTMENT_PAGE("department_page", "列表", ModuleDef.ORGANIZATION, DomainDef.ORG_DEPART), DEPARTMENT_CREATE(

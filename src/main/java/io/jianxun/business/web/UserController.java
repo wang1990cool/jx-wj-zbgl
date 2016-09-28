@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -104,7 +105,7 @@ public class UserController extends EntityController<User> {
 
 	@RequestMapping(value = "changepassword", method = RequestMethod.POST)
 	@ResponseBody
-	public ReturnDto changepassword(@Valid PasswordDto password) {
+	public ReturnDto changepassword(@Valid @ModelAttribute("passworddto") PasswordDto password) {
 		User user = ((UserDetailsService) getEntityService()).getCurrentUser();
 		if (user == null)
 			throw new UsernameNotFoundException("用户不存在");
