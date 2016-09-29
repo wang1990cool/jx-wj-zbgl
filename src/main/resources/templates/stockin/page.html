@@ -6,7 +6,7 @@
 			value="1" /> <input type="hidden" name="orderField"
 			th:value="${orderField}" value="id" /> <input type="hidden"
 			name="orderDirection" th:value="${orderDirection}" value="DESC" />
-		<div class="bjui-searchBar">
+		<div sec:authorize="hasAnyAuthority('ALL','STOCK_PAGE')" class="bjui-searchBar">
 			<label>装备器械名称：</label><input type="text"
 				th:value="${{param['search_LIKE_weapon.name']}}" value=""
 				name="search_LIKE_weapon.name" class="form-control" size="10" />&nbsp;

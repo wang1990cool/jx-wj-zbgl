@@ -361,11 +361,11 @@
 										data-options="{id:'tabs', faicon:'caret-right'}">查询</a></li>
 								</ul>
 
-								<ul class="menu-items" data-tit="组织管理" data-faicon="bug">
+								<ul sec:authorize="hasAnyAuthority('ALL','DEPARTMENT_PAGE','DEPARTMENT_CREATE','DEPARTMENT_MODIFY','DEPARTMENT_REMOVE','CONSTABLE_PAGE','CONSTABLE_CREATE','CONSTABLE_MODIFY','CONSTABLE_REMOVE')" class="menu-items" data-tit="组织管理" data-faicon="bug">
 									<li sec:authorize="hasAnyAuthority('ALL','DEPARTMENT_PAGE','DEPARTMENT_CREATE','DEPARTMENT_MODIFY','DEPARTMENT_REMOVE')"><a href="#" th:href="@{/business/department/tree/}"
 										data-fresh="true"
 										data-options="{id:'department-page', faicon:'caret-right'}">机构管理</a></li>
-									<li ><a href="#" th:href="@{/business/constable/tree/}"
+									<li sec:authorize="hasAnyAuthority('ALL','CONSTABLE_PAGE','CONSTABLE_CREATE','CONSTABLE_MODIFY','CONSTABLE_REMOVE')" ><a href="#" th:href="@{/business/constable/tree/}"
 										data-options="{id:'constable-page', faicon:'caret-right'}">警员信息管理</a></li>
 								</ul>
 

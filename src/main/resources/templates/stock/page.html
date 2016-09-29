@@ -7,7 +7,7 @@
 			type="hidden" name="orderField" th:value="${orderField}" value="id" />
 		<input type="hidden" name="orderDirection"
 			th:value="${orderDirection}" value="DESC" />
-		<div class="bjui-searchBar">
+		<div sec:authorize="hasAnyAuthority('ALL','STOCK_PAGE')" class="bjui-searchBar">
 			<label>装备器械名称：</label><input type="text"
 				th:value="${{param['search_LIKE_weapon.name']}}" value=""
 				name="search_LIKE_weapon.name" class="form-control" size="10" />&nbsp;
@@ -16,39 +16,23 @@
 	</form>
 	<hr style="margin: 5px 0" />
 	<div class="pull-left">
-		<button type="button" data-toggle="navtab" class="btn-red"
+		<button sec:authorize="hasAnyAuthority('ALL','STOCKIN_CREATE')"  type="button" data-toggle="navtab" class="btn-red"
 			data-id="stock-navtab-new" data-url="business/stockin/create/{#dId}">直接入库</button>
-
-		<div class="btn-group">
+		<div  class="btn-group">
 			<button type="button" class="btn-default dropdown-toggle"
 				data-toggle="dropdown" data-icon="copy">
-				清单明细<span class="caret"></span>
+				入库出库查询<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu right" role="menu">
-				<li><a href="business/stockin/page/{#bjui-selected}"
+				<li><a sec:authorize="hasAnyAuthority('ALL','STOCKIN_PAGE')" href="business/stockin/page/{#bjui-selected}"
 					data-toggle="navtab"
 					data-options="{id:'stock-in-page', faicon:'caret-right'}">入库单信息</a></li>
-				<li><a href="business/stockindetail/page/{#bjui-selected}"
+				<li><a sec:authorize="hasAnyAuthority('ALL','STOCKINDETAIL_PAGE')" href="business/stockindetail/page/{#bjui-selected}"
 					data-toggle="navtab"
-					data-options="{id:'stock-in-detail-page', faicon:'caret-right'}">库存明细</a></li>
-				<li class="divider"></li>
-				<li><a href="business/stockout/page/{#bjui-selected}"
-					data-toggle="navtab"
-					data-options="{id:'stock-out-page', faicon:'caret-right'}">领用明细</a></li>
+					data-options="{id:'stock-in-detail-page', faicon:'caret-right'}">入库明细</a></li>
 			</ul>
 		</div>
 		<div class="btn-group">
-			<button type="button" class="btn-default dropdown-toggle"
-				data-toggle="dropdown" data-icon="copy">
-				批量操作<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu right" role="menu">
-				<li><a href="#" data-toggle="doexport"
-					data-confirm-msg="确定要导出信息吗？">导出<span style="color: green;">全部</span></a></li>
-				<li><a href="#" data-toggle="doexportchecked"
-					data-confirm-msg="确定要导出选中项吗？" data-idname="expids" data-group="ids">导出<span
-						style="color: red;">选中</span></a></li>
-			</ul>
 		</div>
 	</div>
 </div>
