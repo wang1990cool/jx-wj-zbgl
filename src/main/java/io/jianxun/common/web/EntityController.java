@@ -31,6 +31,7 @@ import io.jianxun.common.utils.Servlets;
 public class EntityController<T extends IdEntity> {
 
 	public static final String AJAX_PREFIX = "/ajax";
+	public static final String DOMAINNAME = "11";
 
 	@Autowired
 	protected HttpServletRequest request;

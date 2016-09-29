@@ -18,6 +18,7 @@ import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.domain.editor.WeaponEditor;
 import io.jianxun.business.domain.stock.Stock;
 import io.jianxun.business.domain.stock.StockIn;
+import io.jianxun.business.domain.validator.StockInValidator;
 import io.jianxun.business.enums.StockInCategory;
 import io.jianxun.business.service.DepartmentableService;
 import io.jianxun.business.service.StockService;
@@ -83,9 +84,12 @@ public class StockInController extends DepartmentableController<StockIn> {
 	public void initBinder(WebDataBinder b) {
 		super.initBinder(b);
 		b.registerCustomEditor(Weapon.class, "weapon", weaponEditor);
+		b.addValidators(stockInValidator);
 	}
 
 	@Autowired
 	private WeaponEditor weaponEditor;
+	@Autowired
+	private StockInValidator stockInValidator;
 
 }

@@ -89,11 +89,14 @@ public class DepartmentableController<T extends DepartmentEntity> extends Busine
 	}
 
 	@RequestMapping(value = "/create/{d_id}", method = RequestMethod.GET)
-	public String create(Model model, @PathVariable("d_id") Long dId) {
+	public String create(@PathVariable("d_id") Long dId, Model model) {
 		model.addAttribute(getDomainName(), entityService.getDomain());
 		model.addAttribute("action", "create");
 		Department parent = departmentService.findOne((Long) dId);
-		model.addAttribute("department", parent);
+		if (parent == null)
+			throw new ServiceException("获取机构信息出错");
+		model.addAttribute("departmentId", dId);
+		model.addAttribute("departmentName", parent.getName());
 		prepareCreateForm(model);
 		return getTemplePrefix() + "/form";
 	}
@@ -103,7 +106,8 @@ public class DepartmentableController<T extends DepartmentEntity> extends Busine
 		model.addAttribute(getDomainName(), entityService.findOne(id));
 		model.addAttribute("action", "modify");
 		T entity = entityService.findOne(id);
-		model.addAttribute("department", entity.getDepart());
+		model.addAttribute("departmentId", entity.getDepart().getId());
+		model.addAttribute("departmentName", entity.getDepart().getName());
 		prepareModifyForm(model);
 		return getTemplePrefix() + "/form";
 
