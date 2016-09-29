@@ -335,7 +335,7 @@
 										data-fresh="true"
 										data-options="{id:'weapon-page', faicon:'caret-right'}">装备基本信息</a></li>
 									<li sec:authorize="hasAnyAuthority('ALL','STOCK_PAGE','STOCK_CREATE','STOCK_MODIFY','STOCK_REMOVE')"><a href="#" th:href="@{/business/stock/tree/}"
-										data-options="{id:'stock-page', faicon:'caret-right'}">入库单信息</a></li>
+										data-options="{id:'stock-page', faicon:'caret-right'}">库存管理</a></li>
 								</ul>
 								<ul class="menu-items" data-tit="器械领用管理" data-faicon="spinner">
 									<li><a href="#" th:href="@{/business/requestform/tree/}"
