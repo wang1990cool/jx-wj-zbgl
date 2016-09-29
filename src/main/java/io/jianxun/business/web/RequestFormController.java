@@ -21,7 +21,6 @@ import io.jianxun.business.enums.RequestFormStatus;
 import io.jianxun.business.service.DepartmentService;
 import io.jianxun.business.service.DepartmentableService;
 import io.jianxun.business.service.RequestFormService;
-import io.jianxun.business.service.WeaponService;
 import io.jianxun.business.web.dto.ReturnDto;
 import io.jianxun.common.service.exception.ServiceException;
 import io.jianxun.common.utils.Servlets;
@@ -30,26 +29,12 @@ import io.jianxun.common.utils.Servlets;
 @RequestMapping("business/requestform")
 public class RequestFormController extends DepartmentableController<RequestForm> {
 
-	@Autowired
-	private WeaponService weaponService;
 
 	@Autowired
 	private DepartmentService departmentService;
 
 	public RequestFormController(DepartmentableService<RequestForm> entityService) {
 		super(entityService);
-	}
-
-	@Override
-	protected void prepareCreateForm(Model model) {
-		super.prepareCreateForm(model);
-		model.addAttribute("weapons", weaponService.findAll());
-	}
-
-	@Override
-	protected void prepareModifyForm(Model model) {
-		super.prepareModifyForm(model);
-		model.addAttribute("weapons", weaponService.findAll());
 	}
 
 	@RequestMapping("/up")

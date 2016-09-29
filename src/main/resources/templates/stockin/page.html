@@ -27,7 +27,7 @@
 				<th data-order-field="productionDate">生产日期</th>
 				<th>入库数量</th>
 				<th>自带编号</th>
-				<th data-order-field="createDate">入库时间</th>
+				<th data-order-field="createTime">入库时间</th>
 				<th>购置来源</th>
 				<th>操作用户</th>
 			</tr>
@@ -41,7 +41,7 @@
 				<td th:text="${e.productionDate}">生产日期</td>
 				<td th:text="${e.capacity}">库存数量</td>
 				<td th:text="${e.weaponCodes}">自带编号</td>
-				<td th:text="${e.createDate}">入库时间</td>
+				<td th:text="${e.createTime}">入库时间</td>
 				<td th:text="${e.stockInCategoryName}">购置来源</td>
 				<td th:text="${e.createUser.name}">操作用户</td>
 			</tr>
