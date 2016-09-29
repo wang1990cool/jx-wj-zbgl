@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 
 import io.jianxun.business.domain.Department;
 import io.jianxun.business.domain.User;
+import io.jianxun.business.enums.BooleanStatus;
 import io.jianxun.business.repository.DepartRepository;
 import io.jianxun.business.web.dto.BaseTree;
 import io.jianxun.business.web.dto.DepartmentTree;
@@ -102,6 +103,11 @@ public class DepartmentService extends TreeableEntityService<Department> {
 			}
 
 		}
+	}
+
+	public List<Department> findSubDepart(Department depart) {
+		return ((DepartRepository) entityRepository).findByLevelCodeStartingWithAndLevelCodeNotAndDeleted(
+				depart.getLevelCode(), depart.getLevelCode(), BooleanStatus.False);
 	}
 
 }

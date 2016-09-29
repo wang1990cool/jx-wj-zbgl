@@ -16,7 +16,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import io.jianxun.business.enums.BooleanStatus;
 import io.jianxun.common.domain.IdEntity;
-import io.jianxun.common.domain.user.UserDetails;
 
 /**
  * 业务实体基础属性

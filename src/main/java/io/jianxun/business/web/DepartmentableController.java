@@ -72,8 +72,8 @@ public class DepartmentableController<T extends DepartmentEntity> extends Busine
 			throw new ServiceException("获取机构仓库信息失败！");
 		Sort sort = createSort(orderField, orderDirection);
 		Map<String, Object> searchParams = getSearchParam();
-		searchParams.put("LIKE_depart.levelCode", parent.getLevelCode() + "%");
-		Page<T> page = entityService.findAll(buildPageable(pageable, sort), searchParams);
+		addDepartSearchParam(searchParams, parent);
+		Page<T> page = getPage(buildPageable(pageable, sort), searchParams);
 		model.addAttribute("content", page.getContent());
 		model.addAttribute("page", page.getNumber() + 1);
 		model.addAttribute("size", page.getSize());
@@ -86,6 +86,14 @@ public class DepartmentableController<T extends DepartmentEntity> extends Busine
 		// 如查询条件
 		otherPageDate(model);
 		return getTemplePrefix() + "/page";
+	}
+
+	protected void addDepartSearchParam(Map<String, Object> searchParams, Department depart) {
+		searchParams.put("STARTWITH_depart.levelCode", depart.getLevelCode() + "%");
+	}
+
+	protected Page<T> getPage(Pageable pageable, Map<String, Object> searchParams) {
+		return entityService.findAll(pageable, searchParams);
 	}
 
 	@RequestMapping(value = "/create/{d_id}", method = RequestMethod.GET)

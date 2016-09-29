@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import io.jianxun.business.domain.Department;
+import io.jianxun.business.enums.BooleanStatus;
 import io.jianxun.common.repository.EntityRepository;
 
 public interface DepartRepository extends EntityRepository<Department, Long> {
@@ -16,5 +17,8 @@ public interface DepartRepository extends EntityRepository<Department, Long> {
 	List<Department> findByPId(Long pId);
 
 	List<Department> findByLevelCodeStartingWith(String levelCode);
+
+	List<Department> findByLevelCodeStartingWithAndLevelCodeNotAndDeleted(String levelCode, String levelCode2,
+			BooleanStatus false1);
 
 }

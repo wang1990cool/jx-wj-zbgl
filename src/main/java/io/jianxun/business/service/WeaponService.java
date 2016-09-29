@@ -118,13 +118,11 @@ public class WeaponService extends BusinessBaseEntityService<Weapon> {
 			else
 				count = ((WeaponRepository) this.entityRepository).countByNameAndTypeAndDeleted(name, type,
 						BooleanStatus.False);
+		else if (id != null && id != -1)
+			count = ((WeaponRepository) this.entityRepository).countByNameAndIdNotAndDeleted(name, id,
+					BooleanStatus.False);
 		else
-			if (id != null && id != -1)
-				count = ((WeaponRepository) this.entityRepository).countByNameAndIdNotAndDeleted(name, id,
-						BooleanStatus.False);
-			else
-				count = ((WeaponRepository) this.entityRepository).countByNameAndDeleted(name,
-						BooleanStatus.False);
+			count = ((WeaponRepository) this.entityRepository).countByNameAndDeleted(name, BooleanStatus.False);
 		return count == 0;
 	}
 

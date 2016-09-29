@@ -14,4 +14,5 @@ public interface EntityRepository<T, ID extends Serializable>
 
 	Class<T> getDomainClazz();
 
+
 }
