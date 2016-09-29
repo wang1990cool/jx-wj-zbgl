@@ -3,7 +3,6 @@ package io.jianxun.business.service;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -14,6 +13,7 @@ import io.jianxun.business.domain.stock.StockIn;
 import io.jianxun.business.domain.stock.StockInDetail;
 import io.jianxun.business.repository.StockInDetailRepository;
 import io.jianxun.common.service.EntityService;
+import io.jianxun.common.service.exception.ServiceException;
 
 @Service
 @Transactional(readOnly = true)

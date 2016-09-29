@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import io.jianxun.business.web.dto.ReturnDto;
+import io.jianxun.common.service.exception.ServiceException;
 
 @org.springframework.web.bind.annotation.ControllerAdvice
 public class ControllerAdvice {
@@ -22,7 +23,14 @@ public class ControllerAdvice {
 		BindingResult result = ex.getBindingResult();
 		return processFieldError(result.getFieldErrors());
 	}
-	
+
+	@ExceptionHandler(ServiceException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ReturnDto processServcieExcptionError(ServiceException ex) {
+		return ReturnDto.error(ex.getMessage());
+	}
+
 	private ReturnDto processFieldError(List<FieldError> errors) {
 		ReturnDto re = null;
 		if (errors != null && errors.size() > 0) {
