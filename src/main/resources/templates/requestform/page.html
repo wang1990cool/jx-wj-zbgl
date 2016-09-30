@@ -16,12 +16,15 @@
 	</form>
 	<hr style="margin: 5px 0" />
 	<div class="pull-left">
-		<button type="button" data-toggle="navtab" class="btn-red"
+		<button th:if="${createable}" type="button" data-toggle="navtab" class="btn-red"
 			data-id="requestform-form-new"
 			data-url="business/requestform/create/{#dId}">新增--领用申请信息</button>
 		<button type="button" data-toggle="navtab" class="btn-green"
-			data-id="requestform-form-auditor"
+			data-id="requestform-form-auditormessage"
 			data-url="business/requestform/auditmessage/{#bjui-selected}">查看审批信息</button>
+		<button th:if="${commitable}" type="button" data-toggle="navtab" class="btn-green"
+			data-id="requestform-form-auditor"
+			data-url="business/requestform/auditform/{#bjui-selected}">审批</button>
 		<div class="btn-group">
 			<button type="button" class="btn-default dropdown-toggle"
 				data-toggle="dropdown" data-icon="copy">

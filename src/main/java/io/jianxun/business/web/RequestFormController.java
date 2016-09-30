@@ -17,13 +17,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import io.jianxun.business.domain.Department;
 import io.jianxun.business.domain.requisitions.RequestForm;
 import io.jianxun.business.domain.requisitions.RequestFormAuditor;
+import io.jianxun.business.domain.stock.Stock;
 import io.jianxun.business.enums.RequestFormStatus;
 import io.jianxun.business.service.DepartmentService;
 import io.jianxun.business.service.DepartmentableService;
 import io.jianxun.business.service.RequestFormAuditorService;
 import io.jianxun.business.service.RequestFormService;
+import io.jianxun.business.service.StockService;
+import io.jianxun.business.web.dto.AuditorDto;
 import io.jianxun.business.web.dto.ReturnDto;
 import io.jianxun.common.service.exception.ServiceException;
 import io.jianxun.common.utils.Servlets;
@@ -36,9 +40,16 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 	private DepartmentService departmentService;
 	@Autowired
 	private RequestFormAuditorService requestFormAuditorService;
+	@Autowired
+	private StockService stockService;
 
 	public RequestFormController(DepartmentableService<RequestForm> entityService) {
 		super(entityService);
+	}
+
+	@Override
+	protected void otherPageDate(Model model) {
+		model.addAttribute("createable", true);
 	}
 
 	@RequestMapping("/up")
@@ -82,10 +93,8 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		model.addAttribute("orderDirection", orderDirection);
 		model.addAttribute("total", page.getTotalElements());
 		model.addAttribute("dId", depart);
+		model.addAttribute("commitable", true);
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
-		// 提供模板方法 处理非标准数据
-		// 如查询条件
-		otherPageDate(model);
 		return getTemplePrefix() + "/page";
 	}
 
@@ -122,9 +131,6 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		model.addAttribute("total", page.getTotalElements());
 		model.addAttribute("dId", depart);
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
-		// 提供模板方法 处理非标准数据
-		// 如查询条件
-		otherPageDate(model);
 		return getTemplePrefix() + "/page";
 	}
 
@@ -135,6 +141,51 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 			((RequestFormService) entityService).commit(id);
 		}
 		return ReturnDto.ok("操作成功!");
+	}
+
+	@RequestMapping(value = "/auditform/{id}")
+	public String auditForm(@PathVariable("id") Long id, Model model) {
+		RequestForm f = entityService.findOne(id);
+		if (f == null)
+			throw new ServiceException("申请信息不存在");
+		Long parentId = f.getDepart().getpId();
+		Department parent = departmentService.findOne(parentId);
+		if (parent == null)
+			throw new ServiceException("获取机构信息失败");
+		Stock stock = stockService.findByWeapon(parent, f.getWeapon());
+		if (stock == null)
+			throw new ServiceException("库存信息不存");
+		model.addAttribute("stockDes", stock.getDescription());
+		AuditorDto auditorDto = new AuditorDto();
+		auditorDto.setDomainId(id);
+		model.addAttribute("auditDto", auditorDto);
+		return getTemplePrefix() + "/auditform";
+	}
+
+	@RequestMapping("/audit")
+	@ResponseBody
+	public ReturnDto audit(AuditorDto auditMessage) {
+		Long id = auditMessage.getDomainId();
+		if (id == null)
+			throw new ServiceException("获取申请信息失败");
+		RequestForm f = entityService.findOne(id);
+		if (f == null)
+			throw new ServiceException("申请信息不存在");
+		((RequestFormService) entityService).audit(f, auditMessage.getMessage());
+		return ReturnDto.ok("审核通过!");
+	}
+
+	@RequestMapping("/back")
+	@ResponseBody
+	public ReturnDto back(AuditorDto auditMessage) {
+		Long id = auditMessage.getDomainId();
+		if (id == null)
+			throw new ServiceException("获取申请信息失败");
+		RequestForm f = entityService.findOne(id);
+		if (f == null)
+			throw new ServiceException("申请信息不存在");
+		((RequestFormService) entityService).back(f, auditMessage.getMessage());
+		return ReturnDto.ok("打回成功!");
 	}
 
 	@RequestMapping(value = "/out/{id}", method = RequestMethod.GET)

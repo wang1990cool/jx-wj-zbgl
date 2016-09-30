@@ -1,0 +1,39 @@
+<div class="bjui-pageContent">
+	<form action="#" id="requestform_form"
+		th:action="@{/business/requestform/audit}" method="POST"
+		th:object="${auditDto}" data-toggle="validate" data-alertmsg="false">
+		<table class="table table-condensed table-hover" width="100%">
+			<tbody>
+
+				<tr>
+					<td><label class="control-label x95">装备库存信息：</label> <span
+						th:text="${stockDes}">备库存信息</span> <input th:field="*{domainId}"
+						type="hidden" name="domainId" /></td>
+				</tr>
+				<tr>
+					<td colspan="4"><label class="control-label x95">审核意见：</label>
+						<textarea th:field="*{message}" name="message"
+							data-toggle="autoheight" cols="60" rows="8"></textarea></td>
+
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
+<div class="bjui-pageFooter">
+	<ul>
+		<li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+		<li><button id="re-form-aggree" type="submit" class="btn-default"
+				data-icon="save">审批通过</button></li>
+		<li><button id="re-form-disaggree" type="submit"
+				class="btn-default" data-icon="save">审批退回</button></li>
+	</ul>
+</div>
+<script type="text/javascript">
+	$('#re-form-aggree').click(function() {
+		$('#requestform_form').attr('action', 'business/requestform/audit');
+	});
+	$('#re-form-disaggree').click(function() {
+		$('#requestform_form').attr('action', 'business/requestform/back');
+	});
+</script>

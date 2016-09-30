@@ -35,11 +35,16 @@ public class StockService extends DepartmentableService<Stock> {
 
 	private void addStockInfo(List<Stock> content) {
 		for (Stock stock : content) {
-			Long total = getWeaponTotal(stock.getWeapon(), stock.getDepart());
-			stock.setTotal(total);
-			String des = getWeaponassignment(stock.getWeapon(), stock.getDepart(), total);
-			stock.setDescription(des);
+			addStockInfo(stock);
+
 		}
+	}
+
+	private void addStockInfo(Stock stock) {
+		Long total = getWeaponTotal(stock.getWeapon(), stock.getDepart());
+		stock.setTotal(total);
+		String des = getWeaponassignment(stock.getWeapon(), stock.getDepart(), total);
+		stock.setDescription(des);
 	}
 
 	private Long getWeaponTotal(Weapon weapon, Department depart) {
@@ -104,7 +109,10 @@ public class StockService extends DepartmentableService<Stock> {
 	}
 
 	public Stock findByWeapon(Department depart, Weapon weapon) {
-		return ((StockRepository) this.entityRepository).findByDepartAndWeapon(depart, weapon);
+		Stock stock = ((StockRepository) this.entityRepository).findByDepartAndWeapon(depart, weapon);
+		if (stock != null)
+			addStockInfo(stock);
+		return stock;
 	}
 
 }
