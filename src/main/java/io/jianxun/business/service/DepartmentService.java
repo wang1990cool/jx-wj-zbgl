@@ -110,4 +110,8 @@ public class DepartmentService extends TreeableEntityService<Department> {
 				depart.getLevelCode(), depart.getLevelCode(), BooleanStatus.False);
 	}
 
+	public boolean isRoot(Department currentDepart) {
+		return 1L == currentDepart.getId();
+	}
+
 }

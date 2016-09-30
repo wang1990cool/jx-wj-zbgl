@@ -7,31 +7,30 @@
 			<tbody>
 
 				<tr>
-					<td><label for="j_custom_name" class="control-label x95">所属机构信息：</label>
-						<input type="text" disabled="disabled"
-						th:value="${departmentName}" size="15" /> <input type="hidden"
-						name="id" th:value="${id}" /><input type="hidden"
-						name="depart.id" th:value="${departmentId}" /></td>
+					<td><label class="control-label x95">所属机构信息：</label> <input
+						type="text" disabled="disabled" th:value="${departmentName}"
+						size="15" /> <input type="hidden" name="id" th:value="${id}" /><input
+						type="hidden" id="dId" name="depart.id" th:value="${departmentId}" /></td>
 				</tr>
 
 				<tr>
-					<td colspan="4"><label for="j_custom_note"
-						class="control-label x95">申请装备：</label> <input type="text"
-						th:field="*{weapon}" name="weapon" data-toggle="lookup"
-						data-id="re-weapon-searchform" data-title="装备查找"
-						data-rule="required;" size="15" /> 
-						</td>
+					<td colspan="4"><label class="control-label x95">申请装备：</label>
+						<input type="text" disabled="disabled" name="weaponName"
+						data-toggle="lookup" data-id="re-weapon-searchform"
+						data-title="装备查找"
+						data-url="business/stock/ajax/search/weapon/{#dId}"
+						 size="15" /></td><input type="hidden" name="weapon" />
 				</tr>
 				<tr>
-					<td colspan="4"><label for="j_custom_note"
-						class="control-label x95">装备库存情况：</label> <input type="text"
-						name="t2.pid" size="20" disabled="disabled" /></td>
+					<td colspan="4"><label class="control-label x95">装备库存情况：</label>
+						<textarea cols="60" rows="8" name="stockDes" 
+							disabled="disabled" /></td>
 				</tr>
 				<tr>
-					<td colspan="4"><label for="j_custom_note"
-						class="control-label x95">申请数量：</label> <input type="text"
-						th:field="*{capacity}" name="capacity" data-toggle="spinner"
-						data-rule="required digits" data-max="100000" size="15" /></td>
+					<td colspan="4"><label class="control-label x95">申请数量：</label>
+						<input type="text" th:field="*{capacity}" name="capacity"
+						data-toggle="spinner" data-rule="required digits"
+						data-max="100000" size="15" /></td>
 				</tr>
 				<tr>
 					<td><label for="j_custom_fname" class="control-label x95">领用日期：</label>
@@ -39,11 +38,9 @@
 						data-toggle="datepicker" data-rule="required;date" size="15" /></td>
 				</tr>
 				<tr>
-					<td colspan="4"><label for="j_custom_note"
-						class="control-label x95">备注：</label> <textarea name="descrip"
-							th:field="*{descrip}" data-toggle="autoheight" cols="60" rows="8"></textarea>
-
-					</td>
+					<td colspan="4"><label class="control-label x95">备注：</label> <textarea
+							name="descrip" th:field="*{descrip}" data-toggle="autoheight"
+							cols="60" rows="8"></textarea></td>
 
 				</tr>
 			</tbody>

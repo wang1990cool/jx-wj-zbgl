@@ -1,5 +1,7 @@
 package io.jianxun.business.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -18,5 +20,7 @@ public interface StockRepository extends EntityRepository<Stock, Long> {
 
 	@Query("select sum(s.inventory) from Stock as s where s.depart = :depart and s.weapon= :weapon")
 	Long sumByDepartAndWeapon(@Param("depart") Department depart, @Param("weapon") Weapon weapon);
+
+	List<Stock> findByDepart(Department parent);
 
 }

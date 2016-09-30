@@ -6,12 +6,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.jianxun.business.domain.DepartmentEntity;
 import io.jianxun.business.domain.Weapon;
 
 @Entity
 @Table(name = "wj_zb_stocks")
 public class Stock extends DepartmentEntity {
+
+	ObjectMapper mapper = new ObjectMapper();
 
 	/**
 	 * 
@@ -69,6 +73,53 @@ public class Stock extends DepartmentEntity {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Transient
+	public String getSearchDes() {
+		if (this.weapon == null)
+			return "";
+		SearchDes s = new SearchDes();
+		s.setStockDes(this.getDescription());
+		s.setWeapon(this.getWeapon().getId());
+		s.setWeaponName(this.getWeapon().getName());
+		try {
+			return mapper.writeValueAsString(s);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "";
+		}
+	}
+
+	class SearchDes {
+		private Long weapon;
+		private String weaponName;
+		private String stockDes;
+
+		public Long getWeapon() {
+			return weapon;
+		}
+
+		public void setWeapon(Long weapon) {
+			this.weapon = weapon;
+		}
+
+		public String getWeaponName() {
+			return weaponName;
+		}
+
+		public void setWeaponName(String weaponName) {
+			this.weaponName = weaponName;
+		}
+
+		public String getStockDes() {
+			return stockDes;
+		}
+
+		public void setStockDes(String stockDes) {
+			this.stockDes = stockDes;
+		}
+
 	}
 
 }

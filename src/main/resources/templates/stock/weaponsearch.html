@@ -1,0 +1,27 @@
+<div class="bjui-pageHeader"></div>
+<div class="bjui-pageContent">
+	<table data-toggle="tablefixed" data-width="100%">
+		<thead>
+			<tr>
+				<th width="100">机构</th>
+				<th data-order-field="name" width="30">名称</th>
+				<th width="60">当前数量</th>
+				<th width="30">总量</th>
+				<th>分布</th>
+				<th width="74">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="e : ${content}" th:attr="data-id=${e.id}">
+				<td th:text="${e.depart.name}">机构</td>
+				<td th:text="${e.weapon.name}">名称</td>
+				<td th:text="${e.inventory}">当前数量</td>
+				<td th:text="${e.total}">总量</td>
+				<td th:text="${e.description}">分布</td>
+				<td><a href="javascript:;" data-toggle="lookupback"
+					th:attr="data-args=${e.searchDes}" class="btn btn-blue"
+					title="选择本项" data-icon="check">选择</a></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

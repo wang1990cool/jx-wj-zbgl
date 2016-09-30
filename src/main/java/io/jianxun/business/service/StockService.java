@@ -14,6 +14,7 @@ import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.domain.stock.Stock;
 import io.jianxun.business.domain.stock.StockIn;
 import io.jianxun.business.repository.StockRepository;
+import io.jianxun.common.service.exception.ServiceException;
 
 @Service
 @Transactional(readOnly = true)
@@ -72,6 +73,17 @@ public class StockService extends DepartmentableService<Stock> {
 	// 获取机构下装备数量
 	public Long countByDepartAndWeapon(Department depart, Weapon weapon) {
 		return ((StockRepository) this.entityRepository).sumByDepartAndWeapon(depart, weapon);
+	}
+
+	// 获取上级机构各类装备库存情况
+	public List<Stock> getParentDepartStock(Department currentDepart) {
+		Department parent = departmentService.findOne(currentDepart.getpId());
+		if (parent == null)
+			throw new ServiceException("获取上级机构信息失败,无法获取库存信息");
+		List<Stock> result = ((StockRepository) this.entityRepository).findByDepart(parent);
+		addStockInfo(result);
+		return result;
+
 	}
 
 	@Transactional(readOnly = false)
