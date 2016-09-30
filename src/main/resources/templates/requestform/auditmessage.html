@@ -1,0 +1,24 @@
+<div class="bjui-pageHeader"></div>
+<div class="bjui-pageContent">
+	<table data-toggle="tablefixed" data-width="100%">
+		<thead>
+			<tr>
+				<th>装备信息</th>
+				<th>审批状态</th>
+				<th>审批信息</th>
+				<th>审批用户</th>
+				<th>审批时间</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="e : ${content}" th:attr="data-id=${e.id}">
+				<td th:text="${e.requestForm.weapon.name}">装备信息</td>
+				<td th:text="${e.status}">状态</td>
+				<td th:text="${e.message}">信息</td>
+				<td th:text="${e.createUser.name}">创建人</td>
+				<td
+					th:text="${#temporals.format(e.createTime, 'yyyy-MM-dd HH:mm:ss')}">审批时间</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

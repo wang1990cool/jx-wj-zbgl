@@ -1,5 +1,6 @@
 package io.jianxun.business.web;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import io.jianxun.business.domain.requisitions.RequestForm;
+import io.jianxun.business.domain.requisitions.RequestFormAuditor;
 import io.jianxun.business.enums.RequestFormStatus;
 import io.jianxun.business.service.DepartmentService;
 import io.jianxun.business.service.DepartmentableService;
+import io.jianxun.business.service.RequestFormAuditorService;
 import io.jianxun.business.service.RequestFormService;
 import io.jianxun.business.web.dto.ReturnDto;
 import io.jianxun.common.service.exception.ServiceException;
@@ -29,9 +32,10 @@ import io.jianxun.common.utils.Servlets;
 @RequestMapping("business/requestform")
 public class RequestFormController extends DepartmentableController<RequestForm> {
 
-
 	@Autowired
 	private DepartmentService departmentService;
+	@Autowired
+	private RequestFormAuditorService requestFormAuditorService;
 
 	public RequestFormController(DepartmentableService<RequestForm> entityService) {
 		super(entityService);
@@ -89,9 +93,8 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 	public String finishtree(Model model, @RequestParam(value = "orderField", defaultValue = "id") String orderField,
 			@RequestParam(value = "orderDirection", defaultValue = "ASC") String orderDirection) {
 		try {
-			model.addAttribute("tree",
-					mapper.writeValueAsString(departmentService.getDepartTree(
-							"business/" + getTemplePrefix() + "/finish/page", getRefrashDiv())));
+			model.addAttribute("tree", mapper.writeValueAsString(departmentService
+					.getDepartTree("business/" + getTemplePrefix() + "/finish/page", getRefrashDiv())));
 			otherTreeData(model);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -140,6 +143,16 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		model.addAttribute(getDomainName(), f);
 		return getTemplePrefix() + "/outform";
 
+	}
+
+	@RequestMapping(value = "/auditmessage/{id}", method = RequestMethod.GET)
+	public String auditmessage(@PathVariable("id") Long id, Model model) {
+		RequestForm form = ((RequestFormService) this.entityService).findOne(id);
+		if (form == null)
+			throw new ServiceException("");
+		List<RequestFormAuditor> messages = requestFormAuditorService.findByRequestForm(form);
+		model.addAttribute("content", messages);
+		return getTemplePrefix() + "/auditmessage";
 	}
 
 }

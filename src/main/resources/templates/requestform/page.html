@@ -19,6 +19,9 @@
 		<button type="button" data-toggle="navtab" class="btn-red"
 			data-id="requestform-form-new"
 			data-url="business/requestform/create/{#dId}">新增--领用申请信息</button>
+		<button type="button" data-toggle="navtab" class="btn-green"
+			data-id="requestform-form-auditor"
+			data-url="business/requestform/auditmessage/{#bjui-selected}">查看审批信息</button>
 		<div class="btn-group">
 			<button type="button" class="btn-default dropdown-toggle"
 				data-toggle="dropdown" data-icon="copy">
@@ -28,7 +31,7 @@
 				<li><a th:href="@{/business/requestform/up}" href="#"
 					data-toggle="doajaxchecked" data-confirm-msg="确定要提交选中项吗？"
 					data-idname="ids" data-group="ids">提交选中</a></li>
-					<li><a th:href="@{/business/requestform/commit}" href="#"
+				<li><a th:href="@{/business/requestform/commit}" href="#"
 					data-toggle="doajaxchecked" data-confirm-msg="确定要审核选中项吗？"
 					data-idname="ids" data-group="ids">审核选中</a></li>
 				<li><a th:href="@{/business/requestform/remove}" href="#"
@@ -40,7 +43,7 @@
 </div>
 <div class="bjui-pageContent tableContent">
 	<table data-toggle="tablefixed" data-width="100%" data-nowrap="true"
-		data-selected-multi="true">
+		data-selected-multi="false">
 		<thead>
 			<tr>
 				<th width="26"><input type="checkbox" class="checkboxCtrl"

@@ -45,7 +45,7 @@ public class RequestForm extends DepartmentEntity {
 	// 备注
 	private String descrip;
 
-	// 申请单状态 create,back 可修改，up commit 锁定
+	// 审核状态 create,back 可修改，up commit 锁定
 	private RequestFormStatus status = RequestFormStatus.CREATE;
 
 	@ManyToOne
