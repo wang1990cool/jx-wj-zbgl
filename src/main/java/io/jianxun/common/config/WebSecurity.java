@@ -38,6 +38,11 @@ public class WebSecurity {
 		String perStr = getPermissionStr(domain, operate);
 		Collection<? extends GrantedAuthority> as = authentication.getAuthorities();
 		for (GrantedAuthority grantedAuthority : as) {
+			// 判断列表权限 只要有任何一个该模型的操作权限 列表权限都返回true
+			if (isPagePerStr(operate)) {
+				if (grantedAuthority.getAuthority().startsWith(domain.toUpperCase()))
+					return true;
+			}
 			if (grantedAuthority.getAuthority().equals(perStr))
 				return true;
 		}
@@ -48,6 +53,14 @@ public class WebSecurity {
 		if (operate.equalsIgnoreCase("tree"))
 			operate = "page";
 		return domain.toUpperCase() + "_" + operate.toUpperCase();
+	}
+
+	private boolean isPagePerStr(String operate) {
+		if (StringUtils.isEmpty(operate))
+			return false;
+		if (operate.equalsIgnoreCase("page") || operate.equalsIgnoreCase("tree"))
+			return true;
+		return false;
 	}
 
 }

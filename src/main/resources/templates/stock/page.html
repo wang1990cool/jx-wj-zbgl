@@ -18,7 +18,7 @@
 	<div class="pull-left">
 		<button sec:authorize="hasAnyAuthority('ALL','STOCKIN_CREATE')"  type="button" data-toggle="navtab" class="btn-red"
 			data-id="stock-navtab-new" data-url="business/stockin/create/{#dId}">直接入库</button>
-		<div  class="btn-group">
+		<div sec:authorize="hasAnyAuthority('ALL','STOCKIN_PAGE','STOCKINDETAIL_PAGE')"  class="btn-group">
 			<button type="button" class="btn-default dropdown-toggle"
 				data-toggle="dropdown" data-icon="copy">
 				入库出库查询<span class="caret"></span>

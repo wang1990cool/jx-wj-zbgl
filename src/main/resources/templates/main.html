@@ -261,6 +261,7 @@
 
 			zTree.expandNode(treeNode, !treeNode.open, false, true, true)
 			return
+
 		}
 		/*<![CDATA[*/
 		if (treeNode.target && treeNode.target == 'dialog')
@@ -330,11 +331,14 @@
 							data-toggle="slidebar"><i class="fa fa-check-square-o"></i>
 								器械信息管理</a>
 							<div class="items hide" data-noinit="true">
-								<ul class="menu-items" data-faicon="star-o">
-									<li sec:authorize="hasAnyAuthority('ALL','WEAPON_PAGE','WEAPON_CREATE','WEAPON_MODIFY','WEAPON_REMOVE')"><a href="#" th:href="@{/business/weapon/page/}"
-										data-fresh="true"
+								<ul sec:authorize="hasAnyAuthority('ALL','WEAPON_PAGE','WEAPON_CREATE','WEAPON_MODIFY','WEAPON_REMOVE','STOCK_PAGE','STOCKIN_CREATE','STOCKIN_PAGE','STOCKINDETAIL_PAGE')" class="menu-items" data-faicon="star-o">
+									<li
+										sec:authorize="hasAnyAuthority('ALL','WEAPON_PAGE','WEAPON_CREATE','WEAPON_MODIFY','WEAPON_REMOVE')"><a
+										href="#" th:href="@{/business/weapon/page/}" data-fresh="true"
 										data-options="{id:'weapon-page', faicon:'caret-right'}">装备基本信息</a></li>
-									<li sec:authorize="hasAnyAuthority('ALL','STOCK_PAGE','STOCK_CREATE','STOCK_MODIFY','STOCK_REMOVE')"><a href="#" th:href="@{/business/stock/tree/}"
+									<li
+										sec:authorize="hasAnyAuthority('ALL','STOCK_PAGE','STOCKIN_CREATE','STOCKIN_PAGE','STOCKINDETAIL_PAGE')"><a
+										href="#" th:href="@{/business/stock/tree/}"
 										data-options="{id:'stock-page', faicon:'caret-right'}">库存管理</a></li>
 								</ul>
 								<ul class="menu-items" data-tit="器械领用管理" data-faicon="spinner">
@@ -348,36 +352,46 @@
 									<li><a href="#"
 										th:href="@{/business/requestform/finish/tree/}"
 										data-options="{id:'requestform-page', faicon:'caret-right'}">待登记</a></li>
-									<li><a href="table-edit.html"
-										data-options="{id:'table-edit', faicon:'caret-right'}">归还</a></li>
 								</ul>
-
-								<ul class="menu-items" data-tit="器械报废管理" data-faicon="image">
+								<!-- 
+								<ul class="menu-items" data-tit="器械借用管理" data-faicon="image">
 									<li><a href="tabs.html"
 										data-options="{id:'tabs', faicon:'caret-right'}">申请</a></li>
 									<li><a href="tabs.html"
-										data-options="{id:'tabs', faicon:'caret-right'}">审批</a></li>
+										data-options="{id:'tabs', faicon:'caret-right'}">待审批</a></li>
 									<li><a href="tabs.html"
-										data-options="{id:'tabs', faicon:'caret-right'}">查询</a></li>
+										data-options="{id:'tabs', faicon:'caret-right'}">待登记</a></li>
 								</ul>
-
-								<ul sec:authorize="hasAnyAuthority('ALL','DEPARTMENT_PAGE','DEPARTMENT_CREATE','DEPARTMENT_MODIFY','DEPARTMENT_REMOVE','CONSTABLE_PAGE','CONSTABLE_CREATE','CONSTABLE_MODIFY','CONSTABLE_REMOVE')" class="menu-items" data-tit="组织管理" data-faicon="bug">
-									<li sec:authorize="hasAnyAuthority('ALL','DEPARTMENT_PAGE','DEPARTMENT_CREATE','DEPARTMENT_MODIFY','DEPARTMENT_REMOVE')"><a href="#" th:href="@{/business/department/tree/}"
+ 								-->
+								<ul
+									sec:authorize="hasAnyAuthority('ALL','DEPARTMENT_PAGE','DEPARTMENT_CREATE','DEPARTMENT_MODIFY','DEPARTMENT_REMOVE','CONSTABLE_PAGE','CONSTABLE_CREATE','CONSTABLE_MODIFY','CONSTABLE_REMOVE')"
+									class="menu-items" data-tit="组织管理" data-faicon="bug">
+									<li
+										sec:authorize="hasAnyAuthority('ALL','DEPARTMENT_PAGE','DEPARTMENT_CREATE','DEPARTMENT_MODIFY','DEPARTMENT_REMOVE')"><a
+										href="#" th:href="@{/business/department/tree/}"
 										data-fresh="true"
 										data-options="{id:'department-page', faicon:'caret-right'}">机构管理</a></li>
-									<li sec:authorize="hasAnyAuthority('ALL','CONSTABLE_PAGE','CONSTABLE_CREATE','CONSTABLE_MODIFY','CONSTABLE_REMOVE')" ><a href="#" th:href="@{/business/constable/tree/}"
+									<li
+										sec:authorize="hasAnyAuthority('ALL','CONSTABLE_PAGE','CONSTABLE_CREATE','CONSTABLE_MODIFY','CONSTABLE_REMOVE')"><a
+										href="#" th:href="@{/business/constable/tree/}"
 										data-options="{id:'constable-page', faicon:'caret-right'}">警员信息管理</a></li>
 								</ul>
 
-								<ul sec:authorize="hasAnyAuthority('ALL','DATADIC_PAGE','DATADIC_CREATE','DATADIC_MODIFY','DATADIC_REMOVE','USER_PAGE','USER_CREATE','USER_MODIFY','USER_REMOVE','USER_RESTPASSWORD','USER_LOCKED','ROLE_PAGE','ROLE_CREATE','ROLE_MODIFY','ROLE_REMOVE')" class="menu-items" data-tit="系统设置" data-faicon="bug">
+								<ul
+									sec:authorize="hasAnyAuthority('ALL','DATADIC_PAGE','DATADIC_CREATE','DATADIC_MODIFY','DATADIC_REMOVE','USER_PAGE','USER_CREATE','USER_MODIFY','USER_REMOVE','USER_RESTPASSWORD','USER_LOCKED','ROLE_PAGE','ROLE_CREATE','ROLE_MODIFY','ROLE_REMOVE')"
+									class="menu-items" data-tit="系统设置" data-faicon="bug">
 									<li
 										sec:authorize="hasAnyAuthority('ALL','DATADIC_PAGE','DATADIC_CREATE','DATADIC_MODIFY','DATADIC_REMOVE')"><a
 										href="#" th:href="@{/business/datadic/page/}"
 										data-fresh="true"
 										data-options="{id:'datadictionary-page', faicon:'caret-right'}">数据字典</a></li>
-									<li sec:authorize="hasAnyAuthority('ALL','USER_PAGE','USER_CREATE','USER_MODIFY','USER_REMOVE','USER_RESTPASSWORD','USER_LOCKED')"><a href="#" th:href="@{/business/user/page/}"
+									<li
+										sec:authorize="hasAnyAuthority('ALL','USER_PAGE','USER_CREATE','USER_MODIFY','USER_REMOVE','USER_RESTPASSWORD','USER_LOCKED')"><a
+										href="#" th:href="@{/business/user/page/}"
 										data-options="{id:'user-page', faicon:'caret-right'}">用户管理</a></li>
-									<li sec:authorize="hasAnyAuthority('ALL','ROLE_PAGE','ROLE_CREATE','ROLE_MODIFY','ROLE_REMOVE')"><a href="#" th:href="@{/business/role/page/}"
+									<li
+										sec:authorize="hasAnyAuthority('ALL','ROLE_PAGE','ROLE_CREATE','ROLE_MODIFY','ROLE_REMOVE')"><a
+										href="#" th:href="@{/business/role/page/}"
 										data-options="{id:'role-page', faicon:'caret-right'}">角色管理</a></li>
 								</ul>
 

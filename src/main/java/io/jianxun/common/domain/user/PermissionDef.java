@@ -10,6 +10,27 @@ import io.jianxun.business.web.dto.CodeNameDto;
 
 //操作定义
 public enum PermissionDef {
+	// 装备基本信息;
+	WEAPON_PAGE("weapon_page", "列表", ModuleDef.STOCK, DomainDef.STOCK_WEAPON), WEAPON_CREATE("weapon_create", "新增",
+			ModuleDef.STOCK, DomainDef.STOCK_WEAPON), WEAPON_MODIFY("weapon_modify", "修改", ModuleDef.STOCK,
+					DomainDef.STOCK_WEAPON), WEAPON_REMOVE("weapon_remove", "删除", ModuleDef.STOCK,
+							DomainDef.STOCK_WEAPON),
+	// 库存管理
+	STOCK_PAGE("stock_page", "列表", ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_IN_CREATE("stockin_create", "直接入库",
+			ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_IN_PAGE("stockin_page", "入库单明细", ModuleDef.STOCK,
+					DomainDef.STOCK_STOCK), STOCK_IN_DETAIL_REMOVE("stockindetail_page", "库存明细", ModuleDef.STOCK,
+							DomainDef.STOCK_STOCK),
+	// ----组织管理
+	// --机构管理
+	DEPARTMENT_PAGE("department_page", "列表", ModuleDef.ORGANIZATION, DomainDef.ORG_DEPART), DEPARTMENT_CREATE(
+			"department_create", "新增", ModuleDef.ORGANIZATION, DomainDef.ORG_DEPART), DEPARTMENT_MODIFY(
+					"department_modify", "修改", ModuleDef.ORGANIZATION, DomainDef.ORG_DEPART), DEPARTMENT_REMOVE(
+							"department_remove", "删除", ModuleDef.ORGANIZATION, DomainDef.ORG_DEPART),
+	// --警员管理
+	CONSTABLE_PAGE("constable_page", "列表", ModuleDef.ORGANIZATION, DomainDef.ORG_CONSTABLE), CONSTABLE_CREATE(
+			"constable_create", "新增", ModuleDef.ORGANIZATION, DomainDef.ORG_CONSTABLE), CONSTABLE_MODIFY(
+					"constable_modify", "修改", ModuleDef.ORGANIZATION, DomainDef.ORG_CONSTABLE), CONSTABLE_REMOVE(
+							"constable_remove", "删除", ModuleDef.ORGANIZATION, DomainDef.ORG_CONSTABLE),
 	// 用户管理相关权限
 	USER_PAGE("user_page", "列表", ModuleDef.SYS, DomainDef.SYS_USER), USER_CREATE("user_create", "新增", ModuleDef.SYS,
 			DomainDef.SYS_USER), USER_MODIFY("user_modify", "修改", ModuleDef.SYS, DomainDef.SYS_USER), USER_REMOVE(
@@ -24,27 +45,7 @@ public enum PermissionDef {
 	DATADIC_PAGE("datadic_page", "列表", ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_CREATE("datadic_create", "新增",
 			ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_MODIFY("datadic_modify", "修改", ModuleDef.SYS,
 					DomainDef.SYS_DATADIC), DATADIC_REMOVE("datadic_remove", "删除", ModuleDef.SYS,
-							DomainDef.SYS_DATADIC),
-	// 装备基本信息;
-	WEAPON_PAGE("weapon_page", "列表", ModuleDef.STOCK, DomainDef.STOCK_WEAPON), WEAPON_CREATE("weapon_create", "新增",
-			ModuleDef.STOCK, DomainDef.STOCK_WEAPON), WEAPON_MODIFY("weapon_modify", "修改", ModuleDef.STOCK,
-					DomainDef.STOCK_WEAPON), WEAPON_REMOVE("weapon_remove", "删除", ModuleDef.STOCK,
-							DomainDef.STOCK_WEAPON),
-	// 库存管理
-	STOCK_PAGE("stock_page", "列表", ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_IN_CREATE("stockin_create", "直接入库",
-			ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_IN_PAGE("stockin_page", "入库单明细", ModuleDef.STOCK,
-					DomainDef.STOCK_STOCK), STOCK_IN_DETAIL_REMOVE("stockindetail_page", "库存明细", ModuleDef.STOCK, DomainDef.STOCK_STOCK),
-	// ----组织管理
-	// --机构管理
-	DEPARTMENT_PAGE("department_page", "列表", ModuleDef.ORGANIZATION, DomainDef.ORG_DEPART), DEPARTMENT_CREATE(
-			"department_create", "新增", ModuleDef.ORGANIZATION, DomainDef.ORG_DEPART), DEPARTMENT_MODIFY(
-					"department_modify", "修改", ModuleDef.ORGANIZATION, DomainDef.ORG_DEPART), DEPARTMENT_REMOVE(
-							"department_remove", "删除", ModuleDef.ORGANIZATION, DomainDef.ORG_DEPART),
-	// --警员管理
-	CONSTABLE_PAGE("constable_page", "列表", ModuleDef.ORGANIZATION, DomainDef.ORG_CONSTABLE), CONSTABLE_CREATE(
-			"constable_create", "新增", ModuleDef.ORGANIZATION, DomainDef.ORG_CONSTABLE), CONSTABLE_MODIFY(
-					"constable_modify", "修改", ModuleDef.ORGANIZATION, DomainDef.ORG_CONSTABLE), CONSTABLE_REMOVE(
-							"constable_remove", "删除", ModuleDef.ORGANIZATION, DomainDef.ORG_CONSTABLE);
+							DomainDef.SYS_DATADIC),;
 	// 操作代码
 	private String code;
 	// 描述
