@@ -262,6 +262,36 @@
 			zTree.expandNode(treeNode, !treeNode.open, false, true, true)
 			return
 
+			
+
+						
+
+			
+
+									
+
+			
+
+						
+
+			
+
+												
+
+			
+
+						
+
+			
+
+									
+
+			
+
+						
+
+			
+
 		}
 		/*<![CDATA[*/
 		if (treeNode.target && treeNode.target == 'dialog')
@@ -331,7 +361,9 @@
 							data-toggle="slidebar"><i class="fa fa-check-square-o"></i>
 								器械信息管理</a>
 							<div class="items hide" data-noinit="true">
-								<ul sec:authorize="hasAnyAuthority('ALL','WEAPON_PAGE','WEAPON_CREATE','WEAPON_MODIFY','WEAPON_REMOVE','STOCK_PAGE','STOCKIN_CREATE','STOCKIN_PAGE','STOCKINDETAIL_PAGE')" class="menu-items" data-faicon="star-o">
+								<ul
+									sec:authorize="hasAnyAuthority('ALL','WEAPON_PAGE','WEAPON_CREATE','WEAPON_MODIFY','WEAPON_REMOVE','STOCK_PAGE','STOCKIN_CREATE','STOCKIN_PAGE','STOCKINDETAIL_PAGE')"
+									class="menu-items" data-faicon="star-o">
 									<li
 										sec:authorize="hasAnyAuthority('ALL','WEAPON_PAGE','WEAPON_CREATE','WEAPON_MODIFY','WEAPON_REMOVE')"><a
 										href="#" th:href="@{/business/weapon/page/}" data-fresh="true"
@@ -363,9 +395,27 @@
 										data-options="{id:'tabs', faicon:'caret-right'}">待登记</a></li>
 								</ul>
  								-->
+								<ul class="menu-items" data-tit="提醒信息查看"
+									data-faicon="exclamation-circle">
+									<li><a href="#"
+										th:href="@{/business/requestform/commit/tree/}"
+										data-fresh="true"
+										data-options="{id:'requestform-page', faicon:'caret-right'}">维护提醒</a></li>
+									<li><a href="#"
+										th:href="@{/business/requestform/commit/tree/}"
+										data-fresh="true"
+										data-options="{id:'requestform-page', faicon:'caret-right'}">报废提醒</a></li>
+									<li><a href="#" th:href="@{/business/requestform/tree/}"
+										data-fresh="true"
+										data-options="{id:'requestform-page', faicon:'caret-right'}">库存提醒</a></li>
+									<li><a href="#"
+										th:href="@{/business/requestform/commit/tree/}"
+										data-fresh="true"
+										data-options="{id:'requestform-page', faicon:'caret-right'}">借用到期提醒</a></li>
+								</ul>
 								<ul
 									sec:authorize="hasAnyAuthority('ALL','DEPARTMENT_PAGE','DEPARTMENT_CREATE','DEPARTMENT_MODIFY','DEPARTMENT_REMOVE','CONSTABLE_PAGE','CONSTABLE_CREATE','CONSTABLE_MODIFY','CONSTABLE_REMOVE')"
-									class="menu-items" data-tit="组织管理" data-faicon="bug">
+									class="menu-items" data-tit="组织管理" data-faicon="sitemap">
 									<li
 										sec:authorize="hasAnyAuthority('ALL','DEPARTMENT_PAGE','DEPARTMENT_CREATE','DEPARTMENT_MODIFY','DEPARTMENT_REMOVE')"><a
 										href="#" th:href="@{/business/department/tree/}"
@@ -379,7 +429,7 @@
 
 								<ul
 									sec:authorize="hasAnyAuthority('ALL','DATADIC_PAGE','DATADIC_CREATE','DATADIC_MODIFY','DATADIC_REMOVE','USER_PAGE','USER_CREATE','USER_MODIFY','USER_REMOVE','USER_RESTPASSWORD','USER_LOCKED','ROLE_PAGE','ROLE_CREATE','ROLE_MODIFY','ROLE_REMOVE')"
-									class="menu-items" data-tit="系统设置" data-faicon="bug">
+									class="menu-items" data-tit="系统设置" data-faicon="cog">
 									<li
 										sec:authorize="hasAnyAuthority('ALL','DATADIC_PAGE','DATADIC_CREATE','DATADIC_MODIFY','DATADIC_REMOVE')"><a
 										href="#" th:href="@{/business/datadic/page/}"
