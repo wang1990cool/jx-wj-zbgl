@@ -45,7 +45,15 @@ public enum PermissionDef {
 	DATADIC_PAGE("datadic_page", "列表", ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_CREATE("datadic_create", "新增",
 			ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_MODIFY("datadic_modify", "修改", ModuleDef.SYS,
 					DomainDef.SYS_DATADIC), DATADIC_REMOVE("datadic_remove", "删除", ModuleDef.SYS,
-							DomainDef.SYS_DATADIC),;
+							DomainDef.SYS_DATADIC),
+	// 维护提醒
+	NOTICE_MAINTAIN_PAGE("notice_maintain", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_MAINTAIN),
+	// 报废提醒
+	NOTICE_SCRAP_PAGE("notice_scrap", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_SCRAP),
+	// 库存提醒
+	NOTICE_STOCK_PAGE("notice_stock", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_STOCK),
+	// 归还提醒
+	NOTICE_ESCHEAT_PAGE("notice_escheat", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_ESCHEAT),;
 	// 操作代码
 	private String code;
 	// 描述
@@ -128,7 +136,7 @@ public enum PermissionDef {
 	// 模块定义
 	public enum ModuleDef {
 		SYS("sys", "系统设置", 99), ORGANIZATION("org", "组织管理", 7), SCRAP("scrap", "器械报废管理", 5), CONSUMING("consuming",
-				"器械领用(借用)管理", 3), STOCK("stock", "器械库存管理", 0);
+				"器械领用(借用)管理", 3), STOCK("stock", "器械库存管理", 0), NOTICE("notice", "提醒信息", 9);
 		private String code;
 		private String name;
 		private Integer sortNum = 99;
@@ -184,7 +192,10 @@ public enum PermissionDef {
 		// 库存配置
 		STOCK_WEAPON("stock_weapon", "装备基本信息", 0), STOCK_STOCK("stock_stock", "库存管理", 10),
 		// 组织配置
-		ORG_DEPART("org_department", "机构管理", 0), ORG_CONSTABLE("org_constable", "警员管理", 10);
+		ORG_DEPART("org_department", "机构管理", 0), ORG_CONSTABLE("org_constable", "警员管理", 10),
+		// 提醒
+		NOTICE_MAINTAIN("notice_maintain", "维护提醒", 0), NOTICE_SCRAP("notice_scrap", "报废提醒",
+				10), NOTICE_STOCK("notice_stock", "库存提醒", 20), NOTICE_ESCHEAT("notice_escheat", "归还提醒", 20);
 		private String code;
 		private String name;
 		private Integer sortNum = 99;

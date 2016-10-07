@@ -395,23 +395,23 @@
 										data-options="{id:'tabs', faicon:'caret-right'}">待登记</a></li>
 								</ul>
  								-->
-								<ul class="menu-items" data-tit="提醒信息查看"
+								<ul class="menu-items" data-tit="提醒信息"
 									data-faicon="exclamation-circle">
-									<li><a href="#"
-										th:href="@{/business/requestform/commit/tree/}"
+									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_MAINTAIN')"><a href="#"
+										th:href="@{/business/notice/maintain/}"
 										data-fresh="true"
-										data-options="{id:'requestform-page', faicon:'caret-right'}">维护提醒</a></li>
-									<li><a href="#"
-										th:href="@{/business/requestform/commit/tree/}"
+										data-options="{id:'maintain-notice-page', faicon:'caret-right'}">维护提醒</a></li>
+									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_SCRAP')"><a href="#"
+										th:href="@{/business/notice/scrap/}"
 										data-fresh="true"
-										data-options="{id:'requestform-page', faicon:'caret-right'}">报废提醒</a></li>
-									<li><a href="#" th:href="@{/business/requestform/tree/}"
+										data-options="{id:'scrap-notice-page', faicon:'caret-right'}">报废提醒</a></li>
+									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_STOCK')"><a href="#" th:href="@{/business/notice/stock/}"
 										data-fresh="true"
-										data-options="{id:'requestform-page', faicon:'caret-right'}">库存提醒</a></li>
-									<li><a href="#"
-										th:href="@{/business/requestform/commit/tree/}"
+										data-options="{id:'stock-notice-page', faicon:'caret-right'}">库存提醒</a></li>
+									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_ESCHEAT')"><a href="#"
+										th:href="@{/business/notice/escheat/}"
 										data-fresh="true"
-										data-options="{id:'requestform-page', faicon:'caret-right'}">借用到期提醒</a></li>
+										data-options="{id:'escheat-notice-page', faicon:'caret-right'}">归还提醒</a></li>
 								</ul>
 								<ul
 									sec:authorize="hasAnyAuthority('ALL','DEPARTMENT_PAGE','DEPARTMENT_CREATE','DEPARTMENT_MODIFY','DEPARTMENT_REMOVE','CONSTABLE_PAGE','CONSTABLE_CREATE','CONSTABLE_MODIFY','CONSTABLE_REMOVE')"
