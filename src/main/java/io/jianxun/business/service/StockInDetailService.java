@@ -66,6 +66,7 @@ public class StockInDetailService extends EntityService<StockInDetail> {
 
 	private StockInDetail createStockInDetail(StockIn stockIn, String ownCode, int i) {
 		StockInDetail detail = new StockInDetail();
+		detail.setDepart(stockIn.getDepart());
 		detail.setStockIn(stockIn);
 		if (!StringUtils.isEmpty(ownCode))
 			detail.setOwnCode(ownCode);

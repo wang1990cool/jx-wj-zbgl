@@ -31,10 +31,14 @@ public class WebSecurity {
 		// 路径中business/ajax统一为只要登录就能使用
 		if ("ajax".equals(operate))
 			return true;
-		User user = ((User) authentication.getPrincipal());
-		// 管理员拥有所有权限
-		if (user.getId() != null && 1L == user.getId())
-			return true;
+		try {
+			User user = ((User) authentication.getPrincipal());
+			// 管理员拥有所有权限
+			if (user.getId() != null && 1L == user.getId())
+				return true;
+		} catch (Exception e) {
+			return false;
+		}
 		String perStr = getPermissionStr(domain, operate);
 		Collection<? extends GrantedAuthority> as = authentication.getAuthorities();
 		for (GrantedAuthority grantedAuthority : as) {

@@ -1,11 +1,12 @@
 <div class="bjui-pageHeader">
 	<form id="pagerForm" data-toggle="ajaxsearch"
 		th:action="@{/business/stockindetail/page}" action="#" method="POST">
-		<input type="hidden" id="dId" name="dId" th:value="${dId}" value="-1" /> <input type="hidden" name="size" th:value="${size}"
-			value="30" /> <input type="hidden" name="page" th:value="${page}"
-			value="1" /> <input type="hidden" name="orderField"
-			th:value="${orderField}" value="id" /> <input type="hidden"
-			name="orderDirection" th:value="${orderDirection}" value="DESC" />
+		<input type="hidden" id="dId" name="dId" th:value="${dId}" value="-1" />
+		<input type="hidden" name="size" th:value="${size}" value="30" /> <input
+			type="hidden" name="page" th:value="${page}" value="1" /> <input
+			type="hidden" name="orderField" th:value="${orderField}" value="id" />
+		<input type="hidden" name="orderDirection"
+			th:value="${orderDirection}" value="DESC" />
 		<div class="bjui-searchBar">
 			<label>装备器械名称：</label><input type="text"
 				th:value="${{param['search_LIKE_stockIn.weapon.name']}}" value=""
@@ -22,6 +23,7 @@
 			<tr>
 				<th width="26"><input type="checkbox" class="checkboxCtrl"
 					data-group="ids" data-toggle="icheck" /></th>
+				<th>所属机构</th>
 				<th>装备器械名称</th>
 				<th>生产日期</th>
 				<th>装备编号</th>
@@ -34,6 +36,7 @@
 			<tr th:each="e : ${content}" th:attr="data-id=${e.id}">
 				<td><input type="checkbox" name="ids" data-toggle="icheck"
 					th:value="${e.id}" value="-1" /></td>
+				<td th:text="${e.depart.name}">所属机构</td>
 				<td th:text="${e.stockIn.weapon.name}">装备器械名称</td>
 				<td th:text="${e.stockIn.productionDate}">生产日期</td>
 				<td th:text="${e.stockCodePrefix + ' ' +e.sNo}">自带编号</td>

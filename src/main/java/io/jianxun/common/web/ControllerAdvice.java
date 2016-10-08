@@ -30,6 +30,13 @@ public class ControllerAdvice {
 	public ReturnDto processServcieExcptionError(ServiceException ex) {
 		return ReturnDto.error(ex.getMessage());
 	}
+	
+	@ExceptionHandler(Exception.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ReturnDto processExcptionError(Exception ex) {
+		return ReturnDto.error(ex.getMessage());
+	}
 
 	private ReturnDto processFieldError(List<FieldError> errors) {
 		ReturnDto re = null;

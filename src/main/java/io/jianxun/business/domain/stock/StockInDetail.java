@@ -10,7 +10,7 @@ import javax.persistence.Transient;
 
 import org.springframework.util.StringUtils;
 
-import io.jianxun.common.domain.IdEntity;
+import io.jianxun.business.domain.DepartmentEntity;
 
 /**
  * 库存明细
@@ -20,7 +20,7 @@ import io.jianxun.common.domain.IdEntity;
  */
 @Entity
 @Table(name = "jx_wj_stock_details")
-public class StockInDetail extends IdEntity {
+public class StockInDetail extends DepartmentEntity {
 
 	/**
 	 * 
@@ -103,9 +103,9 @@ public class StockInDetail extends IdEntity {
 	public void setsNo(String sNo) {
 		this.sNo = sNo;
 	}
-	
+
 	@Transient
-	private String getBarcode(){
+	private String getBarcode() {
 		return this.stockCodePrefix + " " + this.sNo;
 	}
 
