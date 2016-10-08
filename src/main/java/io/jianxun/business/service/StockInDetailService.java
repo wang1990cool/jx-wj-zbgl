@@ -1,6 +1,7 @@
 package io.jianxun.business.service;
 
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -74,6 +75,11 @@ public class StockInDetailService extends EntityService<StockInDetail> {
 			throw new ServiceException("获取装备流水号出错！");
 		detail.setsNo(getNextSno(detail.getStockCodePrefix(), i));
 		return detail;
+
+	}
+
+	public List<StockInDetail> findByMaintenanceDateLT(LocalDate noticeDate) {
+		return ((StockInDetailRepository) entityRepository).findByMaintenanceDateBefore(noticeDate);
 
 	}
 

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
 import io.jianxun.business.service.AuditorAwareImpl;
@@ -15,6 +16,7 @@ import io.jianxun.common.repository.EntityRepositoryImpl;
 @SpringBootApplication
 @EnableJpaRepositories(repositoryBaseClass = EntityRepositoryImpl.class)
 @EnableJpaAuditing
+@EnableScheduling
 public class WjZbglApplication {
 
 	@Bean
