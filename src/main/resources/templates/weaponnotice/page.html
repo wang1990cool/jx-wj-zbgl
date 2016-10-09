@@ -1,0 +1,56 @@
+<div class="bjui-pageHeader">
+	<form id="pagerForm" data-toggle="ajaxsearch"
+		th:action="@{/business/weaponnotice/page}" action="#" method="POST">
+		<input type="hidden" id="dId" name="dId" th:value="${dId}" value="-1" />
+		<input type="hidden" name="size" th:value="${size}" value="30" /> <input
+			type="hidden" name="page" th:value="${page}" value="1" /> <input
+			type="hidden" name="orderField" th:value="${orderField}" value="id" /> <input
+			type="hidden" name="orderDirection" th:value="${orderDirection}" value="DESC" />
+		<div class="bjui-searchBar">
+		</div>
+	</form>
+	<hr style="margin: 5px 0" />
+	<div class="pull-left">
+		<div class="btn-group">
+			<button sec:authorize="hasAnyAuthority('ALL','CONSTABLE_REMOVE')" type="button" class="btn-default dropdown-toggle"
+				data-toggle="dropdown" data-icon="copy">
+				批量操作<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu right" role="menu">
+				<li sec:authorize="hasAnyAuthority('ALL','CONSTABLE_REMOVE')"><a th:href="@{/business/wnotice/remove}" href="#"
+					data-toggle="doajaxchecked" data-confirm-msg="确定要删除选中项吗？"
+					data-idname="ids" data-group="ids">删除选中</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="bjui-pageContent tableContent">
+	<table data-toggle="tablefixed" data-width="100%" data-nowrap="true"
+		data-selected-multi="true">
+		<thead>
+			<tr>
+				<th width="26"><input type="checkbox" class="checkboxCtrl"
+					data-group="ids" data-toggle="icheck" /></th>
+				<th data-order-field="depart.name">所属机构</th>
+				<th data-order-field="message">提醒信息</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="e : ${content}" th:attr="data-id=${e.id}">
+				<td><input type="checkbox" name="ids" data-toggle="icheck"
+					th:value="${e.id}" value="-1" /></td>
+				<td th:text="${e.depart.name}">所属机构</td>
+				<td th:text="${e.message}">提醒信息</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="bjui-pageFooter">
+	<div class="pages">
+		<span th:text="'每页 '+${size}+' 条 '">每页 0 条</span> &nbsp; <span
+			th:text="',共 '+${total}+' 条 '">共 0 条</span>
+	</div>
+	<div class="pagination-box" data-toggle="pagination"
+		th:attrappend="data-total=${total},data-page-size=${size},data-page-current=${page}">
+	</div>
+</div>
