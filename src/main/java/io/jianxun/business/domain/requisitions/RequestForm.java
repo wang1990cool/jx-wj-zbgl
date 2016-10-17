@@ -9,6 +9,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,14 +34,14 @@ public class RequestForm extends DepartmentEntity {
 	private static final long serialVersionUID = 1057179651112200284L;
 	private Weapon weapon;
 	// 申请数量
-	private BigDecimal capacity = BigDecimal.ZERO;
+	private BigDecimal capacity = BigDecimal.ONE;
 
 	// 申请单创创建时间
 	private LocalDate createDate;
 	// 申请单创建用户
 	private User createUser;
 	// 领用日期
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate requiredDate = LocalDate.now();
 	// 领用人信息
 	private String requiredUser;
@@ -48,6 +51,7 @@ public class RequestForm extends DepartmentEntity {
 	// 审核状态 create,back 可修改，up commit 锁定
 	private RequestFormStatus status = RequestFormStatus.CREATE;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "weapon_id")
 	public Weapon getWeapon() {
@@ -58,6 +62,8 @@ public class RequestForm extends DepartmentEntity {
 		this.weapon = weapon;
 	}
 
+	@Min(1)
+	@Max(100000)
 	public BigDecimal getCapacity() {
 		return capacity;
 	}
@@ -117,12 +123,11 @@ public class RequestForm extends DepartmentEntity {
 	}
 
 	/**
-	 * @param status the status to set
+	 * @param status
+	 *            the status to set
 	 */
 	public void setStatus(RequestFormStatus status) {
 		this.status = status;
 	}
-	
-	
 
 }

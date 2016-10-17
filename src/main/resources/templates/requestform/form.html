@@ -15,11 +15,11 @@
 
 				<tr>
 					<td colspan="4"><label class="control-label x95">申请装备：</label>
-						<input type="text" disabled="disabled" name="weaponName"
+						<input type="text" disabled="disabled" name="weaponName" data-rule="required"
 						data-toggle="lookup" data-id="re-weapon-searchform"
 						data-title="装备查找"
 						data-url="business/stock/ajax/search/weapon/{#dId}"
-						 size="15" /></td><input type="hidden" name="weapon" />
+						 size="15" /><input type="hidden" name="weapon"  data-rule="required" /></td>
 				</tr>
 				<tr>
 					<td colspan="4"><label class="control-label x95">装备库存情况：</label>
@@ -29,7 +29,7 @@
 				<tr>
 					<td colspan="4"><label class="control-label x95">申请数量：</label>
 						<input type="text" th:field="*{capacity}" name="capacity"
-						data-toggle="spinner" data-rule="required digits"
+						data-toggle="spinner" data-rule="required;integer; range[1~100000]" data-min="1"
 						data-max="100000" size="15" /></td>
 				</tr>
 				<tr>

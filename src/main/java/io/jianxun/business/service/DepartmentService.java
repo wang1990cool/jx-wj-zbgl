@@ -97,6 +97,8 @@ public class DepartmentService extends TreeableEntityService<Department> {
 				d.setName("马鞍山市特警支队" + i + "大队");
 				d.setpId(root.getId());
 				d.setLevelCode(serialNamer.getSerialNumber(root.getLevelCode()));
+				d.setCode("0" + i);
+				d.setSimpleName(i + "大队");
 				d.setXxsx(i);
 				entityRepository.saveAndFlush(d);
 

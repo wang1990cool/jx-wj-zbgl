@@ -20,7 +20,7 @@ import io.jianxun.common.service.exception.ServiceException;
 @Transactional(readOnly = true)
 public class StockService extends DepartmentableService<Stock> {
 
-	static final String MSG = "当前机构[%s],总库存%d";
+	static final String MSG = "总库存%d";
 	static final String SUBMSG = " | 机构[%s],库存%d";
 
 	@Autowired
@@ -55,14 +55,13 @@ public class StockService extends DepartmentableService<Stock> {
 	public String getWeaponassignment(Weapon weapon, Department depart, Long all) {
 		// 机构及以下装备总量其中当前机构库存多少,下级机构库存多少
 		StringBuilder sb = new StringBuilder(50);
-		sb.append(String.format(MSG, depart.getName(), all));
+		sb.append(String.format(MSG, all));
 		List<Department> subDep = departmentService.findSubDepart(depart);
 		if (subDep.size() > 0) {
-			sb.append("其中");
 			for (Department department : subDep) {
 				Long subAll = countByDepartAndWeapon(department, weapon);
 				if (subAll != null && subAll > 0)
-					sb.append(String.format(SUBMSG, department.getName(), subAll));
+					sb.append(String.format(SUBMSG, department.getDisplayName(), subAll));
 			}
 
 		}

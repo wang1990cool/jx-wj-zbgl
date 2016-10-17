@@ -2,6 +2,7 @@ package io.jianxun.business.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -27,6 +28,11 @@ public class Department extends TreeableEntity {
 	 */
 	public String getName() {
 		return name;
+	}
+
+	@Transient
+	public String getDisplayName() {
+		return simpleName == null ? name : simpleName;
 	}
 
 	/**
