@@ -47,7 +47,7 @@ public class DepartmentService extends TreeableEntityService<Department> {
 			DepartmentTree d = new DepartmentTree();
 			d.setId(department.getId());
 			d.setpId(department.getpId());
-			d.setName(department.getName());
+			d.setName(department.getSimpleName() == null ? department.getName() : department.getSimpleName());
 			d.setLevelCode(department.getLevelCode());
 			tree.add(d);
 		}

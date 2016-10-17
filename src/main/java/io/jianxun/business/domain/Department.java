@@ -17,6 +17,8 @@ public class Department extends TreeableEntity {
 
 	@NotNull
 	private String name;
+	// 简称
+	private String simpleName;
 
 	private String descrip;
 
@@ -33,6 +35,14 @@ public class Department extends TreeableEntity {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getSimpleName() {
+		return simpleName;
+	}
+
+	public void setSimpleName(String simpleName) {
+		this.simpleName = simpleName;
 	}
 
 	public String getCode() {
