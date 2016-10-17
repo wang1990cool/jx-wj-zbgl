@@ -10,6 +10,14 @@
 						th:text="${stockDes}">备库存信息</span> <input th:field="*{domainId}"
 						type="hidden" name="domainId" /></td>
 				</tr>
+				
+				<tr>
+					<td><label class="control-label x95">审核数量：</label> 
+						<input type="text" th:field="*{auditAmount}" name="auditAmount"
+						data-toggle="spinner" data-rule="required;integer; range[1~100000]" data-min="1"
+						data-max="100000" size="15" /></td>
+				</tr>
+				
 				<tr>
 					<td colspan="4"><label class="control-label x95">审核意见：</label>
 						<textarea th:field="*{message}" name="message"

@@ -1,23 +1,32 @@
 package io.jianxun.business.domain.requisitions;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.google.common.collect.Sets;
 
 import io.jianxun.business.domain.DepartmentEntity;
 import io.jianxun.business.domain.User;
 import io.jianxun.business.domain.Weapon;
+import io.jianxun.business.domain.stock.StockInDetail;
 import io.jianxun.business.enums.RequestFormStatus;
 
 /**
@@ -34,7 +43,7 @@ public class RequestForm extends DepartmentEntity {
 	private static final long serialVersionUID = 1057179651112200284L;
 	private Weapon weapon;
 	// 申请数量
-	private BigDecimal capacity = BigDecimal.ONE;
+	private Integer capacity = 1;
 
 	// 申请单创创建时间
 	private LocalDate createDate;
@@ -51,6 +60,9 @@ public class RequestForm extends DepartmentEntity {
 	// 审核状态 create,back 可修改，up commit 锁定
 	private RequestFormStatus status = RequestFormStatus.CREATE;
 
+	// 具体的库存装备信息
+	private Set<StockInDetail> details = Sets.newHashSet();
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "weapon_id")
@@ -64,11 +76,11 @@ public class RequestForm extends DepartmentEntity {
 
 	@Min(1)
 	@Max(100000)
-	public BigDecimal getCapacity() {
+	public Integer getCapacity() {
 		return capacity;
 	}
 
-	public void setCapacity(BigDecimal capacity) {
+	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
 
@@ -128,6 +140,30 @@ public class RequestForm extends DepartmentEntity {
 	 */
 	public void setStatus(RequestFormStatus status) {
 		this.status = status;
+	}
+
+	@ManyToMany
+	@JoinTable(name = "jx_zb_ref_details", joinColumns = { @JoinColumn(name = "ref_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "detail_id") })
+	// Fecth策略定义
+	@Fetch(FetchMode.SUBSELECT)
+	// 集合按id排序.
+	@OrderBy("id")
+	public Set<StockInDetail> getDetails() {
+		return details;
+	}
+
+	public void setDetails(Set<StockInDetail> details) {
+		this.details = details;
+	}
+
+	@Transient
+	public String getOverview() {
+		if (this.getWeapon() == null)
+			return "";
+		return "申请机构:" + this.getDepart().getSimpleName() + "|申请装备:" + this.getWeapon().getName() + "|申请数量:"
+				+ this.getCapacity();
+
 	}
 
 }

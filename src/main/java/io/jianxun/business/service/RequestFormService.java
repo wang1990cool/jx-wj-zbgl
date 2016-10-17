@@ -70,8 +70,19 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 			f.setStatus(RequestFormStatus.BACK);
 		if (StringUtils.isEmpty(message))
 			message = "审核未通过";
-		save(f);
 		requestFormAuditorService.audit(f, message);
+
+	}
+
+	@Transactional(readOnly = false)
+	public void up(RequestForm f, String message) {
+		if (f.getStatus().equals(RequestFormStatus.CREATE) || f.getStatus().equals(RequestFormStatus.BACK)) {
+			f.setStatus(RequestFormStatus.UP);
+			if (StringUtils.isEmpty(message))
+				message = "提交成功";
+			requestFormAuditorService.audit(f, message);
+		} else
+			throw new ServiceException("状态错误不能提交");
 
 	}
 

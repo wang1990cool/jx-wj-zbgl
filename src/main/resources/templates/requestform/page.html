@@ -16,24 +16,37 @@
 	</form>
 	<hr style="margin: 5px 0" />
 	<div class="pull-left">
-		<button th:if="${createable}" type="button" data-toggle="navtab" class="btn-red"
-			data-id="requestform-form-new"
+		<button th:if="${createable}" type="button" data-toggle="navtab"
+			class="btn-blue" data-id="requestform-form-new"
 			data-url="business/requestform/create/{#dId}">新增--领用申请信息</button>
+		<button th:if="${createable}" type="button" data-toggle="navtab"
+			class="btn-red" data-id="requestform-form-up"
+			data-url="business/requestform/upform/{#bjui-selected}">提交</button>
 		<button type="button" data-toggle="navtab" class="btn-green"
 			data-id="requestform-form-auditormessage"
 			data-url="business/requestform/auditmessage/{#bjui-selected}">查看审批信息</button>
-		<button th:if="${commitable}" type="button" data-toggle="navtab" class="btn-green"
-			data-id="requestform-form-auditor"
+		<button th:if="${commitable}" type="button" data-toggle="navtab"
+			class="btn-green" data-id="requestform-form-auditor"
 			data-url="business/requestform/auditform/{#bjui-selected}">审批</button>
+		<button th:if="${enrollment}" type="button" data-toggle="navtab"
+			class="btn-green" data-id="requestform-form-enrollment"
+			data-url="business/requestform/out/{#bjui-selected}">选择登记</button>
+		<button th:if="${enrollment}" type="button" data-toggle="navtab"
+			class="btn-green" data-id="requestform-form-enrollment"
+			data-url="business/requestform/autoout/{#bjui-selected}">系统登记</button>
+		<button th:if="${enrollment}" type="button" data-toggle="navtab"
+			class="btn-green" data-id="requestform-form-enrollment"
+			data-url="business/requestform/out/detail/{#bjui-selected}">发放装备明细</button>
+		<!-- 
 		<div class="btn-group">
 			<button type="button" class="btn-default dropdown-toggle"
 				data-toggle="dropdown" data-icon="copy">
 				批量操作<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu right" role="menu">
-				<li><a th:href="@{/business/requestform/up}" href="#"
+				<li><a th:href="@{/business/requestform/ups}" href="#"
 					data-toggle="doajaxchecked" data-confirm-msg="确定要提交选中项吗？"
-					data-idname="ids" data-group="ids">提交选中</a></li>
+					data-idname="ids" data-group="ids">批量提交</a></li>
 				<li><a th:href="@{/business/requestform/commit}" href="#"
 					data-toggle="doajaxchecked" data-confirm-msg="确定要审核选中项吗？"
 					data-idname="ids" data-group="ids">审核选中</a></li>
@@ -42,6 +55,7 @@
 					data-idname="ids" data-group="ids">删除选中</a></li>
 			</ul>
 		</div>
+		 -->
 	</div>
 </div>
 <div class="bjui-pageContent tableContent">
@@ -76,10 +90,7 @@
 					data-id="requestform-modify-form" data-title="修改-器械信息">修改</a> <a
 					th:href="@{/business/requestform/remove/{id}(id=${e.id})}" href="#"
 					class="btn btn-red" data-toggle="doajax"
-					data-confirm-msg="确定要删除该行信息吗？">删除</a> <a
-					th:href="@{/business/requestform/out/{id}(id=${e.id})}" href="#"
-					class="btn btn-orange" data-toggle="navtab"
-					data-id="requestform-out-form" data-title="出库领用-器械信息">领用登记</a></td>
+					data-confirm-msg="确定要删除该行信息吗？">删除</a></td>
 			</tr>
 		</tbody>
 	</table>

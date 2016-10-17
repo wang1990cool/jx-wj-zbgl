@@ -203,7 +203,7 @@ public class EntityController<T extends IdEntity> {
 
 	@ModelAttribute
 	public void getMode(@RequestParam(value = "id", defaultValue = "-1") Long id, Model model) {
-		if (id != null) {
+		if (id != null&&id!=-1L) {
 			T entity = entityService.findOne(id);
 			if (entity != null)
 				model.addAttribute("domain", entity);

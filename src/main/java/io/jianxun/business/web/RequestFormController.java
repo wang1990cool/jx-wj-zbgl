@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,16 +20,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import io.jianxun.business.domain.Department;
+import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.domain.requisitions.RequestForm;
 import io.jianxun.business.domain.requisitions.RequestFormAuditor;
 import io.jianxun.business.domain.stock.Stock;
+import io.jianxun.business.domain.validator.RequestFormValidator;
 import io.jianxun.business.enums.RequestFormStatus;
 import io.jianxun.business.service.DepartmentService;
 import io.jianxun.business.service.DepartmentableService;
 import io.jianxun.business.service.RequestFormAuditorService;
 import io.jianxun.business.service.RequestFormService;
+import io.jianxun.business.service.StockInDetailService;
 import io.jianxun.business.service.StockService;
+import io.jianxun.business.service.WeaponService;
 import io.jianxun.business.web.dto.AuditorDto;
+import io.jianxun.business.web.dto.ReAuditorDto;
 import io.jianxun.business.web.dto.ReturnDto;
 import io.jianxun.common.service.exception.ServiceException;
 import io.jianxun.common.utils.Servlets;
@@ -43,6 +50,12 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 	@Autowired
 	private StockService stockService;
 
+	@Autowired
+	private StockInDetailService detailService;
+
+	@Autowired
+	private WeaponService weaponService;
+
 	public RequestFormController(DepartmentableService<RequestForm> entityService) {
 		super(entityService);
 	}
@@ -52,7 +65,7 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		model.addAttribute("createable", true);
 	}
 
-	@RequestMapping("/up")
+	@RequestMapping("/ups")
 	@ResponseBody
 	public ReturnDto up(@RequestParam("ids") Long[] ids) {
 		for (Long id : ids) {
@@ -130,6 +143,7 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		model.addAttribute("orderDirection", orderDirection);
 		model.addAttribute("total", page.getTotalElements());
 		model.addAttribute("dId", depart);
+		model.addAttribute("enrollment", true);
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return getTemplePrefix() + "/page";
 	}
@@ -143,8 +157,8 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		return ReturnDto.ok("操作成功!");
 	}
 
-	@RequestMapping(value = "/auditform/{id}")
-	public String auditForm(@PathVariable("id") Long id, Model model) {
+	@RequestMapping(value = "/upform/{id}")
+	public String upform(@PathVariable("id") Long id, Model model) {
 		RequestForm f = entityService.findOne(id);
 		if (f == null)
 			throw new ServiceException("申请信息不存在");
@@ -158,6 +172,39 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		model.addAttribute("stockDes", stock.getDescription());
 		AuditorDto auditorDto = new AuditorDto();
 		auditorDto.setDomainId(id);
+		model.addAttribute("auditDto", auditorDto);
+		return getTemplePrefix() + "/upform";
+	}
+
+	@RequestMapping("/up")
+	@ResponseBody
+	public ReturnDto up(AuditorDto auditMessage) {
+		Long id = auditMessage.getDomainId();
+		if (id == null)
+			throw new ServiceException("获取申请信息失败");
+		RequestForm f = entityService.findOne(id);
+		if (f == null)
+			throw new ServiceException("申请信息不存在");
+		((RequestFormService) entityService).up(f, auditMessage.getMessage());
+		return ReturnDto.ok("提交成功!");
+	}
+
+	@RequestMapping(value = "/auditform/{id}")
+	public String auditForm(@PathVariable("id") Long id, Model model) {
+		RequestForm f = entityService.findOne(id);
+		if (f == null)
+			throw new ServiceException("申请信息不存在");
+		Long parentId = f.getDepart().getpId();
+		Department parent = departmentService.findOne(parentId);
+		if (parent == null)
+			throw new ServiceException("获取机构信息失败");
+		Stock stock = stockService.findByWeapon(parent, f.getWeapon());
+		if (stock == null)
+			throw new ServiceException("库存信息不存在");
+		model.addAttribute("stockDes", stock.getDescription());
+		ReAuditorDto auditorDto = new ReAuditorDto();
+		auditorDto.setDomainId(id);
+		auditorDto.setAuditAmount(f.getCapacity());
 		model.addAttribute("auditDto", auditorDto);
 		return getTemplePrefix() + "/auditform";
 	}
@@ -189,11 +236,19 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 	}
 
 	@RequestMapping(value = "/out/{id}", method = RequestMethod.GET)
-	public String modify(@PathVariable("id") Long id, Model model) {
+	public String outform(@PathVariable("id") Long id, Model model) {
 		RequestForm f = entityService.findOne(id);
-		model.addAttribute(getDomainName(), f);
+		model.addAttribute("overview", f.getOverview());
+		model.addAttribute("departmentId", f.getDepart().getpId());
+		model.addAttribute("weaponId", f.getWeapon().getId());
 		return getTemplePrefix() + "/outform";
 
+	}
+	
+	
+	@RequestMapping(value = "/out", method = RequestMethod.POST)
+	public ReturnDto out(@PathVariable("id") Long id, Model model) {
+		return ReturnDto.ok("登记成功!");
 	}
 
 	@RequestMapping(value = "/auditmessage/{id}", method = RequestMethod.GET)
@@ -205,5 +260,29 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		model.addAttribute("content", messages);
 		return getTemplePrefix() + "/auditmessage";
 	}
+
+	@RequestMapping(value = "/ajax/search/weapon/detail/{weaponId}/{departId}")
+	public String getDepartWeaponDetail(@PathVariable("weaponId") Long weaponId,
+			@PathVariable("departId") Long departId, Model model) {
+
+		Department department = departmentService.findOne(departId);
+		if (department == null)
+			throw new ServiceException("获取机构信息失败");
+		Weapon weapon = weaponService.findOne(weaponId);
+		if (weapon == null)
+			throw new ServiceException("获取装备信息失败");
+		model.addAttribute("content", detailService.findByDepartAndStockInWeapon(department, weapon));
+		return "requestform/selectweapon";
+
+	}
+
+	@InitBinder
+	public void initBinder(WebDataBinder b) {
+		super.initBinder(b);
+		b.addValidators(requestFormValidator);
+	}
+
+	@Autowired
+	private RequestFormValidator requestFormValidator;
 
 }

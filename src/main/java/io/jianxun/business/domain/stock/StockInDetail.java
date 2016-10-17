@@ -12,6 +12,8 @@ import javax.persistence.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.jianxun.business.domain.DepartmentEntity;
 import io.jianxun.business.domain.User;
 
@@ -29,6 +31,8 @@ public class StockInDetail extends DepartmentEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = -5850340513999006022L;
+	
+	ObjectMapper mapper = new ObjectMapper();
 
 	// 入库单据
 	private StockIn stockIn;
@@ -165,6 +169,56 @@ public class StockInDetail extends DepartmentEntity {
 	 */
 	public void setMaintenanceUser(User maintenanceUser) {
 		this.maintenanceUser = maintenanceUser;
+	}
+
+	@Transient
+	public String getInfo() {
+		if (this.getStockIn() == null)
+			return "";
+		if (this.getStockIn().getWeapon() == null)
+			return "";
+		return "装备名称:" + this.getStockIn().getWeapon().getName() + "|型号" + this.getStockIn().getWeapon().getType()
+				+ "|生产日期:" + this.getStockIn().getProductionDate() + "|系统编码:"+this.getBarcode();
+
+	}
+
+	@Transient
+	public String getSearchDes() {
+		if (this.getStockIn() == null)
+			return "";
+		if (this.getStockIn().getWeapon() == null)
+			return "";
+		SearchDes s = new SearchDes();
+		s.setDetailId(this.getId());
+		s.setInfo(this.getInfo());
+		try {
+			return mapper.writeValueAsString(s);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "";
+		}
+	}
+
+	class SearchDes {
+		private Long detailId;
+		private String info;
+
+		public Long getDetailId() {
+			return detailId;
+		}
+
+		public void setDetailId(Long detailId) {
+			this.detailId = detailId;
+		}
+
+		public String getInfo() {
+			return info;
+		}
+
+		public void setInfo(String info) {
+			this.info = info;
+		}
+
 	}
 
 }

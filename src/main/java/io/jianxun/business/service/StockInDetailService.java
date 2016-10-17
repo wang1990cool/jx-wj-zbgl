@@ -10,6 +10,8 @@ import org.springframework.util.StringUtils;
 
 import com.google.common.collect.Lists;
 
+import io.jianxun.business.domain.Department;
+import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.domain.stock.StockIn;
 import io.jianxun.business.domain.stock.StockInDetail;
 import io.jianxun.business.repository.StockInDetailRepository;
@@ -80,6 +82,11 @@ public class StockInDetailService extends EntityService<StockInDetail> {
 
 	public List<StockInDetail> findByMaintenanceDateLT(LocalDate noticeDate) {
 		return ((StockInDetailRepository) entityRepository).findByMaintenanceDateBefore(noticeDate);
+
+	}
+
+	public List<StockInDetail> findByDepartAndStockInWeapon(Department department, Weapon weapon) {
+		return ((StockInDetailRepository) entityRepository).findByDepartAndStockInWeapon(department, weapon);
 
 	}
 

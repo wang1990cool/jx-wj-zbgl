@@ -1,41 +1,30 @@
 <div class="bjui-pageContent">
 	<form action="#" id="requestform_form"
-		th:action="@{/business/requestform/modify}" method="POST"
-		th:object="${requestform}" data-toggle="validate" data-alertmsg="false">
+		th:action="@{/business/requestform/out}" method="POST"
+		th:object="${requestform}" data-toggle="validate"
+		data-alertmsg="false">
 		<table class="table table-condensed table-hover" width="100%">
 			<tbody>
-			
-				
+
 				<tr>
-					<td colspan="4"><label for="j_custom_note"
-						class="control-label x95">装备：</label>
-						<input type="text" disabled="disabled" th:field="*{weapon.name}" size="15" /><input type="hidden" name="id"
-						th:value="${id}" />
-					</td>
+					<td><label class="control-label x95">申请简述：</label> <input
+						type="text" disabled="disabled" th:value="${overview}"
+						size="60" /> <input type="hidden" name="id" th:value="${id}" /><input
+						type="hidden" id="dId"  th:value="${departmentId}" /><input
+						type="hidden" id="wId" th:value="${weaponId}" /></td>
+				</tr>
+
+				<tr>
+					<td colspan="4"><label class="control-label x95">申请装备：</label>
+						<input type="text" disabled="disabled" name="weaponName"
+						data-rule="required" data-toggle="lookup"
+						data-id="re-weapon-searchform" data-title="装备查找"
+						data-url="business/requestform/ajax/search/weapon/detail/{#dId}/{#wId}"
+						size="15" /><input type="hidden" name="detailId"  data-rule="required" /></td>
 				</tr>
 				<tr>
-					<td colspan="4"><label for="j_custom_note"
-						class="control-label x95">申请数量：</label> 
-						<input type="text" disabled="disabled" th:field="*{capacity}" size="15" />
-					</td>
-				</tr>
-				<tr>
-					<td><label for="j_custom_fname" class="control-label x95">领用日期：</label>
-					<input type="text" disabled="disabled" th:field="*{requiredDate}" size="15" />
-						</td>
-				</tr>
-				<tr>
-					<td><label for="j_custom_fname" class="control-label x95">领用人：</label>
-					<input type="text" name="requiredUser" th:field="*{requiredUser}" size="15" />
-						</td>
-				</tr>
-				<tr>
-					<td colspan="4"><label for="j_custom_note"
-						class="control-label x95">备注：</label> 
-						<textarea name="descrip" disabled="disabled"
-							th:field="*{descrip}" data-toggle="autoheight" cols="60" rows="8"></textarea>
-					</td>
-					
+					<td colspan="4"><label class="control-label x95">装备信息：</label>
+						<textarea cols="60" rows="8" name="info" disabled="disabled" /></td>
 				</tr>
 			</tbody>
 		</table>

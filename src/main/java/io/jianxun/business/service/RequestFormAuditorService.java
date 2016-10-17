@@ -2,6 +2,7 @@ package io.jianxun.business.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,9 @@ import io.jianxun.common.service.EntityService;
 @Transactional(readOnly = true)
 public class RequestFormAuditorService extends EntityService<RequestFormAuditor> {
 
+	@Autowired
+	private RequestFormService requestFormService;
+
 	@Transactional(readOnly = false)
 	public void audit(RequestForm requestForm, String message) {
 		RequestFormAuditor auditor = new RequestFormAuditor();
@@ -21,6 +25,7 @@ public class RequestFormAuditorService extends EntityService<RequestFormAuditor>
 		auditor.setRequestForm(requestForm);
 		auditor.setMessage(message);
 		save(auditor);
+		requestFormService.save(requestForm);
 	}
 
 	public List<RequestFormAuditor> findByRequestForm(RequestForm form) {
