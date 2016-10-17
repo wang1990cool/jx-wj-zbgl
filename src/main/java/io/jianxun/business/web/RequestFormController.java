@@ -5,8 +5,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -24,6 +26,7 @@ import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.domain.requisitions.RequestForm;
 import io.jianxun.business.domain.requisitions.RequestFormAuditor;
 import io.jianxun.business.domain.stock.Stock;
+import io.jianxun.business.domain.stock.StockInDetail;
 import io.jianxun.business.domain.validator.RequestFormValidator;
 import io.jianxun.business.enums.RequestFormStatus;
 import io.jianxun.business.service.DepartmentService;
@@ -244,11 +247,45 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		return getTemplePrefix() + "/outform";
 
 	}
-	
-	
+
 	@RequestMapping(value = "/out", method = RequestMethod.POST)
-	public ReturnDto out(@PathVariable("id") Long id, Model model) {
+	@ResponseBody
+	public ReturnDto out(@RequestParam("id") Long id, @RequestParam("detailId") Long[] details, Model model) {
+		RequestForm f = entityService.findOne(id);
+		if (f == null)
+			throw new ServiceException("获取申请信息失败");
+		if (details != null && details.length > 0) {
+			if (f.getCapacity() < details.length)
+				throw new ServiceException("装备选择超出申请数量范围");
+			for (Long d : details) {
+				StockInDetail detail = detailService.findOne(d);
+				if (detail != null)
+					f.getDetails().add(detail);
+			}
+			f.setStatus(RequestFormStatus.ENROLLMENT);
+			entityService.save(f);
+		} else
+			throw new ServiceException("未选择任何装备");
 		return ReturnDto.ok("登记成功!");
+	}
+
+	// 系统登记
+	@RequestMapping(value = "/sysout/{id}")
+	@ResponseBody
+	public ReturnDto sysout(@PathVariable("id") Long id, Model model) {
+		RequestForm f = entityService.findOne(id);
+		if (f == null)
+			throw new ServiceException("获取申请信息失败");
+
+		Page<StockInDetail> p = detailService.findAll(new PageRequest(0, f.getCapacity(), Direction.DESC, "id"));
+		if (p.getContent() != null && !p.getContent().isEmpty()) {
+			f.getDetails().addAll(p.getContent());
+			f.setStatus(RequestFormStatus.ENROLLMENT);
+			entityService.save(f);
+		} else
+			throw new ServiceException("未选择任何装备");
+		return ReturnDto.ok("登记成功!");
+
 	}
 
 	@RequestMapping(value = "/auditmessage/{id}", method = RequestMethod.GET)

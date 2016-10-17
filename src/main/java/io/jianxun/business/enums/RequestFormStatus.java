@@ -2,6 +2,6 @@ package io.jianxun.business.enums;
 
 public enum RequestFormStatus {
 
-	CREATE, UP, COMMIT, BACK;
+	CREATE, UP, COMMIT, ENROLLMENT, FINISH, BACK;
 
 }
