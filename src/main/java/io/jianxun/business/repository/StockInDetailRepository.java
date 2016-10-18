@@ -16,4 +16,8 @@ public interface StockInDetailRepository extends EntityRepository<StockInDetail,
 
 	List<StockInDetail> findByDepartAndStockInWeapon(Department department, Weapon weapon);
 
+	List<StockInDetail> findByMaintenanceNoticeDateBefore(LocalDate noticeDate);
+
+	List<StockInDetail> findByRetirementPeriodNoticeDateBefore(LocalDate noticeDate);
+
 }

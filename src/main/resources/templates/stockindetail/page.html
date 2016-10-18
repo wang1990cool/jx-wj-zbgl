@@ -29,6 +29,8 @@
 				<th>装备编号</th>
 				<th>装备自带编号</th>
 				<th data-order-field="stockIn.createTime">入库时间</th>
+				<th data-order-field="maintenanceNoticeDate">维护到期时间</th>
+				<th data-order-field="retirementPeriodNoticeDate">报废时间</th>
 				<th data-order-field="stockIn.createUser.name">操作用户</th>
 			</tr>
 		</thead>
@@ -42,6 +44,8 @@
 				<td th:text="${e.stockCodePrefix + ' ' +e.sNo}">自带编号</td>
 				<td th:text="${e.ownCode}">自带编号</td>
 				<td th:text="${e.stockIn.createTime}">入库时间</td>
+				<td th:text="${e.maintenanceNoticeDate}">维护到期时间</td>
+				<td th:text="${e.retirementPeriodNoticeDate}">报废时间</td>
 				<td th:text="${e.stockIn.createUser.name}">操作用户</td>
 			</tr>
 		</tbody>

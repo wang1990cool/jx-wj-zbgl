@@ -16,6 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jianxun.business.domain.DepartmentEntity;
 import io.jianxun.business.domain.User;
+import io.jianxun.business.domain.Weapon;
+import io.jianxun.business.enums.Unit;
 
 /**
  * 库存明细
@@ -31,7 +33,7 @@ public class StockInDetail extends DepartmentEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = -5850340513999006022L;
-	
+
 	ObjectMapper mapper = new ObjectMapper();
 
 	// 入库单据
@@ -51,6 +53,12 @@ public class StockInDetail extends DepartmentEntity {
 	// 最后维护日期
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate maintenanceDate;
+	// 维护周期到期日期
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate maintenanceNoticeDate;
+	// 报废到期日期
+	private LocalDate retirementPeriodNoticeDate;
+
 	private User maintenanceUser;
 
 	/**
@@ -140,10 +148,68 @@ public class StockInDetail extends DepartmentEntity {
 	 * @return the maintenanceDate
 	 */
 	public LocalDate getMaintenanceDate() {
-		if (this.maintenanceDate == null)
-			if (this.getStockIn() != null)
-				this.maintenanceDate = this.getStockIn().getProductionDate();
+		if (this.getStockIn() != null) {
+			Weapon weapon = this.getStockIn().getWeapon();
+			if (weapon == null || weapon.getMaintenanceCycle() == -1)
+				this.maintenanceDate = null;
+			else {
+				if (this.maintenanceDate == null) {
+					this.maintenanceDate = this.getStockIn().getProductionDate();
+				}
+
+			}
+		}
 		return maintenanceDate;
+	}
+
+	public LocalDate getMaintenanceNoticeDate() {
+		if (this.getMaintenanceDate() != null) {
+			Weapon weapon = this.getStockIn().getWeapon();
+			if (weapon != null) {
+				int cycle = weapon.getMaintenanceCycle();
+				String unit = weapon.getMaintenanceCycleUnit();
+				if (Unit.MONTH.getCode().equals(unit))
+					this.maintenanceNoticeDate = this.getMaintenanceDate().plusMonths(cycle);
+				else if (Unit.YEAR.getCode().equals(unit))
+					this.maintenanceNoticeDate = this.getMaintenanceDate().plusYears(cycle);
+				else if (Unit.DAY.getCode().equals(unit))
+					this.maintenanceNoticeDate = this.getMaintenanceDate().plusDays(cycle);
+				else
+					this.maintenanceDate = null;
+			}
+		}
+
+		return maintenanceNoticeDate;
+	}
+
+	public void setMaintenanceNoticeDate(LocalDate mnaintenanceNoticeDate) {
+		this.maintenanceNoticeDate = mnaintenanceNoticeDate;
+	}
+
+	public LocalDate getRetirementPeriodNoticeDate() {
+		if (this.getStockIn() != null) {
+			Weapon weapon = this.getStockIn().getWeapon();
+			if (weapon == null || weapon.getMaintenanceCycle() == -1)
+				this.retirementPeriodNoticeDate = null;
+			else {
+				int cycle = weapon.getRetirementPeriod();
+				String unit = weapon.getRetirementPeriodUnit();
+				if (Unit.MONTH.getCode().equals(unit))
+					this.retirementPeriodNoticeDate = this.stockIn.getProductionDate().plusMonths(cycle);
+				else if (Unit.YEAR.getCode().equals(unit))
+					this.retirementPeriodNoticeDate = this.stockIn.getProductionDate().plusYears(cycle);
+				else if (Unit.DAY.getCode().equals(unit))
+					this.retirementPeriodNoticeDate = this.stockIn.getProductionDate().plusDays(cycle);
+				else
+					this.retirementPeriodNoticeDate = null;
+
+			}
+		}
+		return this.retirementPeriodNoticeDate;
+	}
+
+	public void setRetirementPeriodNoticeDate(LocalDate retirementPeriodNoticeDate) {
+		this.retirementPeriodNoticeDate = retirementPeriodNoticeDate;
 	}
 
 	/**
@@ -178,7 +244,7 @@ public class StockInDetail extends DepartmentEntity {
 		if (this.getStockIn().getWeapon() == null)
 			return "";
 		return "装备名称:" + this.getStockIn().getWeapon().getName() + "|型号" + this.getStockIn().getWeapon().getType()
-				+ "|生产日期:" + this.getStockIn().getProductionDate() + "|系统编码:"+this.getBarcode();
+				+ "|生产日期:" + this.getStockIn().getProductionDate() + "|系统编码:" + this.getBarcode();
 
 	}
 

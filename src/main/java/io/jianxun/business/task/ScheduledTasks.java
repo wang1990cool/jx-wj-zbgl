@@ -12,8 +12,15 @@ public class ScheduledTasks {
 	@Autowired
 	private WeaponNoticeService weaponNoticeService;
 
-	@Scheduled(fixedRate = 5000)
-	public void te() {
+	// 维护提醒
+	@Scheduled(cron="0 0 0 * * ?")
+	public void wh() {
+		weaponNoticeService.createWeaponNotice();
+	}
+
+	// 归还提醒
+	@Scheduled(cron="0 0 0 * * ?")
+	public void gh() {
 		weaponNoticeService.createWeaponNotice();
 	}
 

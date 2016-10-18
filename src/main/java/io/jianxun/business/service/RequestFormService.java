@@ -18,6 +18,7 @@ import io.jianxun.business.domain.requisitions.RequestForm;
 import io.jianxun.business.domain.stock.StockInDetail;
 import io.jianxun.business.enums.RequestFormStatus;
 import io.jianxun.business.event.AdjustStockEvent;
+import io.jianxun.business.event.RefreshNoticeEvent;
 import io.jianxun.common.service.exception.ServiceException;
 
 @Service
@@ -137,7 +138,8 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 		requestFormAuditorService.audit(f, message);
 		// 调整库存
 		adjustStock(f);
-
+		//刷新提醒
+		applicationEventPublisher.publishEvent(new RefreshNoticeEvent());
 	}
 
 	private void adjustStock(RequestForm f) {

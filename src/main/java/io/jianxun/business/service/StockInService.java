@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.jianxun.business.domain.stock.StockIn;
+import io.jianxun.business.event.RefreshNoticeEvent;
 import io.jianxun.business.event.RefreshStockEvent;
 
 @Service
@@ -27,6 +28,8 @@ public class StockInService extends DepartmentableService<StockIn> {
 		this.entityRepository.flush();
 		// 刷新库存
 		refreshStock(stock);
+		//刷新提醒
+		applicationEventPublisher.publishEvent(new RefreshNoticeEvent());
 		return stock;
 
 	}

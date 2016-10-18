@@ -85,6 +85,19 @@ public class StockInDetailService extends EntityService<StockInDetail> {
 		return ((StockInDetailRepository) entityRepository).findByMaintenanceDateBefore(noticeDate);
 
 	}
+	
+	
+	//维护到期提醒
+	public List<StockInDetail> findByMaintenanceNoticeDateLT(LocalDate noticeDate) {
+		return ((StockInDetailRepository) entityRepository).findByMaintenanceNoticeDateBefore(noticeDate);
+
+	}
+	
+	//报废提醒
+	public List<StockInDetail> findByRetirementPeriodNoticeDateLT(LocalDate noticeDate) {
+		return ((StockInDetailRepository) entityRepository).findByRetirementPeriodNoticeDateBefore(noticeDate);
+
+	}
 
 	public List<StockInDetail> findByDepartAndStockInWeapon(Department department, Weapon weapon) {
 		return ((StockInDetailRepository) entityRepository).findByDepartAndStockInWeapon(department, weapon);
