@@ -1,5 +1,6 @@
 package io.jianxun.business.service;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -131,6 +132,7 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 		f.setStatus(RequestFormStatus.FINISH);
 		if (StringUtils.isEmpty(message))
 			message = "确认发放";
+		f.setRequiredDate(LocalDate.now());
 		save(f);
 		requestFormAuditorService.audit(f, message);
 		// 调整库存

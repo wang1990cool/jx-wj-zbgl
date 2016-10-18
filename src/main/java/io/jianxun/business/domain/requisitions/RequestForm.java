@@ -63,6 +63,10 @@ public class RequestForm extends DepartmentEntity {
 	// 具体的库存装备信息
 	private Set<StockInDetail> details = Sets.newHashSet();
 
+	// 归还日期
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate returnDate;
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "weapon_id")
@@ -155,6 +159,14 @@ public class RequestForm extends DepartmentEntity {
 
 	public void setDetails(Set<StockInDetail> details) {
 		this.details = details;
+	}
+
+	public LocalDate getReturnDate() {
+		return returnDate;
+	}
+
+	public void setReturnDate(LocalDate returnDate) {
+		this.returnDate = returnDate;
 	}
 
 	@Transient

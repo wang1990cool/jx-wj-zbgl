@@ -9,7 +9,7 @@
 				<tr>
 					<td><label class="control-label x95">所属机构信息：</label> <input
 						type="text" disabled="disabled" th:value="${departmentName}"
-						size="15" /> <input type="hidden" name="id" th:value="${id}" /><input
+						size="60" /> <input type="hidden" name="id" th:value="${id}" /><input
 						type="hidden" id="dId" name="depart.id" th:value="${departmentId}" /></td>
 				</tr>
 
@@ -33,9 +33,9 @@
 						data-max="100000" size="15" /></td>
 				</tr>
 				<tr>
-					<td><label for="j_custom_fname" class="control-label x95">领用日期：</label>
-						<input type="text" th:field="*{requiredDate}" name="requiredDate"
-						data-toggle="datepicker" data-rule="required;date" size="15" /></td>
+					<td><label for="j_custom_fname" class="control-label x95">归还日期：</label>
+						<input type="text" th:field="*{returnDate}" name="rreturnDate"
+						data-toggle="datepicker" data-rule="date" size="15" /></td>
 				</tr>
 				<tr>
 					<td colspan="4"><label class="control-label x95">备注：</label> <textarea
