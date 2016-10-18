@@ -2,10 +2,14 @@ package io.jianxun.business.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.jianxun.business.domain.requisitions.RequestForm;
+import io.jianxun.business.domain.stock.StockInDetail;
 import io.jianxun.business.enums.RequestFormStatus;
 import io.jianxun.common.service.exception.ServiceException;
 
@@ -15,6 +19,8 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 
 	@Autowired
 	private RequestFormAuditorService requestFormAuditorService;
+	@Autowired
+	private StockInDetailService stockInDetailService;
 
 	@Transactional(readOnly = false)
 	public void up(Long id) {
@@ -84,6 +90,34 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 		} else
 			throw new ServiceException("状态错误不能提交");
 
+	}
+
+	@Transactional(readOnly = false)
+	public void sysout(RequestForm f) {
+		Page<StockInDetail> p = stockInDetailService.findAll(new PageRequest(0, f.getCapacity(), Direction.DESC, "id"));
+		if (p.getContent() != null && !p.getContent().isEmpty()) {
+			f.getDetails().addAll(p.getContent());
+			f.setStatus(RequestFormStatus.ENROLLMENT);
+			save(f);
+			requestFormAuditorService.audit(f, "登记成功");
+		} else
+			throw new ServiceException("未选择任何装备");
+
+	}
+
+	@Transactional(readOnly = false)
+	public void finish(RequestForm f, String message) {
+		if (!f.getStatus().equals(RequestFormStatus.ENROLLMENT))
+			throw new ServiceException("申请信息未登记不能确认");
+		if (f.getStatus().equals(RequestFormStatus.FINISH))
+			throw new ServiceException("申请已确认，不能重复操作");
+			f.setStatus(RequestFormStatus.FINISH);
+		if (StringUtils.isEmpty(message))
+			message = "确认发放";
+		save(f);
+		requestFormAuditorService.audit(f, message);
+		//TODO 更新内存
+		
 	}
 
 }

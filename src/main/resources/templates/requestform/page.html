@@ -34,7 +34,7 @@
 		<button th:if="${enrollment}" type="button" data-toggle="doajax" data-confirm-msg="确定要系统自动分配装备吗？"
 			class="btn-green" data-id="requestform-form-enrollment"
 			data-url="business/requestform/sysout/{#bjui-selected}">系统登记</button>
-		<button th:if="${enrollment}" type="button" data-toggle="navtab"
+		<button th:if="${finish}" type="button" data-toggle="navtab"
 			class="btn-green" data-id="requestform-form-finish"
 			data-url="business/requestform/finish/{#bjui-selected}">发放确认</button>
 		<!-- 
@@ -82,10 +82,10 @@
 				<td th:text="${e.weapon.name}">装备信息</td>
 				<td th:text="${e.capacity}">申请数量</td>
 				<td th:text="${e.requiredDate}">领用日期</td>
-				<td><a th:if="${createable}"
+				<td><a th:if="${e.status == T(io.jianxun.business.enums.RequestFormStatus).CREATE}"
 					th:href="@{/business/requestform/modify/{id}(id=${e.id})}" href="#"
 					class="btn btn-green" data-toggle="navtab"
-					data-id="requestform-modify-form" data-title="修改-器械信息">修改</a> <a th:if="${createable}"
+					data-id="requestform-modify-form" data-title="修改-器械信息">修改</a> <a th:if="${e.status == T(io.jianxun.business.enums.RequestFormStatus).CREATE}"
 					th:href="@{/business/requestform/remove/{id}(id=${e.id})}" href="#"
 					class="btn btn-red" data-toggle="doajax"
 					data-confirm-msg="确定要删除该行信息吗？">删除</a></td>

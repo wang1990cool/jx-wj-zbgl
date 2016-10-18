@@ -5,10 +5,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -129,8 +127,24 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 
 	}
 
-	@RequestMapping("finish/page/{depart}")
-	public String finishpage(Model model, Pageable pageable, @PathVariable("depart") Long depart,
+	@RequestMapping(value = "enrollment/tree", method = RequestMethod.GET)
+	public String enrollmenttree(Model model,
+			@RequestParam(value = "orderField", defaultValue = "id") String orderField,
+			@RequestParam(value = "orderDirection", defaultValue = "ASC") String orderDirection) {
+		try {
+			model.addAttribute("tree", mapper.writeValueAsString(departmentService
+					.getDepartTree("business/" + getTemplePrefix() + "/enrollment/page", getRefrashDiv())));
+			otherTreeData(model);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			throw new ServiceException("获取树形数据失败!");
+		}
+		return getTemplePrefix() + "/tree";
+
+	}
+
+	@RequestMapping("enrollment/page/{depart}")
+	public String enrollmentpage(Model model, Pageable pageable, @PathVariable("depart") Long depart,
 			@RequestParam(value = "orderField", defaultValue = "id") String orderField,
 			@RequestParam(value = "orderDirection", defaultValue = "DESC") String orderDirection) {
 		// 处理分页及排序
@@ -147,6 +161,28 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		model.addAttribute("total", page.getTotalElements());
 		model.addAttribute("dId", depart);
 		model.addAttribute("enrollment", true);
+		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
+		return getTemplePrefix() + "/page";
+	}
+
+	@RequestMapping("finish/page/{depart}")
+	public String finishpage(Model model, Pageable pageable, @PathVariable("depart") Long depart,
+			@RequestParam(value = "orderField", defaultValue = "id") String orderField,
+			@RequestParam(value = "orderDirection", defaultValue = "DESC") String orderDirection) {
+		// 处理分页及排序
+		// 由于B-jui 分页组件设定与pageable 有所差别为简单处理 在此直接代码修改pageable对象
+		Sort sort = createSort(orderField, orderDirection);
+		Map<String, Object> searchParams = getSearchParam();
+		searchParams.put("EQ_status", RequestFormStatus.ENROLLMENT.toString());
+		Page<RequestForm> page = entityService.findAll(buildPageable(pageable, sort), searchParams);
+		model.addAttribute("content", page.getContent());
+		model.addAttribute("page", page.getNumber() + 1);
+		model.addAttribute("size", page.getSize());
+		model.addAttribute("orderField", orderField);
+		model.addAttribute("orderDirection", orderDirection);
+		model.addAttribute("total", page.getTotalElements());
+		model.addAttribute("dId", depart);
+		model.addAttribute("finish", true);
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return getTemplePrefix() + "/page";
 	}
@@ -276,14 +312,7 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		RequestForm f = entityService.findOne(id);
 		if (f == null)
 			throw new ServiceException("获取申请信息失败");
-
-		Page<StockInDetail> p = detailService.findAll(new PageRequest(0, f.getCapacity(), Direction.DESC, "id"));
-		if (p.getContent() != null && !p.getContent().isEmpty()) {
-			f.getDetails().addAll(p.getContent());
-			f.setStatus(RequestFormStatus.ENROLLMENT);
-			entityService.save(f);
-		} else
-			throw new ServiceException("未选择任何装备");
+		((RequestFormService) entityService).sysout(f);
 		return ReturnDto.ok("登记成功!");
 
 	}
@@ -311,6 +340,31 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		model.addAttribute("content", detailService.findByDepartAndStockInWeapon(department, weapon));
 		return "requestform/selectweapon";
 
+	}
+
+	@RequestMapping(value = "/finish/{id}", method = RequestMethod.GET)
+	public String finishform(@PathVariable("id") Long id, Model model) {
+		RequestForm f = entityService.findOne(id);
+		model.addAttribute("overview", f.getOverview());
+		model.addAttribute("weaponlist", f.getDetails());
+		AuditorDto auditorDto = new AuditorDto();
+		auditorDto.setDomainId(id);
+		model.addAttribute("auditDto", auditorDto);
+		return getTemplePrefix() + "/finishform";
+
+	}
+	
+	@RequestMapping("/finish")
+	@ResponseBody
+	public ReturnDto finish(AuditorDto auditMessage) {
+		Long id = auditMessage.getDomainId();
+		if (id == null)
+			throw new ServiceException("获取申请信息失败");
+		RequestForm f = entityService.findOne(id);
+		if (f == null)
+			throw new ServiceException("申请信息不存在");
+		((RequestFormService) entityService).finish(f, auditMessage.getMessage());
+		return ReturnDto.ok("确认成功!");
 	}
 
 	@InitBinder

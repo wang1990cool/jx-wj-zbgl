@@ -292,6 +292,38 @@
 
 			
 
+															
+
+			
+
+						
+
+			
+
+									
+
+			
+
+						
+
+			
+
+												
+
+			
+
+						
+
+			
+
+									
+
+			
+
+						
+
+			
+
 		}
 		/*<![CDATA[*/
 		if (treeNode.target && treeNode.target == 'dialog')
@@ -382,8 +414,11 @@
 										data-fresh="true"
 										data-options="{id:'requestform-page', faicon:'caret-right'}">待审批</a></li>
 									<li><a href="#"
-										th:href="@{/business/requestform/finish/tree/}"
+										th:href="@{/business/requestform/enrollment/tree/}"
 										data-options="{id:'requestform-page', faicon:'caret-right'}">待登记</a></li>
+									<li><a href="#"
+										th:href="@{/business/requestform/finish/tree/}"
+										data-options="{id:'requestform-page', faicon:'caret-right'}">待领用</a></li>
 								</ul>
 								<!-- 
 								<ul class="menu-items" data-tit="器械借用管理" data-faicon="image">
@@ -397,19 +432,20 @@
  								-->
 								<ul class="menu-items" data-tit="提醒信息"
 									data-faicon="exclamation-circle">
-									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_MAINTAIN')"><a href="#"
-										th:href="@{/business/weaponnotice/tree/}"
+									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_MAINTAIN')"><a
+										href="#" th:href="@{/business/weaponnotice/tree/}"
 										data-fresh="true"
 										data-options="{id:'maintain-notice-page', faicon:'caret-right'}">维护提醒</a></li>
-									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_SCRAP')"><a href="#"
-										th:href="@{/business/notice/scrap/}"
+									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_SCRAP')"><a
+										href="#" th:href="@{/business/notice/scrap/}"
 										data-fresh="true"
 										data-options="{id:'scrap-notice-page', faicon:'caret-right'}">报废提醒</a></li>
-									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_STOCK')"><a href="#" th:href="@{/business/notice/stock/}"
+									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_STOCK')"><a
+										href="#" th:href="@{/business/notice/stock/}"
 										data-fresh="true"
 										data-options="{id:'stock-notice-page', faicon:'caret-right'}">库存提醒</a></li>
-									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_ESCHEAT')"><a href="#"
-										th:href="@{/business/notice/escheat/}"
+									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_ESCHEAT')"><a
+										href="#" th:href="@{/business/notice/escheat/}"
 										data-fresh="true"
 										data-options="{id:'escheat-notice-page', faicon:'caret-right'}">归还提醒</a></li>
 								</ul>

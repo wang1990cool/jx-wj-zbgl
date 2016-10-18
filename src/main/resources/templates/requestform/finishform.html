@@ -1,0 +1,31 @@
+<div class="bjui-pageContent">
+	<form action="#" id="requestform_finishform"
+		th:action="@{/business/requestform/finish}" method="POST"
+		th:object="${auditDto}" data-toggle="validate" data-alertmsg="false">
+		<table class="table table-condensed table-hover" width="100%">
+			<tbody>
+
+				<tr>
+					<td><label class="control-label x95">申请简述：</label> <input
+						type="text" disabled="disabled" th:value="${overview}"
+						size="60" /> <input th:field="*{domainId}"
+						type="hidden" name="domainId" /></td>
+				</tr>
+				
+				<tr>
+					<td colspan="4"><label class="control-label x95">领用人信息：</label>
+						<textarea th:field="*{message}" name="message"
+							data-toggle="autoheight" cols="60" rows="8"></textarea></td>
+
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
+<div class="bjui-pageFooter">
+	<ul>
+		<li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+		<li><button  type="submit" class="btn-default"
+				data-icon="save">确认</button></li>
+	</ul>
+</div>
