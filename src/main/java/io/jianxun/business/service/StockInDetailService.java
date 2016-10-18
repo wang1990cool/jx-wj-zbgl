@@ -3,6 +3,7 @@ package io.jianxun.business.service;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,6 +89,14 @@ public class StockInDetailService extends EntityService<StockInDetail> {
 	public List<StockInDetail> findByDepartAndStockInWeapon(Department department, Weapon weapon) {
 		return ((StockInDetailRepository) entityRepository).findByDepartAndStockInWeapon(department, weapon);
 
+	}
+
+	@Transactional(readOnly = false)
+	public void moveDetail(Set<StockInDetail> details, Department destination) {
+		for (StockInDetail stockInDetail : details) {
+			stockInDetail.setDepart(destination);
+		}
+		save(details);
 	}
 
 }

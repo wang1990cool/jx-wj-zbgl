@@ -2,6 +2,7 @@ package io.jianxun.business.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import io.jianxun.business.domain.Department;
 import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.domain.stock.Stock;
 import io.jianxun.business.domain.stock.StockIn;
+import io.jianxun.business.domain.stock.StockInDetail;
 import io.jianxun.business.repository.StockRepository;
 import io.jianxun.common.service.exception.ServiceException;
 
@@ -25,6 +27,8 @@ public class StockService extends DepartmentableService<Stock> {
 
 	@Autowired
 	private DepartmentService departmentService;
+	@Autowired
+	private StockInDetailService stockInDetailService;
 
 	@Override
 	public Page<Stock> findAll(Pageable pageable, Map<String, Object> searchParams) {
@@ -112,6 +116,33 @@ public class StockService extends DepartmentableService<Stock> {
 		if (stock != null)
 			addStockInfo(stock);
 		return stock;
+	}
+
+	// 移库
+	@Transactional(readOnly = false)
+	public void refrashStock(Department source, Department destination, Weapon weapon, Set<StockInDetail> details) {
+		if (source.getId() == destination.getId())
+			throw new ServiceException("机构内部不能进行调整操作");
+		Stock s = findByWeapon(source, weapon);
+		if (s == null)
+			throw new ServiceException("获取机构库存信息失败");
+		if (s.getInventory() < details.size())
+			throw new ServiceException("机构库存量不足,操作失败");
+		s.setInventory(s.getInventory() - details.size());
+		Stock d = findByWeapon(destination, weapon);
+		if (d != null) {
+			Integer inventory = s.getInventory();
+			d.setInventory(inventory + details.size());
+		} else {
+			d = new Stock();
+			d.setWeapon(weapon);
+			d.setDepart(destination);
+			d.setInventory(details.size());
+		}
+		save(s);
+		save(d);
+		stockInDetailService.moveDetail(details, destination);
+
 	}
 
 }

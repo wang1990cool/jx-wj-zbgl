@@ -1,16 +1,22 @@
 package io.jianxun.business.service;
 
+import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.jianxun.business.domain.Department;
+import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.domain.requisitions.RequestForm;
 import io.jianxun.business.domain.stock.StockInDetail;
 import io.jianxun.business.enums.RequestFormStatus;
+import io.jianxun.business.event.AdjustStockEvent;
 import io.jianxun.common.service.exception.ServiceException;
 
 @Service
@@ -21,6 +27,17 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 	private RequestFormAuditorService requestFormAuditorService;
 	@Autowired
 	private StockInDetailService stockInDetailService;
+
+	private final ApplicationEventPublisher applicationEventPublisher;
+
+	@Autowired
+	private DepartmentService departmentService;
+
+	@Autowired
+	public RequestFormService(ApplicationEventPublisher applicationEventPublisher) {
+		super();
+		this.applicationEventPublisher = applicationEventPublisher;
+	}
 
 	@Transactional(readOnly = false)
 	public void up(Long id) {
@@ -111,13 +128,41 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 			throw new ServiceException("申请信息未登记不能确认");
 		if (f.getStatus().equals(RequestFormStatus.FINISH))
 			throw new ServiceException("申请已确认，不能重复操作");
-			f.setStatus(RequestFormStatus.FINISH);
+		f.setStatus(RequestFormStatus.FINISH);
 		if (StringUtils.isEmpty(message))
 			message = "确认发放";
 		save(f);
 		requestFormAuditorService.audit(f, message);
-		//TODO 更新内存
-		
+		// 调整库存
+		adjustStock(f);
+
+	}
+
+	private void adjustStock(RequestForm f) {
+		Department source = getSourceDepart(f);
+		Department destination = f.getDepart();
+		Weapon weapon = f.getWeapon();
+		Set<StockInDetail> details = f.getDetails();
+		adjustStockEvent(source, destination, weapon, details);
+
+	}
+
+	private Department getSourceDepart(RequestForm f) {
+		Long parentId = f.getDepart().getpId();
+		Department source = departmentService.findOne(parentId);
+		if (source == null)
+			throw new ServiceException("获取机构信息出错");
+		return source;
+	}
+
+	private void adjustStockEvent(Department source, Department destination, Weapon weapon,
+			Set<StockInDetail> details) {
+		AdjustStockEvent event = new AdjustStockEvent();
+		event.setSource(source);
+		event.setDestination(destination);
+		event.setWeapon(weapon);
+		event.setDetails(details);
+		applicationEventPublisher.publishEvent(event);
 	}
 
 }
