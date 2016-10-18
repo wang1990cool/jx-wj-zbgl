@@ -34,7 +34,7 @@ public class StockInDetailController extends EntityController<StockInDetail> {
 		Sort sort = createSort(orderField, orderDirection);
 		Stock stock = stockService.findOne(stockId);
 		Map<String, Object> searchParams = getSearchParam();
-		searchParams.put("STARTWITH_stockIn.depart.levelCode", stock.getDepart().getLevelCode());
+		searchParams.put("EQ_depart.levelCode", stock.getDepart().getLevelCode());
 		searchParams.put("EQ_stockIn.weapon.id", Long.toString(stock.getWeapon().getId()));
 		Page<StockInDetail> page = entityService.findAll(buildPageable(pageable, sort), searchParams);
 		model.addAttribute("content", page.getContent());
