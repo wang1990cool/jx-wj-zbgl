@@ -46,6 +46,21 @@ public enum PermissionDef {
 			ModuleDef.SYS, DomainDef.SYS_DATADIC), DATADIC_MODIFY("datadic_modify", "修改", ModuleDef.SYS,
 					DomainDef.SYS_DATADIC), DATADIC_REMOVE("datadic_remove", "删除", ModuleDef.SYS,
 							DomainDef.SYS_DATADIC),
+	// 申请
+	REQUESTFORM_PAGE("requestform_page", "列表", ModuleDef.REQUESTFORM,
+			DomainDef.REQUESTFORM_REQUESTFORM), REQUESTFORM_CREATE("requestform_create", "新增", ModuleDef.REQUESTFORM,
+					DomainDef.REQUESTFORM_REQUESTFORM), REQUESTFORM_MODIFY("requestform_modify", "修改", ModuleDef.REQUESTFORM,
+							DomainDef.REQUESTFORM_REQUESTFORM), REQUESTFORM_REMOVE("requestform_remove", "删除", ModuleDef.REQUESTFORM,
+									DomainDef.REQUESTFORM_REQUESTFORM), REQUESTFORM_UP("requestform_up", "提交", ModuleDef.REQUESTFORM,
+							DomainDef.REQUESTFORM_REQUESTFORM), REQUESTFORM_AUDITMESSAGE("requestform_auditmessage",
+									"查看审核信息", ModuleDef.REQUESTFORM,
+									DomainDef.REQUESTFORM_REQUESTFORM),
+//	审核
+	REQUESTFORM_AUDIT("requestform_audit","待审核", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_COMMIT),REQUESTFORM_COMMIT("requestform_commit","审核", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_COMMIT),
+	//登记
+	REQUESTFORM_ENROLLMENT("requestform_enrollment","待登记", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_ENROLLMENT),REQUESTFORM_OUT("requestform_out","选择登记", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_ENROLLMENT),REQUESTFORM_SYSOUT("requestform_sysout","系统登记", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_ENROLLMENT),
+	//领用
+	REQUESTFORM_FINISH("requestform_finish","待领用", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_FINISH),REQUESTFORM_FINISHED("requestform_finished","确认", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_FINISH),
 	// 维护提醒
 	NOTICE_MAINTAIN_PAGE("notice_maintain", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_MAINTAIN),
 	// 报废提醒
@@ -53,7 +68,7 @@ public enum PermissionDef {
 	// 库存提醒
 	NOTICE_STOCK_PAGE("notice_stock", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_STOCK),
 	// 归还提醒
-	NOTICE_ESCHEAT_PAGE("notice_escheat", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_ESCHEAT),;
+	NOTICE_ESCHEAT_PAGE("notice_escheat", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_ESCHEAT);
 	// 操作代码
 	private String code;
 	// 描述
@@ -135,7 +150,7 @@ public enum PermissionDef {
 
 	// 模块定义
 	public enum ModuleDef {
-		SYS("sys", "系统设置", 99), ORGANIZATION("org", "组织管理", 7), SCRAP("scrap", "器械报废管理", 5), CONSUMING("consuming",
+		SYS("sys", "系统设置", 99), ORGANIZATION("org", "组织管理", 7), SCRAP("scrap", "器械报废管理", 5), REQUESTFORM("requestform",
 				"器械领用(借用)管理", 3), STOCK("stock", "器械库存管理", 0), NOTICE("notice", "提醒信息", 9);
 		private String code;
 		private String name;
@@ -193,6 +208,10 @@ public enum PermissionDef {
 		STOCK_WEAPON("stock_weapon", "装备基本信息", 0), STOCK_STOCK("stock_stock", "库存管理", 10),
 		// 组织配置
 		ORG_DEPART("org_department", "机构管理", 0), ORG_CONSTABLE("org_constable", "警员管理", 10),
+		// 领用
+		REQUESTFORM_REQUESTFORM("requestform_requestform", "装备器械申请", 0), REQUESTFORM_COMMIT("requestform_commit",
+				"装备器械审核", 10), REQUESTFORM_ENROLLMENT("requestform_enrollment", "装备器械登记",
+						20), REQUESTFORM_FINISH("requestform_finish", "装备器械发放", 20),
 		// 提醒
 		NOTICE_MAINTAIN("notice_maintain", "维护提醒", 0), NOTICE_SCRAP("notice_scrap", "报废提醒",
 				10), NOTICE_STOCK("notice_stock", "库存提醒", 20), NOTICE_ESCHEAT("notice_escheat", "归还提醒", 20);

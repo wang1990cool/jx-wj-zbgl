@@ -75,12 +75,12 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		return ReturnDto.ok("操作成功!");
 	}
 
-	@RequestMapping(value = "commit/tree", method = RequestMethod.GET)
+	@RequestMapping(value = "audit/tree", method = RequestMethod.GET)
 	public String committree(Model model, @RequestParam(value = "orderField", defaultValue = "id") String orderField,
 			@RequestParam(value = "orderDirection", defaultValue = "ASC") String orderDirection) {
 		try {
 			model.addAttribute("tree", mapper.writeValueAsString(departmentService
-					.getDepartTree("business/" + getTemplePrefix() + "/commit/page", getRefrashDiv())));
+					.getDepartTree("business/" + getTemplePrefix() + "/audit/page", getRefrashDiv())));
 			otherTreeData(model);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -90,7 +90,7 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 
 	}
 
-	@RequestMapping("commit/page/{depart}")
+	@RequestMapping("audit/page/{depart}")
 	public String commitpage(Model model, Pageable pageable, @PathVariable("depart") Long depart,
 			@RequestParam(value = "orderField", defaultValue = "id") String orderField,
 			@RequestParam(value = "orderDirection", defaultValue = "DESC") String orderDirection) {
@@ -187,16 +187,16 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		return getTemplePrefix() + "/page";
 	}
 
-	@RequestMapping("/commit")
-	@ResponseBody
-	public ReturnDto commit(@RequestParam("ids") Long[] ids) {
-		for (Long id : ids) {
-			((RequestFormService) entityService).commit(id);
-		}
-		return ReturnDto.ok("操作成功!");
-	}
+	// @RequestMapping("/commit")
+	// @ResponseBody
+	// public ReturnDto commit(@RequestParam("ids") Long[] ids) {
+	// for (Long id : ids) {
+	// ((RequestFormService) entityService).commit(id);
+	// }
+	// return ReturnDto.ok("操作成功!");
+	// }
 
-	@RequestMapping(value = "/upform/{id}")
+	@RequestMapping(value = "/up/{id}", method = RequestMethod.GET)
 	public String upform(@PathVariable("id") Long id, Model model) {
 		RequestForm f = entityService.findOne(id);
 		if (f == null)
@@ -215,7 +215,7 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		return getTemplePrefix() + "/upform";
 	}
 
-	@RequestMapping("/up")
+	@RequestMapping(value = "/up", method = RequestMethod.POST)
 	@ResponseBody
 	public ReturnDto up(AuditorDto auditMessage) {
 		Long id = auditMessage.getDomainId();
@@ -228,7 +228,7 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		return ReturnDto.ok("提交成功!");
 	}
 
-	@RequestMapping(value = "/auditform/{id}")
+	@RequestMapping(value = "/commit/{id}", method = RequestMethod.GET)
 	public String auditForm(@PathVariable("id") Long id, Model model) {
 		RequestForm f = entityService.findOne(id);
 		if (f == null)
@@ -248,7 +248,7 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		return getTemplePrefix() + "/auditform";
 	}
 
-	@RequestMapping("/audit")
+	@RequestMapping(value = "/commit", method = RequestMethod.POST)
 	@ResponseBody
 	public ReturnDto audit(AuditorDto auditMessage) {
 		Long id = auditMessage.getDomainId();
@@ -342,7 +342,7 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 
 	}
 
-	@RequestMapping(value = "/finish/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/finished/{id}", method = RequestMethod.GET)
 	public String finishform(@PathVariable("id") Long id, Model model) {
 		RequestForm f = entityService.findOne(id);
 		model.addAttribute("overview", f.getOverview());
@@ -353,8 +353,8 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		return getTemplePrefix() + "/finishform";
 
 	}
-	
-	@RequestMapping("/finish")
+
+	@RequestMapping(value = "/finished", method = RequestMethod.POST)
 	@ResponseBody
 	public ReturnDto finish(AuditorDto auditMessage) {
 		Long id = auditMessage.getDomainId();

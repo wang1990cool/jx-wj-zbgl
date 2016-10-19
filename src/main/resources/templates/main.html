@@ -406,17 +406,17 @@
 										data-options="{id:'stock-page', faicon:'caret-right'}">库存管理</a></li>
 								</ul>
 								<ul class="menu-items" data-tit="器械领用管理" data-faicon="spinner">
-									<li><a href="#" th:href="@{/business/requestform/tree/}"
+									<li sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_PAGE','REQUESTFORM_CREATE','REQUESTFORM_UP','REQUESTFORM_AUDITMESSAGE')"><a href="#" th:href="@{/business/requestform/tree/}"
 										data-fresh="true"
 										data-options="{id:'requestform-page', faicon:'caret-right'}">申请</a></li>
-									<li><a href="#"
-										th:href="@{/business/requestform/commit/tree/}"
+									<li sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_AUDIT','REQUESTFORM_COMMIT')"><a href="#"
+										th:href="@{/business/requestform/audit/tree/}"
 										data-fresh="true"
 										data-options="{id:'requestform-page', faicon:'caret-right'}">待审批</a></li>
-									<li><a href="#"
+									<li sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_ENROLLMENT','REQUESTFORM_OUT','REQUESTFORM_SYSOUT')"><a href="#"
 										th:href="@{/business/requestform/enrollment/tree/}"
 										data-options="{id:'requestform-page', faicon:'caret-right'}">待登记</a></li>
-									<li><a href="#"
+									<li sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_FINISH','REQUESTFORM_FINISHED')"><a href="#"
 										th:href="@{/business/requestform/finish/tree/}"
 										data-options="{id:'requestform-page', faicon:'caret-right'}">待领用</a></li>
 								</ul>
