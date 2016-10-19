@@ -405,7 +405,7 @@
 										href="#" th:href="@{/business/stock/tree/}"
 										data-options="{id:'stock-page', faicon:'caret-right'}">库存管理</a></li>
 								</ul>
-								<ul class="menu-items" data-tit="器械领用管理" data-faicon="spinner">
+								<ul sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_PAGE','REQUESTFORM_CREATE','REQUESTFORM_UP','REQUESTFORM_AUDITMESSAGE','REQUESTFORM_AUDIT','REQUESTFORM_COMMIT','REQUESTFORM_ENROLLMENT','REQUESTFORM_OUT','REQUESTFORM_SYSOUT','REQUESTFORM_FINISH','REQUESTFORM_FINISHED')" class="menu-items" data-tit="器械领用管理" data-faicon="spinner">
 									<li sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_PAGE','REQUESTFORM_CREATE','REQUESTFORM_UP','REQUESTFORM_AUDITMESSAGE')"><a href="#" th:href="@{/business/requestform/tree/}"
 										data-fresh="true"
 										data-options="{id:'requestform-page', faicon:'caret-right'}">申请</a></li>
@@ -420,23 +420,13 @@
 										th:href="@{/business/requestform/finish/tree/}"
 										data-options="{id:'requestform-page', faicon:'caret-right'}">待领用</a></li>
 								</ul>
-								<!-- 
-								<ul class="menu-items" data-tit="器械借用管理" data-faicon="image">
-									<li><a href="tabs.html"
-										data-options="{id:'tabs', faicon:'caret-right'}">申请</a></li>
-									<li><a href="tabs.html"
-										data-options="{id:'tabs', faicon:'caret-right'}">待审批</a></li>
-									<li><a href="tabs.html"
-										data-options="{id:'tabs', faicon:'caret-right'}">待登记</a></li>
-								</ul>
- 								-->
-								<ul class="menu-items" data-tit="提醒信息"
+								<ul sec:authorize="hasAnyAuthority('ALL','WEAPONNOTICE_PAGE','RWEAPONNOTICE_PAGE')" class="menu-items" data-tit="提醒信息"
 									data-faicon="exclamation-circle">
-									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_MAINTAIN')"><a
+									<li sec:authorize="hasAnyAuthority('ALL','WEAPONNOTICE_PAGE')"><a
 										href="#" th:href="@{/business/weaponnotice/tree/}"
 										data-fresh="true"
 										data-options="{id:'maintain-notice-page', faicon:'caret-right'}">维护提醒</a></li>
-									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_SCRAP')"><a
+									<li sec:authorize="hasAnyAuthority('ALL','RWEAPONNOTICE_PAGE')"><a
 										href="#" th:href="@{/business/rweaponnotice/tree/}"
 										data-fresh="true"
 										data-options="{id:'scrap-notice-page', faicon:'caret-right'}">报废提醒</a></li>
