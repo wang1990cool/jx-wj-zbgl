@@ -334,14 +334,14 @@
             var zTree    = $.fn.zTree.getZTreeObj($this.attr('id'))
             
             // start ---默认选中第后台回传id 自动执行onClick事件
-            var selectId = $this.attr('selectid');
-            if(selectId&&op.onClick){
-            	var node = zTree.getNodeByParam("id", selectId, null); 
-        		if(node){
-        			zTree.selectNode(node);
-        			op.onClick.toFunc().call(this, event, zTree.setting.treeId, node)
-        		}
-            }
+           // var selectId = $this.attr('selectid');
+           // if(selectId&&op.onClick){
+           // 	var node = zTree.getNodeByParam("id", selectId, null); 
+        //		if(node){
+        	//		zTree.selectNode(node);
+        	//		op.onClick.toFunc().call(this, event, zTree.setting.treeId, node)
+        	//	}
+            //}
             // end ---
             if (op.expandAll) zTree.expandAll(true)
             
