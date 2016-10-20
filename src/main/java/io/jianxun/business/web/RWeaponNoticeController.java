@@ -1,5 +1,7 @@
 package io.jianxun.business.web;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -12,6 +14,15 @@ public class RWeaponNoticeController extends DepartmentableController<RWeaponNot
 
 	public RWeaponNoticeController(DepartmentableService<RWeaponNotice> entityService) {
 		super(entityService);
+	}
+	
+	@Override
+	protected Sort createSort(String orderField, String orderDirection) {
+		Direction d = Direction.valueOf(orderDirection.toUpperCase());
+		if (d == null)
+			d = Direction.DESC;
+		Sort sort = new Sort(d, "level", orderField);
+		return sort;
 	}
 
 }

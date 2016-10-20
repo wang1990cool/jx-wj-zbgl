@@ -64,8 +64,9 @@ public class RequestForm extends DepartmentEntity {
 	private Set<StockInDetail> details = Sets.newHashSet();
 
 	// 归还日期
+	//9999-12-31 表示领用 合理 日期 表示借用
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate returnDate;
+	private LocalDate returnDate = LocalDate.of(9999, 12, 31);
 
 	@NotNull
 	@ManyToOne

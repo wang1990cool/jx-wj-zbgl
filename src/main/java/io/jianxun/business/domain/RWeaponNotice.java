@@ -6,7 +6,7 @@ import javax.persistence.Table;
 //报废提醒
 @Entity
 @Table(name = "wj_zb_rweaponnotices")
-public class RWeaponNotice extends WeaponNotice {
+public class RWeaponNotice extends NoticeEntity {
 
 	private static final long serialVersionUID = -7953155446321202172L;
 

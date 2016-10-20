@@ -1,6 +1,7 @@
 package io.jianxun.business.service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +20,7 @@ import io.jianxun.business.domain.stock.StockInDetail;
 import io.jianxun.business.enums.RequestFormStatus;
 import io.jianxun.business.event.AdjustStockEvent;
 import io.jianxun.business.event.RefreshNoticeEvent;
+import io.jianxun.business.repository.RequestFormRepository;
 import io.jianxun.common.service.exception.ServiceException;
 
 @Service
@@ -141,6 +143,10 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 		//刷新提醒
 		applicationEventPublisher.publishEvent(new RefreshNoticeEvent());
 	}
+	
+	public List<RequestForm> findByReturnDateLT(LocalDate noticeDate) {
+		return ((RequestFormRepository)this.entityRepository).findByReturnDateBefore(noticeDate);
+	}
 
 	private void adjustStock(RequestForm f) {
 		Department source = getSourceDepart(f);
@@ -168,5 +174,7 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 		event.setDetails(details);
 		applicationEventPublisher.publishEvent(event);
 	}
+
+	
 
 }
