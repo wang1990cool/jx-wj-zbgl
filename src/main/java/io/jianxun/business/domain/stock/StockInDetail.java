@@ -60,6 +60,7 @@ public class StockInDetail extends DepartmentEntity {
 	private LocalDate retirementPeriodNoticeDate;
 
 	private User maintenanceUser;
+	
 
 	/**
 	 * @return the stockIn

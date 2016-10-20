@@ -45,6 +45,7 @@ public class WeaponNoticeService extends DepartmentableService<WeaponNotice> {
 	private WeaponNotice createNoiceMessage(StockInDetail stockInDetail) {
 		WeaponNotice notice = new WeaponNotice();
 		notice.setDepart(stockInDetail.getDepart());
+		notice.setDetail(stockInDetail);
 		long d = ChronoUnit.DAYS.between(LocalDate.now(), stockInDetail.getMaintenanceNoticeDate());
 		if (d > 0)
 			notice.setMessage(String.format("装备 %s 编号[%s] 还有%d天即将到达维护期限", stockInDetail.getStockIn().getWeapon(),
@@ -52,9 +53,19 @@ public class WeaponNoticeService extends DepartmentableService<WeaponNotice> {
 		else {
 			notice.setLevel(NoticeEntity.OUT_TIME_LEVEL);
 			notice.setMessage(String.format("装备 %s 编号[%s] 超过维护期限 %d 天", stockInDetail.getStockIn().getWeapon(),
-					stockInDetail.getStockCodePrefix() + stockInDetail.getsNo(), 0-d));
+					stockInDetail.getStockCodePrefix() + stockInDetail.getsNo(), 0 - d));
 		}
 		return notice;
+	}
+
+	@Transactional(readOnly = false)
+	public void maintain(WeaponNotice notice) {
+		StockInDetail detail = notice.getDetail();
+		if (detail != null) {
+			detail.setMaintenanceDate(LocalDate.now());
+			stockInDetailService.save(detail);
+		}
+
 	}
 
 }

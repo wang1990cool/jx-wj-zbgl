@@ -12,14 +12,14 @@
 	<hr style="margin: 5px 0" />
 	<div class="pull-left">
 		<div class="btn-group">
-			<button sec:authorize="hasAnyAuthority('ALL','CONSTABLE_REMOVE')" type="button" class="btn-default dropdown-toggle"
+			<button sec:authorize="hasAnyAuthority('ALL','RWEAPONNOTICE_SCRAP')" type="button" class="btn-default dropdown-toggle"
 				data-toggle="dropdown" data-icon="copy">
 				批量操作<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu right" role="menu">
-				<li sec:authorize="hasAnyAuthority('ALL','CONSTABLE_REMOVE')"><a th:href="@{/business/wnotice/remove}" href="#"
-					data-toggle="doajaxchecked" data-confirm-msg="确定要删除选中项吗？"
-					data-idname="ids" data-group="ids">删除选中</a></li>
+				<li sec:authorize="hasAnyAuthority('ALL','RWEAPONNOTICE_SCRAP')"><a th:href="@{/business/rweaponnotice/scrap}" href="#"
+					data-toggle="doajaxchecked" data-confirm-msg="确定要报废选中项吗？"
+					data-idname="ids" data-group="ids">批量报废选中</a></li>
 			</ul>
 		</div>
 	</div>

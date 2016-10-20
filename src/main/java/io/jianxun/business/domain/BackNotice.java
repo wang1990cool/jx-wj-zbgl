@@ -1,6 +1,8 @@
 package io.jianxun.business.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import io.jianxun.business.domain.requisitions.RequestForm;
@@ -25,6 +27,8 @@ public class BackNotice extends NoticeEntity {
 	/**
 	 * @return the requestForm
 	 */
+	@ManyToOne
+	@JoinColumn(name = "rf_id")
 	public RequestForm getRequestForm() {
 		return requestForm;
 	}

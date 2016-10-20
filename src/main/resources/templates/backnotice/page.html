@@ -1,6 +1,6 @@
 <div class="bjui-pageHeader">
 	<form id="pagerForm" data-toggle="ajaxsearch"
-		th:action="@{/business/rweaponnotice/page}" action="#" method="POST">
+		th:action="@{/business/backnotice/page}" action="#" method="POST">
 		<input type="hidden" id="dId" name="dId" th:value="${dId}" value="-1" />
 		<input type="hidden" name="size" th:value="${size}" value="30" /> <input
 			type="hidden" name="page" th:value="${page}" value="1" /> <input
@@ -12,12 +12,12 @@
 	<hr style="margin: 5px 0" />
 	<div class="pull-left">
 		<div class="btn-group">
-			<button sec:authorize="hasAnyAuthority('ALL','CONSTABLE_REMOVE')" type="button" class="btn-default dropdown-toggle"
+			<button sec:authorize="hasAnyAuthority('ALL','BACKNOTICE_ESCHEAT')" type="button" class="btn-default dropdown-toggle"
 				data-toggle="dropdown" data-icon="copy">
 				批量操作<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu right" role="menu">
-				<li sec:authorize="hasAnyAuthority('ALL','CONSTABLE_REMOVE')"><a th:href="@{/business/wnotice/remove}" href="#"
+				<li sec:authorize="hasAnyAuthority('ALL','BACKNOTICE_ESCHEAT')"><a th:href="@{/business/backnotice/escheat}" href="#"
 					data-toggle="doajaxchecked" data-confirm-msg="确定要删除选中项吗？"
 					data-idname="ids" data-group="ids">删除选中</a></li>
 			</ul>

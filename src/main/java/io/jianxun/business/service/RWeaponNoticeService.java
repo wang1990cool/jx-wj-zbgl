@@ -45,6 +45,7 @@ public class RWeaponNoticeService extends DepartmentableService<RWeaponNotice> {
 	private RWeaponNotice createNoiceMessage(StockInDetail stockInDetail) {
 		RWeaponNotice notice = new RWeaponNotice();
 		notice.setDepart(stockInDetail.getDepart());
+		notice.setDetail(stockInDetail);
 		long d = ChronoUnit.DAYS.between(LocalDate.now(), stockInDetail.getRetirementPeriodNoticeDate());
 		if (d > 0)
 			notice.setMessage(String.format("装备 %s 编号[%s] 还有%d天即将到达维护期限", stockInDetail.getStockIn().getWeapon(),
@@ -55,6 +56,13 @@ public class RWeaponNoticeService extends DepartmentableService<RWeaponNotice> {
 					stockInDetail.getStockCodePrefix() + stockInDetail.getsNo(), 0 - d));
 		}
 		return notice;
+	}
+
+	@Transactional(readOnly = false)
+	public void scrap(RWeaponNotice notice) {
+		StockInDetail detail = notice.getDetail();
+		if (detail != null)
+			stockInDetailService.delete(detail);
 	}
 
 }

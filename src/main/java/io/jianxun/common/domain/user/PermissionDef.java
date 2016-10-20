@@ -62,13 +62,13 @@ public enum PermissionDef {
 	//领用
 	REQUESTFORM_FINISH("requestform_finish","待领用", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_FINISH),REQUESTFORM_FINISHED("requestform_finished","确认", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_FINISH),
 	// 维护提醒
-	NOTICE_MAINTAIN_PAGE("weaponnotice_page", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_MAINTAIN),
+	NOTICE_MAINTAIN_PAGE("weaponnotice_page", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_MAINTAIN),NOTICE_MAINTAIN_MAINTAIN("weaponnotice_maintain", "维护确认", ModuleDef.NOTICE, DomainDef.NOTICE_MAINTAIN),
 	// 报废提醒
-	NOTICE_SCRAP_PAGE("RWEAPONNOTICE_PAGE", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_SCRAP),
+	NOTICE_SCRAP_PAGE("rweaponnotice_page", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_SCRAP),NOTICE_SCRAP_SCRAP("rweaponnotice_scrap", "报废确认", ModuleDef.NOTICE, DomainDef.NOTICE_SCRAP),
 	// 库存提醒
 	NOTICE_STOCK_PAGE("notice_stock", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_STOCK),
 	// 归还提醒
-	NOTICE_ESCHEAT_PAGE("notice_escheat", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_ESCHEAT);
+	NOTICE_ESCHEAT_PAGE("backnotice_page", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_ESCHEAT),NOTICE_ESCHEAT_ESCHEAT("backnotice_escheat", "归还", ModuleDef.NOTICE, DomainDef.NOTICE_ESCHEAT);
 	// 操作代码
 	private String code;
 	// 描述
