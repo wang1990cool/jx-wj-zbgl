@@ -18,8 +18,8 @@
 			</button>
 			<ul class="dropdown-menu right" role="menu">
 				<li sec:authorize="hasAnyAuthority('ALL','BACKNOTICE_ESCHEAT')"><a th:href="@{/business/backnotice/escheat}" href="#"
-					data-toggle="doajaxchecked" data-confirm-msg="确定要删除选中项吗？"
-					data-idname="ids" data-group="ids">删除选中</a></li>
+					data-toggle="doajaxchecked" data-confirm-msg="确定要归还选中项吗？"
+					data-idname="ids" data-group="ids">批量归还选中</a></li>
 			</ul>
 		</div>
 	</div>

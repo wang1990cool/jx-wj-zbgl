@@ -131,7 +131,7 @@ public class StockService extends DepartmentableService<Stock> {
 		s.setInventory(s.getInventory() - details.size());
 		Stock d = findByWeapon(destination, weapon);
 		if (d != null) {
-			Integer inventory = s.getInventory();
+			Integer inventory = d.getInventory();
 			d.setInventory(inventory + details.size());
 		} else {
 			d = new Stock();
