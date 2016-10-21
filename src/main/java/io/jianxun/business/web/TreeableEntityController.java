@@ -33,7 +33,6 @@ public class TreeableEntityController<T extends TreeableEntity> extends EntityCo
 	@RequestMapping(value = "tree", method = RequestMethod.GET)
 	public String tree(Model model, @RequestParam(value = "orderField", defaultValue = "id") String orderField,
 			@RequestParam(value = "orderDirection", defaultValue = "ASC") String orderDirection) {
-		((DepartmentService) entityService).createTestData();
 		try {
 			model.addAttribute("tree",
 					mapper.writeValueAsString(((TreeableEntityService<T>) entityService).getCurrentUserTree()));
