@@ -18,6 +18,8 @@
 	<div class="pull-left">
 		<button sec:authorize="hasAnyAuthority('ALL','STOCKIN_CREATE')"  type="button" data-toggle="navtab" class="btn-red"
 			data-id="stock-navtab-new" data-url="business/stockin/create/{#dId}">直接入库</button>
+		<button sec:authorize="hasAnyAuthority('ALL','STOCK_SETTING')"  type="button" data-toggle="navtab" class="btn-red"
+			data-id="stock-navtab-new" data-url="business/stock/setting/{#bjui-selected}">库存上下限设置</button>	
 		<div sec:authorize="hasAnyAuthority('ALL','STOCKIN_PAGE','STOCKINDETAIL_PAGE')"  class="btn-group">
 			<button type="button" class="btn-default dropdown-toggle"
 				data-toggle="dropdown" data-icon="copy">
@@ -38,13 +40,14 @@
 </div>
 <div class="bjui-pageContent tableContent">
 	<table data-toggle="tablefixed" data-width="100%" data-nowrap="true"
-		data-selected-multi="true"  style="word-break:break-all; word-wrap:break-all;">
+		  style="word-break:break-all; word-wrap:break-all;">
 		<thead>
 			<tr>
 				<th width="26"><input type="checkbox" class="checkboxCtrl"
 					data-group="ids" data-toggle="icheck" /></th>
 				<th width="120">所属机构</th>
 				<th data-order-field="name" width="100">装备器械名称</th>
+				<th>库存上下限</th>
 				<th width="120">当前机构库存数量</th>
 				<th width="100">库存总量</th>
 				<th>分布情况</th>
@@ -56,6 +59,7 @@
 					th:value="${e.id}" value="-1" /></td>
 				<td th:text="${e.depart.name}" >所属机构</td>
 				<td th:text="${e.weapon.name}" >装备器械名称</td>
+				<td th:text="${e.minMaxdisplay}" >库存上下限</td>
 				<td th:text="${e.inventory}" >当前机构库存数量</td>
 				<td th:text="${e.total}" >库存总量</td>
 				<td th:text="${e.description}">分布情况</td>

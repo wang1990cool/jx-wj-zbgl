@@ -631,17 +631,15 @@
 										href="#" th:href="@{/business/rweaponnotice/tree/}"
 										data-fresh="true"
 										data-options="{id:'scrap-notice-page', faicon:'caret-right'}">报废提醒</a></li>
-									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_ESCHEAT')"><a
+									<li sec:authorize="hasAnyAuthority('ALL','BACKNOTICE_PAGE')"><a
 										href="#" th:href="@{/business/backnotice/tree/}"
 										data-fresh="true"
 										data-options="{id:'escheat-notice-page', faicon:'caret-right'}">归还提醒</a></li>
-									<!-- 
-									<li sec:authorize="hasAnyAuthority('ALL','NOTICE_STOCK')"><a
-										href="#" th:href="@{/business/notice/stock/}"
+									<li sec:authorize="hasAnyAuthority('ALL','STOCKNOTICE_PAGE')"><a
+										href="#" th:href="@{/business/stocknotice/tree/}"
 										data-fresh="true"
 										data-options="{id:'stock-notice-page', faicon:'caret-right'}">库存提醒</a></li>
 									
-										 -->
 								</ul>
 								<ul
 									sec:authorize="hasAnyAuthority('ALL','DEPARTMENT_PAGE','DEPARTMENT_CREATE','DEPARTMENT_MODIFY','DEPARTMENT_REMOVE','CONSTABLE_PAGE','CONSTABLE_CREATE','CONSTABLE_MODIFY','CONSTABLE_REMOVE')"

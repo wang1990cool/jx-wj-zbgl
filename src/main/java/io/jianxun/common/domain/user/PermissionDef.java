@@ -19,7 +19,8 @@ public enum PermissionDef {
 	STOCK_PAGE("stock_page", "列表", ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_IN_CREATE("stockin_create", "直接入库",
 			ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_IN_PAGE("stockin_page", "入库单明细", ModuleDef.STOCK,
 					DomainDef.STOCK_STOCK), STOCK_IN_DETAIL_REMOVE("stockindetail_page", "库存明细", ModuleDef.STOCK,
-							DomainDef.STOCK_STOCK),
+							DomainDef.STOCK_STOCK),STOCK_SET("stock_setting", "库存限定设置", ModuleDef.STOCK,
+									DomainDef.STOCK_STOCK),
 	// ----组织管理
 	// --机构管理
 	DEPARTMENT_PAGE("department_page", "列表", ModuleDef.ORGANIZATION, DomainDef.ORG_DEPART), DEPARTMENT_CREATE(
@@ -66,7 +67,7 @@ public enum PermissionDef {
 	// 报废提醒
 	NOTICE_SCRAP_PAGE("rweaponnotice_page", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_SCRAP),NOTICE_SCRAP_SCRAP("rweaponnotice_scrap", "报废确认", ModuleDef.NOTICE, DomainDef.NOTICE_SCRAP),
 	// 库存提醒
-	NOTICE_STOCK_PAGE("notice_stock", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_STOCK),
+	NOTICE_STOCK_PAGE("stocknotice_page", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_STOCK),
 	// 归还提醒
 	NOTICE_ESCHEAT_PAGE("backnotice_page", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_ESCHEAT),NOTICE_ESCHEAT_ESCHEAT("backnotice_escheat", "归还", ModuleDef.NOTICE, DomainDef.NOTICE_ESCHEAT);
 	// 操作代码

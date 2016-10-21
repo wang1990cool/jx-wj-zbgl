@@ -28,6 +28,10 @@ public class BusinessBaseEntityService<T extends BusinessBaseEntity> extends Ent
 			count = ((BusinessBaseRepository<T>) this.entityRepository).countByCodeAndDeleted(code,BooleanStatus.False);
 		return count == 0;
 	}
+	
+	public boolean isDeleted(T entity){
+		return BooleanStatus.TRUE.equals(entity.getDeleted());
+	}
 
 	/*
 	 * (non-Javadoc)

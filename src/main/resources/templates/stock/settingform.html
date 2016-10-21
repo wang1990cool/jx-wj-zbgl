@@ -1,0 +1,19 @@
+<div class="bjui-pageContent">
+	<form  action="#" th:action="@{/business/stock/setting}" th:object="${d}" method="POST" data-toggle="validate">
+        <div class="form-group" style="margin: 20px 0 20px; ">
+            <label  class="control-label x85">库存下限：</label>
+            <input type="text" th:field="*{minInventory}" data-rule="" name="minInventory"  value=""  placeholder="下限" size="20" />
+            <input type="hidden" name="stockId" th:value="${d.stockId}" />
+        </div>
+        <div class="form-group">
+            <label class="control-label x85">库存上限：</label>
+            <input type="text" th:field="*{maxInventory}" data-rule="" name="maxInventory"  value="" placeholder="上限" size="20" />
+        </div>
+	</form>
+</div>
+<div class="bjui-pageFooter">
+    <ul>
+        <li><button type="button" class="btn-close">取消</button></li>
+        <li><button type="submit" class="btn-default">保存</button></li>
+    </ul>
+</div>

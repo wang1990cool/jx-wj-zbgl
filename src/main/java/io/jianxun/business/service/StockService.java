@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.domain.stock.Stock;
 import io.jianxun.business.domain.stock.StockIn;
 import io.jianxun.business.domain.stock.StockInDetail;
+import io.jianxun.business.event.StockMinMaxEvent;
 import io.jianxun.business.repository.StockRepository;
 import io.jianxun.common.service.exception.ServiceException;
 
@@ -29,6 +31,27 @@ public class StockService extends DepartmentableService<Stock> {
 	private DepartmentService departmentService;
 	@Autowired
 	private StockInDetailService stockInDetailService;
+
+	private final ApplicationEventPublisher applicationEventPublisher;
+
+	@Autowired
+	public StockService(ApplicationEventPublisher applicationEventPublisher) {
+		super();
+		this.applicationEventPublisher = applicationEventPublisher;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * io.jianxun.business.service.BusinessBaseEntityService#save(io.jianxun.
+	 * business.domain.BusinessBaseEntity)
+	 */
+	@Override
+	public Stock save(Stock stock) {
+		sendMinMaxEvent(stock);
+		return super.save(stock);
+	}
 
 	@Override
 	public Page<Stock> findAll(Pageable pageable, Map<String, Object> searchParams) {
@@ -111,6 +134,17 @@ public class StockService extends DepartmentableService<Stock> {
 		save(stock);
 	}
 
+	private void sendMinMaxEvent(Stock stock) {
+		Integer min = stock.getMinInventory();
+		Integer max = stock.getMaxInventory();
+		if (min != -1 || max != -1) {
+			// 跟新库存提醒
+			StockMinMaxEvent event = new StockMinMaxEvent();
+			event.setStock(stock);
+			applicationEventPublisher.publishEvent(event);
+		}
+	}
+
 	public Stock findByWeapon(Department depart, Weapon weapon) {
 		Stock stock = ((StockRepository) this.entityRepository).findByDepartAndWeapon(depart, weapon);
 		if (stock != null)
@@ -143,6 +177,31 @@ public class StockService extends DepartmentableService<Stock> {
 		save(d);
 		stockInDetailService.moveDetail(details, destination);
 
+	}
+
+	@Transactional(readOnly = false)
+	public void settingMinAndMax(Stock stock, Integer minInventory, Integer maxInventory) {
+		if (minInventory > 0)
+			stock.setMinInventory(getMin(minInventory, maxInventory));
+		else
+			stock.setMinInventory(-1);
+		if (maxInventory > 0)
+			stock.setMaxInventory(getMax(minInventory, maxInventory));
+		else
+			stock.setMaxInventory(-1);
+		if (minInventory > 0 || maxInventory > 0) {
+			save(stock);
+		}
+	}
+
+	private Integer getMax(Integer minInventory, Integer maxInventory) {
+		return minInventory < maxInventory ? maxInventory : minInventory;
+	}
+
+	private Integer getMin(Integer minInventory, Integer maxInventory) {
+		if(maxInventory<0)
+			return minInventory;
+		return minInventory < maxInventory ? minInventory : maxInventory;
 	}
 
 }

@@ -32,6 +32,14 @@ public class Stock extends DepartmentEntity {
 	// 反应该种备件在库存中的分布和装备情况
 	private String description;
 
+	// 最小库存(库存过低提醒使用)
+	// -1 时不错提醒
+	private Integer minInventory = -1;
+	// 最大库存（库存过高提醒使用）
+	private Integer maxInventory = -1;
+	
+	private String minMaxdisplay;
+
 	@ManyToOne
 	@JoinColumn(name = "weapon_id")
 	public Weapon getWeapon() {
@@ -90,6 +98,60 @@ public class Stock extends DepartmentEntity {
 			return "";
 		}
 	}
+
+	/**
+	 * @return the minInventory
+	 */
+	public Integer getMinInventory() {
+		return minInventory;
+	}
+
+	/**
+	 * @param minInventory
+	 *            the minInventory to set
+	 */
+	public void setMinInventory(Integer minInventory) {
+		this.minInventory = minInventory;
+	}
+
+	/**
+	 * @return the maxInventory
+	 */
+	public Integer getMaxInventory() {
+		return maxInventory;
+	}
+
+	/**
+	 * @param maxInventory
+	 *            the maxInventory to set
+	 */
+	public void setMaxInventory(Integer maxInventory) {
+		this.maxInventory = maxInventory;
+	}
+	
+
+	/**
+	 * @return the minMaxdisplay
+	 */
+	@Transient
+	public String getMinMaxdisplay() {
+		StringBuilder sb = new StringBuilder();
+		if(this.minInventory>0)
+			sb.append("下限:" + this.minInventory);
+		if(this.maxInventory>0)
+			sb.append("上限:" + this.maxInventory);
+		this.minMaxdisplay = sb.toString();
+		return this.minMaxdisplay;
+	}
+
+	/**
+	 * @param minMaxdisplay the minMaxdisplay to set
+	 */
+	public void setMinMaxdisplay(String minMaxdisplay) {
+		this.minMaxdisplay = minMaxdisplay;
+	}
+
+
 
 	class SearchDes {
 		private Long weapon;

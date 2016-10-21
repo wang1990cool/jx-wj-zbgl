@@ -7,12 +7,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.jianxun.business.domain.Department;
 import io.jianxun.business.domain.stock.Stock;
 import io.jianxun.business.service.DepartmentService;
 import io.jianxun.business.service.DepartmentableService;
 import io.jianxun.business.service.StockService;
+import io.jianxun.business.web.dto.ReturnDto;
+import io.jianxun.business.web.dto.StockSettingDto;
 import io.jianxun.common.service.exception.ServiceException;
 
 @Controller
@@ -41,6 +45,26 @@ public class StockController extends DepartmentableController<Stock> {
 		model.addAttribute("content", ((StockService) entityService).getParentDepartStock(currentDepart));
 		return "stock/weaponsearch";
 
+	}
+
+	@RequestMapping(value = "/setting/{currentStockId}", method = RequestMethod.GET)
+	public String stocksetform(@PathVariable("currentStockId") Long stockid, Model model) {
+		model.addAttribute("d", new StockSettingDto(stockid, -1, -1));
+		return "stock/settingform";
+	}
+
+	@RequestMapping(value = "/setting", method = RequestMethod.POST)
+	@ResponseBody
+	public ReturnDto stockset(StockSettingDto stockSetting) {
+		if (stockSetting == null)
+			throw new ServiceException("设置失败，获取数据出错");
+		Long stockId = stockSetting.getStockId();
+		Stock stock = this.entityService.findOne(stockId);
+		if (stock == null)
+			throw new ServiceException("获取库存信息失败");
+		((StockService) this.entityService).settingMinAndMax(stock, stockSetting.getMinInventory(),
+				stockSetting.getMaxInventory());
+		return ReturnDto.ok("设置成功");
 	}
 
 }
