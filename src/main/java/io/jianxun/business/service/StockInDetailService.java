@@ -16,12 +16,11 @@ import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.domain.stock.StockIn;
 import io.jianxun.business.domain.stock.StockInDetail;
 import io.jianxun.business.repository.StockInDetailRepository;
-import io.jianxun.common.service.EntityService;
 import io.jianxun.common.service.exception.ServiceException;
 
 @Service
 @Transactional(readOnly = true)
-public class StockInDetailService extends EntityService<StockInDetail> {
+public class StockInDetailService extends DepartmentableService	<StockInDetail> {
 
 	public String getMaxSno(String prefix) {
 		StockInDetail detail = ((StockInDetailRepository) entityRepository)

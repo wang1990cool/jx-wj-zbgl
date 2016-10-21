@@ -20,6 +20,7 @@ public class ControllerAdvice {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public ReturnDto processValidationError(BindException ex) {
+		ex.printStackTrace();
 		BindingResult result = ex.getBindingResult();
 		return processFieldError(result.getFieldErrors());
 	}
@@ -28,6 +29,7 @@ public class ControllerAdvice {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public ReturnDto processServcieExcptionError(ServiceException ex) {
+		ex.printStackTrace();
 		return ReturnDto.error(ex.getMessage());
 	}
 	
@@ -35,6 +37,7 @@ public class ControllerAdvice {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public ReturnDto processExcptionError(Exception ex) {
+		ex.printStackTrace();
 		return ReturnDto.error(ex.getMessage());
 	}
 
