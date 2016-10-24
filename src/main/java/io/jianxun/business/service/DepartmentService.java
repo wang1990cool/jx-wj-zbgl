@@ -84,7 +84,9 @@ public class DepartmentService extends TreeableEntityService<Department> {
 	public void delete(Department entity) {
 		List<Department> children = ((DepartRepository) entityRepository)
 				.findByLevelCodeStartingWith(entity.getLevelCode());
-		deleteInBatch(children);
+		for (Department department : children) {
+			super.delete(department);
+		}
 		super.delete(entity);
 	}
 

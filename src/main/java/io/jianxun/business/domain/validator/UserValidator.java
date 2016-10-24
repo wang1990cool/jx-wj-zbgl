@@ -7,6 +7,7 @@ import org.springframework.validation.Validator;
 
 import io.jianxun.business.domain.User;
 import io.jianxun.business.service.UserDetailsService;
+import io.jianxun.business.web.dto.PasswordDto;
 
 @Component
 public class UserValidator implements Validator {
@@ -16,7 +17,7 @@ public class UserValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return User.class.isAssignableFrom(clazz);
+		return User.class.isAssignableFrom(clazz) || PasswordDto.class.isAssignableFrom(clazz);
 	}
 
 	@Override
