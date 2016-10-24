@@ -16,6 +16,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
+		accessDeniedException.printStackTrace();
 		response.setContentType("text/plain;charset=UTF-8");
 		response.getWriter().println("没有操作权限");
 		response.getWriter().flush();
