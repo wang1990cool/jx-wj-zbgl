@@ -23,13 +23,15 @@ public class BusinessBaseEntityService<T extends BusinessBaseEntity> extends Ent
 	public boolean validateCodeIsUnique(String code, Long id) {
 		Long count = 0L;
 		if (id != null && id != -1)
-			count = ((BusinessBaseRepository<T>) this.entityRepository).countByCodeAndIdNotAndDeleted(code, id,BooleanStatus.False);
+			count = ((BusinessBaseRepository<T>) this.entityRepository).countByCodeAndIdNotAndDeleted(code, id,
+					BooleanStatus.False);
 		else
-			count = ((BusinessBaseRepository<T>) this.entityRepository).countByCodeAndDeleted(code,BooleanStatus.False);
+			count = ((BusinessBaseRepository<T>) this.entityRepository).countByCodeAndDeleted(code,
+					BooleanStatus.False);
 		return count == 0;
 	}
-	
-	public boolean isDeleted(T entity){
+
+	public boolean isDeleted(T entity) {
 		return BooleanStatus.TRUE.equals(entity.getDeleted());
 	}
 
@@ -67,8 +69,11 @@ public class BusinessBaseEntityService<T extends BusinessBaseEntity> extends Ent
 	 */
 	@Override
 	public Page<T> findAll(Pageable pageable, Map<String, Object> searchParams) {
-		if (searchParams == null || (!searchParams.containsKey("EQ_" + BusinessBaseEntity.DELETED_PROPERTY)))
+		if (searchParams == null)
+			searchParams = Maps.newHashMap();
+		if (!searchParams.containsKey("EQ_" + BusinessBaseEntity.DELETED_PROPERTY)) {
 			searchParams.put("EQ_" + BusinessBaseEntity.DELETED_PROPERTY, BooleanStatus.False.toString());
+		}
 		return super.findAll(pageable, searchParams);
 	}
 
