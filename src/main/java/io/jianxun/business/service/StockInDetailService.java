@@ -20,7 +20,7 @@ import io.jianxun.common.service.exception.ServiceException;
 
 @Service
 @Transactional(readOnly = true)
-public class StockInDetailService extends DepartmentableService	<StockInDetail> {
+public class StockInDetailService extends DepartmentableService<StockInDetail> {
 
 	public String getMaxSno(String prefix) {
 		StockInDetail detail = ((StockInDetailRepository) entityRepository)
@@ -84,15 +84,14 @@ public class StockInDetailService extends DepartmentableService	<StockInDetail> 
 		return ((StockInDetailRepository) entityRepository).findByMaintenanceDateBefore(noticeDate);
 
 	}
-	
-	
-	//维护到期提醒
+
+	// 维护到期提醒
 	public List<StockInDetail> findByMaintenanceNoticeDateLT(LocalDate noticeDate) {
 		return ((StockInDetailRepository) entityRepository).findByMaintenanceNoticeDateBefore(noticeDate);
 
 	}
-	
-	//报废提醒
+
+	// 报废提醒
 	public List<StockInDetail> findByRetirementPeriodNoticeDateLT(LocalDate noticeDate) {
 		return ((StockInDetailRepository) entityRepository).findByRetirementPeriodNoticeDateBefore(noticeDate);
 
@@ -109,6 +108,18 @@ public class StockInDetailService extends DepartmentableService	<StockInDetail> 
 			stockInDetail.setDepart(destination);
 		}
 		save(details);
+	}
+
+	@Transactional(readOnly = false)
+	public void refreshWeaponInfo(Weapon weapon) {
+		if (weapon == null)
+			throw new ServiceException("获取装备信息失败");
+		List<StockInDetail> list = findByWeapon(weapon);
+		save(list);
+	}
+
+	private List<StockInDetail> findByWeapon(Weapon weapon) {
+		return ((StockInDetailRepository) entityRepository).findByStockInWeapon(weapon);
 	}
 
 }

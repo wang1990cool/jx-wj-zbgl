@@ -60,7 +60,6 @@ public class StockInDetail extends DepartmentEntity {
 	private LocalDate retirementPeriodNoticeDate;
 
 	private User maintenanceUser;
-	
 
 	/**
 	 * @return the stockIn
@@ -178,7 +177,8 @@ public class StockInDetail extends DepartmentEntity {
 				else
 					this.maintenanceDate = null;
 			}
-		}
+		} else
+			this.maintenanceNoticeDate = null;
 
 		return maintenanceNoticeDate;
 	}
@@ -190,7 +190,7 @@ public class StockInDetail extends DepartmentEntity {
 	public LocalDate getRetirementPeriodNoticeDate() {
 		if (this.getStockIn() != null) {
 			Weapon weapon = this.getStockIn().getWeapon();
-			if (weapon == null || weapon.getMaintenanceCycle() == -1)
+			if (weapon == null || weapon.getRetirementPeriod() == -1)
 				this.retirementPeriodNoticeDate = null;
 			else {
 				int cycle = weapon.getRetirementPeriod();
@@ -205,7 +205,8 @@ public class StockInDetail extends DepartmentEntity {
 					this.retirementPeriodNoticeDate = null;
 
 			}
-		}
+		}else
+			this.retirementPeriodNoticeDate = null;
 		return this.retirementPeriodNoticeDate;
 	}
 

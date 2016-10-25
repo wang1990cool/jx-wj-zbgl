@@ -3,6 +3,8 @@ package io.jianxun.business.service;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -12,6 +14,7 @@ import com.google.common.collect.Lists;
 import io.jianxun.business.domain.DataDictionary;
 import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.enums.BooleanStatus;
+import io.jianxun.business.event.RefreshStockDetailEvent;
 import io.jianxun.business.repository.WeaponRepository;
 import io.jianxun.business.web.dto.CodeNameDto;
 import io.jianxun.common.service.exception.ServiceException;
@@ -19,6 +22,14 @@ import io.jianxun.common.service.exception.ServiceException;
 @Service
 @Transactional(readOnly = true)
 public class WeaponService extends BusinessBaseEntityService<Weapon> {
+
+	private final ApplicationEventPublisher applicationEventPublisher;
+
+	@Autowired
+	public WeaponService(ApplicationEventPublisher applicationEventPublisher) {
+		super();
+		this.applicationEventPublisher = applicationEventPublisher;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -30,11 +41,15 @@ public class WeaponService extends BusinessBaseEntityService<Weapon> {
 	@Override
 	@Transactional(readOnly = false)
 	public Weapon save(Weapon entity) {
-		if (entityRepository.isNew(entity)) {
+		boolean f = entityRepository.isNew(entity);
+		if (f) {
 			entity.setCode(getNextCode());
 			entity.setTypeCode(getNextTypeCode(entity.getName(), entity.getCategory()));
 		}
-		return super.save(entity);
+		super.save(entity);
+		if (!f)
+			applicationEventPublisher.publishEvent(new RefreshStockDetailEvent(entity));
+		return entity;
 	}
 
 	public long countByNameAnd(String name) {
