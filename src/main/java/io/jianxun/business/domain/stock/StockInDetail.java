@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jianxun.business.domain.DepartmentEntity;
 import io.jianxun.business.domain.User;
 import io.jianxun.business.domain.Weapon;
+import io.jianxun.business.enums.DetailStatus;
 import io.jianxun.business.enums.Unit;
 
 /**
@@ -60,6 +61,9 @@ public class StockInDetail extends DepartmentEntity {
 	private LocalDate retirementPeriodNoticeDate;
 
 	private User maintenanceUser;
+
+	// 状态 可用 已选
+	private String status = DetailStatus.ACTIVE.getCode();
 
 	/**
 	 * @return the stockIn
@@ -205,7 +209,7 @@ public class StockInDetail extends DepartmentEntity {
 					this.retirementPeriodNoticeDate = null;
 
 			}
-		}else
+		} else
 			this.retirementPeriodNoticeDate = null;
 		return this.retirementPeriodNoticeDate;
 	}
@@ -237,6 +241,28 @@ public class StockInDetail extends DepartmentEntity {
 	 */
 	public void setMaintenanceUser(User maintenanceUser) {
 		this.maintenanceUser = maintenanceUser;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status
+	 *            the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	@Transient
+	public String getStatusDisplay() {
+		if (this.getStatus() != null)
+			return DetailStatus.parse(this.getStatus());
+		return "";
 	}
 
 	@Transient

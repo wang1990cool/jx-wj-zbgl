@@ -17,21 +17,21 @@
 	<hr style="margin: 5px 0" />
 </div>
 <div class="bjui-pageContent tableContent">
-	<table data-toggle="tablefixed" data-width="100%" data-nowrap="true"
-		data-selected-multi="true">
+	<table class="table table-bordered table-hover table-striped table-top" style="width:1448px">
 		<thead>
 			<tr>
 				<th width="26"><input type="checkbox" class="checkboxCtrl"
 					data-group="ids" data-toggle="icheck" /></th>
-				<th>所属机构</th>
-				<th>装备器械名称</th>
-				<th>生产日期</th>
-				<th>装备编号</th>
-				<th>装备自带编号</th>
-				<th data-order-field="stockIn.createTime">入库时间</th>
-				<th data-order-field="maintenanceNoticeDate">维护到期时间</th>
-				<th data-order-field="retirementPeriodNoticeDate">报废时间</th>
-				<th data-order-field="stockIn.createUser.name">操作用户</th>
+				<th  width="150">所属机构</th>
+				<th width="60">状态</th>
+				<th width="200">装备器械名称</th>
+				<th width="100">生产日期</th>
+				<th width="340">装备编号</th>
+				<th width="240">装备自带编号</th>
+				<th width="180" data-order-field="stockIn.createTime">入库时间</th>
+				<th width="100" data-order-field="maintenanceNoticeDate">维护到期时间</th>
+				<th width="100" data-order-field="retirementPeriodNoticeDate">报废时间</th>
+				<th width="100" data-order-field="stockIn.createUser.name">操作用户</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -39,6 +39,7 @@
 				<td><input type="checkbox" name="ids" data-toggle="icheck"
 					th:value="${e.id}" value="-1" /></td>
 				<td th:text="${e.depart.name}">所属机构</td>
+				<td th:text="${e.statusDisplay}">状态</td>
 				<td th:text="${e.stockIn.weapon.name}">装备器械名称</td>
 				<td th:text="${e.stockIn.productionDate}">生产日期</td>
 				<td th:text="${e.stockCodePrefix + ' ' +e.sNo}">自带编号</td>
