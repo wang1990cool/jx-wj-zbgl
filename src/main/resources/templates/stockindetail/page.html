@@ -39,7 +39,7 @@
 				<td><input type="checkbox" name="ids" data-toggle="icheck"
 					th:value="${e.id}" value="-1" /></td>
 				<td th:text="${e.depart.name}">所属机构</td>
-				<td th:text="${e.statusDisplay}">状态</td>
+				<td th:text="${e.status}">状态</td>
 				<td th:text="${e.stockIn.weapon.name}">装备器械名称</td>
 				<td th:text="${e.stockIn.productionDate}">生产日期</td>
 				<td th:text="${e.stockCodePrefix + ' ' +e.sNo}">自带编号</td>

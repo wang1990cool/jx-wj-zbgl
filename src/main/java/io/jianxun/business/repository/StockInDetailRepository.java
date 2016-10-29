@@ -6,6 +6,7 @@ import java.util.List;
 import io.jianxun.business.domain.Department;
 import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.domain.stock.StockInDetail;
+import io.jianxun.business.enums.DetailStatus;
 import io.jianxun.common.repository.EntityRepository;
 
 public interface StockInDetailRepository extends EntityRepository<StockInDetail, Long> {
@@ -16,9 +17,9 @@ public interface StockInDetailRepository extends EntityRepository<StockInDetail,
 
 	List<StockInDetail> findByDepartAndStockInWeapon(Department department, Weapon weapon);
 
-	List<StockInDetail> findByMaintenanceNoticeDateBefore(LocalDate noticeDate);
+	List<StockInDetail> findByStatusAndMaintenanceNoticeDateBefore(String status, LocalDate noticeDate);
 
-	List<StockInDetail> findByRetirementPeriodNoticeDateBefore(LocalDate noticeDate);
+	List<StockInDetail> findByStatusAndRetirementPeriodNoticeDateBefore(String status, LocalDate noticeDate);
 
 	List<StockInDetail> findByStockInWeapon(Weapon weapon);
 

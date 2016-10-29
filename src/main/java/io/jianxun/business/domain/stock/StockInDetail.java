@@ -63,7 +63,7 @@ public class StockInDetail extends DepartmentEntity {
 	private User maintenanceUser;
 
 	// 状态 可用 已选
-	private String status = DetailStatus.ACTIVE.getCode();
+	private String status = DetailStatus.ACTIVE.getName();
 
 	/**
 	 * @return the stockIn
@@ -256,13 +256,6 @@ public class StockInDetail extends DepartmentEntity {
 	 */
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	@Transient
-	public String getStatusDisplay() {
-		if (this.getStatus() != null)
-			return DetailStatus.parse(this.getStatus());
-		return "";
 	}
 
 	@Transient

@@ -62,7 +62,7 @@ public class RWeaponNoticeService extends DepartmentableService<RWeaponNotice> {
 	public void scrap(RWeaponNotice notice) {
 		StockInDetail detail = notice.getDetail();
 		if (detail != null)
-			stockInDetailService.delete(detail);
+			stockInDetailService.scrap(detail);
 	}
 
 }

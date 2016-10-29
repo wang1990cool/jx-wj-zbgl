@@ -15,6 +15,7 @@ import io.jianxun.business.domain.Department;
 import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.domain.stock.StockIn;
 import io.jianxun.business.domain.stock.StockInDetail;
+import io.jianxun.business.enums.DetailStatus;
 import io.jianxun.business.repository.StockInDetailRepository;
 import io.jianxun.common.service.exception.ServiceException;
 
@@ -87,13 +88,14 @@ public class StockInDetailService extends DepartmentableService<StockInDetail> {
 
 	// 维护到期提醒
 	public List<StockInDetail> findByMaintenanceNoticeDateLT(LocalDate noticeDate) {
-		return ((StockInDetailRepository) entityRepository).findByMaintenanceNoticeDateBefore(noticeDate);
+		return ((StockInDetailRepository) entityRepository).findByStatusAndMaintenanceNoticeDateBefore(DetailStatus.ACTIVE.getName(),noticeDate);
 
 	}
 
 	// 报废提醒
 	public List<StockInDetail> findByRetirementPeriodNoticeDateLT(LocalDate noticeDate) {
-		return ((StockInDetailRepository) entityRepository).findByRetirementPeriodNoticeDateBefore(noticeDate);
+		return ((StockInDetailRepository) entityRepository)
+				.findByStatusAndRetirementPeriodNoticeDateBefore(DetailStatus.ACTIVE.getName(), noticeDate);
 
 	}
 
@@ -120,6 +122,15 @@ public class StockInDetailService extends DepartmentableService<StockInDetail> {
 
 	private List<StockInDetail> findByWeapon(Weapon weapon) {
 		return ((StockInDetailRepository) entityRepository).findByStockInWeapon(weapon);
+	}
+
+	@Transactional(readOnly = false)
+	public void scrap(StockInDetail detail) {
+		if (detail != null) {
+			detail.setStatus(DetailStatus.SCRAPPED.getName());
+			save(detail);
+		}
+
 	}
 
 }
