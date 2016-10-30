@@ -346,8 +346,7 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 		RequestForm f = entityService.findOne(id);
 		if (f == null)
 			throw new ServiceException("获取申请信息失败");
-		f.getDetails().clear();
-		entityService.save(f);
+		((RequestFormService) entityService).clear(f);
 		return ReturnDto.ok("清空成功！!");
 
 	}

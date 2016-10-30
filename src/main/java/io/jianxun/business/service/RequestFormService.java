@@ -17,6 +17,7 @@ import io.jianxun.business.domain.Department;
 import io.jianxun.business.domain.Weapon;
 import io.jianxun.business.domain.requisitions.RequestForm;
 import io.jianxun.business.domain.stock.StockInDetail;
+import io.jianxun.business.enums.DetailStatus;
 import io.jianxun.business.enums.RequestFormStatus;
 import io.jianxun.business.event.AdjustStockEvent;
 import io.jianxun.business.event.RefreshNoticeEvent;
@@ -184,6 +185,18 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 		event.setWeapon(weapon);
 		event.setDetails(details);
 		applicationEventPublisher.publishEvent(event);
+	}
+
+	@Transactional(readOnly = false)
+	public void clear(RequestForm f) {
+		Set<StockInDetail> details = f.getDetails();
+		for (StockInDetail stockInDetail : details) {
+			stockInDetail.setStatus(DetailStatus.ACTIVE.getName());
+		}
+		stockInDetailService.save(details);
+		details.clear();
+		save(f);
+		
 	}
 
 	
