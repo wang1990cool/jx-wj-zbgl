@@ -101,7 +101,7 @@ public class StockInDetailService extends DepartmentableService<StockInDetail> {
 	}
 
 	public List<StockInDetail> findByDepartAndStockInWeapon(Department department, Weapon weapon) {
-		return ((StockInDetailRepository) entityRepository).findByDepartAndStockInWeapon(department, weapon);
+		return ((StockInDetailRepository) entityRepository).findByDepartAndStockInWeaponAndStatus(department, weapon,DetailStatus.ACTIVE.getName());
 
 	}
 

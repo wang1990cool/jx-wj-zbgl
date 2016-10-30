@@ -14,12 +14,12 @@ public interface StockInDetailRepository extends EntityRepository<StockInDetail,
 
 	List<StockInDetail> findByMaintenanceDateBefore(LocalDate maintenanceDate);
 
-	List<StockInDetail> findByDepartAndStockInWeapon(Department department, Weapon weapon);
-
 	List<StockInDetail> findByStatusAndMaintenanceNoticeDateBefore(String status, LocalDate noticeDate);
 
 	List<StockInDetail> findByStatusAndRetirementPeriodNoticeDateBefore(String status, LocalDate noticeDate);
 
 	List<StockInDetail> findByStockInWeapon(Weapon weapon);
+
+	List<StockInDetail> findByDepartAndStockInWeaponAndStatus(Department department, Weapon weapon, String name);
 
 }

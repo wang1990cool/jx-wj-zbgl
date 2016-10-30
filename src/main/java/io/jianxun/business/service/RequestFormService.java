@@ -2,6 +2,7 @@ package io.jianxun.business.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.google.common.collect.Maps;
 
 import io.jianxun.business.domain.Department;
 import io.jianxun.business.domain.Weapon;
@@ -116,7 +119,9 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 
 	@Transactional(readOnly = false)
 	public void sysout(RequestForm f) {
-		Page<StockInDetail> p = stockInDetailService.findAll(new PageRequest(0, f.getCapacity(), Direction.DESC, "id"));
+		Map<String, Object> searchParams = Maps.newHashMap();
+		searchParams.put("EQ_status", DetailStatus.ACTIVE.getName());
+		Page<StockInDetail> p = stockInDetailService.findAll(new PageRequest(0, f.getCapacity(), Direction.DESC, "id"),searchParams);
 		if (p.getContent() != null && !p.getContent().isEmpty()) {
 			stockInDetailService.selected(p.getContent());
 			f.getDetails().addAll(p.getContent());
@@ -126,7 +131,7 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 			throw new ServiceException("未选择任何装备");
 
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void sysoutCommit(RequestForm f) {
 		if (f.getDetails() != null && !f.getDetails().isEmpty()) {
@@ -152,12 +157,12 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 		requestFormAuditorService.audit(f, message);
 		// 调整库存
 		adjustStock(f);
-		//刷新提醒
+		// 刷新提醒
 		applicationEventPublisher.publishEvent(new RefreshNoticeEvent());
 	}
-	
+
 	public List<RequestForm> findByReturnDateLT(LocalDate noticeDate) {
-		return ((RequestFormRepository)this.entityRepository).findByReturnDateBefore(noticeDate);
+		return ((RequestFormRepository) this.entityRepository).findByReturnDateBefore(noticeDate);
 	}
 
 	private void adjustStock(RequestForm f) {
@@ -196,9 +201,7 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 		stockInDetailService.save(details);
 		details.clear();
 		save(f);
-		
-	}
 
-	
+	}
 
 }

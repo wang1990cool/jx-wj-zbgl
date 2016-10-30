@@ -26,6 +26,7 @@ import io.jianxun.business.domain.requisitions.RequestFormAuditor;
 import io.jianxun.business.domain.stock.Stock;
 import io.jianxun.business.domain.stock.StockInDetail;
 import io.jianxun.business.domain.validator.RequestFormValidator;
+import io.jianxun.business.enums.DetailStatus;
 import io.jianxun.business.enums.RequestFormStatus;
 import io.jianxun.business.service.DepartmentService;
 import io.jianxun.business.service.DepartmentableService;
@@ -295,10 +296,11 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 				throw new ServiceException("装备选择超出申请数量范围");
 			for (Long d : details) {
 				StockInDetail detail = detailService.findOne(d);
+				if(!DetailStatus.ACTIVE.getName().equals(detail.getStatus()))
+					throw new ServiceException("装备状态错误，必须选择可用装备");
 				if (detail != null)
 					f.getDetails().add(detail);
 			}
-			f.setStatus(RequestFormStatus.ENROLLMENT);
 			entityService.save(f);
 		} else
 			throw new ServiceException("未选择任何装备");
