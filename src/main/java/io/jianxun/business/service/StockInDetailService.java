@@ -109,6 +109,7 @@ public class StockInDetailService extends DepartmentableService<StockInDetail> {
 	public void moveDetail(Set<StockInDetail> details, Department destination) {
 		for (StockInDetail stockInDetail : details) {
 			stockInDetail.setDepart(destination);
+			stockInDetail.setStatus(DetailStatus.ACTIVE.getName());
 		}
 		save(details);
 	}
