@@ -88,7 +88,8 @@ public class StockInDetailService extends DepartmentableService<StockInDetail> {
 
 	// 维护到期提醒
 	public List<StockInDetail> findByMaintenanceNoticeDateLT(LocalDate noticeDate) {
-		return ((StockInDetailRepository) entityRepository).findByStatusAndMaintenanceNoticeDateBefore(DetailStatus.ACTIVE.getName(),noticeDate);
+		return ((StockInDetailRepository) entityRepository)
+				.findByStatusAndMaintenanceNoticeDateBefore(DetailStatus.ACTIVE.getName(), noticeDate);
 
 	}
 
@@ -130,6 +131,15 @@ public class StockInDetailService extends DepartmentableService<StockInDetail> {
 			detail.setStatus(DetailStatus.SCRAPPED.getName());
 			save(detail);
 		}
+
+	}
+
+	@Transactional(readOnly = false)
+	public void selected(List<StockInDetail> content) {
+		for (StockInDetail stockInDetail : content) {
+			stockInDetail.setStatus(DetailStatus.SELECTED.getName());
+		}
+		save(content);
 
 	}
 

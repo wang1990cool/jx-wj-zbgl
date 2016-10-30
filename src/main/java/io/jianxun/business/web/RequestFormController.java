@@ -79,8 +79,8 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 	public String committree(Model model, @RequestParam(value = "orderField", defaultValue = "id") String orderField,
 			@RequestParam(value = "orderDirection", defaultValue = "ASC") String orderDirection) {
 		try {
-			model.addAttribute("tree", mapper.writeValueAsString(departmentService
-					.getDepartTree("business/" + getTemplePrefix() + "/audit/page", getRefrashDiv())));
+			model.addAttribute("tree", mapper.writeValueAsString(
+					departmentService.getDepartTree("business/" + getTemplePrefix() + "/audit/page", getRefrashDiv())));
 			otherTreeData(model);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -314,6 +314,41 @@ public class RequestFormController extends DepartmentableController<RequestForm>
 			throw new ServiceException("获取申请信息失败");
 		((RequestFormService) entityService).sysout(f);
 		return ReturnDto.ok("登记成功!");
+
+	}
+
+	// 系统登记
+	@RequestMapping(value = "/sysoutcommit/{id}")
+	@ResponseBody
+	public ReturnDto sysoutcommit(@PathVariable("id") Long id, Model model) {
+		RequestForm f = entityService.findOne(id);
+		if (f == null)
+			throw new ServiceException("获取申请信息失败");
+		((RequestFormService) entityService).sysoutCommit(f);
+		return ReturnDto.ok("登记成功!");
+
+	}
+
+	@RequestMapping(value = "/sysout/detail/{id}")
+	public String sysoutDetail(@PathVariable("id") Long id, Model model) {
+		RequestForm f = entityService.findOne(id);
+		if (f == null)
+			throw new ServiceException("获取申请信息失败");
+		model.addAttribute("content", f.getDetails());
+		return "stockindetail/list";
+
+	}
+
+	// 清空
+	@RequestMapping(value = "/sysout/clear/{id}")
+	@ResponseBody
+	public ReturnDto sysoutclear(@PathVariable("id") Long id, Model model) {
+		RequestForm f = entityService.findOne(id);
+		if (f == null)
+			throw new ServiceException("获取申请信息失败");
+		f.getDetails().clear();
+		entityService.save(f);
+		return ReturnDto.ok("清空成功！!");
 
 	}
 

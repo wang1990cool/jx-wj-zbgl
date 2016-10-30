@@ -33,14 +33,34 @@
 			th:if="${commitable}" type="button" data-toggle="navtab"
 			class="btn-green" data-id="requestform-form-auditor"
 			data-url="business/requestform/commit/{#bjui-selected}">审批</button>
-		<button sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_OUT')" th:if="${enrollment}" type="button" data-toggle="navtab"
+		<button sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_OUT')"
+			th:if="${enrollment}" type="button" data-toggle="navtab"
 			class="btn-green" data-id="requestform-form-enrollment"
 			data-url="business/requestform/out/{#bjui-selected}">选择登记</button>
-		<button sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_SYSOUT')" th:if="${enrollment}" type="button" data-toggle="doajax"
+		<button sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_SYSOUT')"
+			th:if="${enrollment}" type="button" data-toggle="doajax"
 			data-confirm-msg="确定要系统自动分配装备吗？" class="btn-green"
 			data-id="requestform-form-enrollment"
 			data-url="business/requestform/sysout/{#bjui-selected}">系统登记</button>
-		<button sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_FINISHED')" th:if="${finish}" type="button" data-toggle="navtab"
+
+		<button sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_SYSOUT')"
+			 type="button" data-toggle="navtab"
+			class="btn-green" data-id="requestform-form-enrollment-detail"
+			data-url="business/requestform/sysout/detail/{#bjui-selected}">登记明细</button>
+		<button sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_SYSOUT')"
+			th:if="${enrollment}" type="button" data-toggle="doajax"
+			data-confirm-msg="确定要清空分配装备吗？" class="btn-green"
+			data-id="requestform-form-enrollment-detail-clear"
+			data-url="business/requestform/sysout/clear/{#bjui-selected}">清空选择</button>
+			
+		<button sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_SYSOUT')"
+			th:if="${enrollment}" type="button" data-toggle="doajax"
+			data-confirm-msg="确定要确认登记的装备吗，确认后不能修改？" class="btn-green"
+			data-id="requestform-form-enrollment-commit"
+			data-url="business/requestform/sysoutcommit/{#bjui-selected}">登记确认</button>	
+			
+		<button sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_FINISHED')"
+			th:if="${finish}" type="button" data-toggle="navtab"
 			class="btn-green" data-id="requestform-form-finish"
 			data-url="business/requestform/finished/{#bjui-selected}">发放确认</button>
 		<!-- 
@@ -90,11 +110,13 @@
 				<td th:text="${e.capacity}">申请数量</td>
 				<td th:text="${e.requiredDate}">领用日期</td>
 				<td th:text="${e.returnDate}">归还日期</td>
-				<td><a sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_MODIFY')"
-					th:if="${e.status == T(io.jianxun.business.enums.RequestFormStatus).CREATE}" 
+				<td><a
+					sec:authorize="hasAnyAuthority('ALL','REQUESTFORM_MODIFY')"
+					th:if="${e.status == T(io.jianxun.business.enums.RequestFormStatus).CREATE}"
 					th:href="@{/business/requestform/modify/{id}(id=${e.id})}" href="#"
 					class="btn btn-green" data-toggle="navtab"
-					data-id="requestform-modify-form" data-title="修改-器械信息">修改</a> <a ec:authorize="hasAnyAuthority('ALL','REQUESTFORM_REMOVE')"
+					data-id="requestform-modify-form" data-title="修改-器械信息">修改</a> <a
+					ec:authorize="hasAnyAuthority('ALL','REQUESTFORM_REMOVE')"
 					th:if="${e.status == T(io.jianxun.business.enums.RequestFormStatus).CREATE}"
 					th:href="@{/business/requestform/remove/{id}(id=${e.id})}" href="#"
 					class="btn btn-red" data-toggle="doajax"

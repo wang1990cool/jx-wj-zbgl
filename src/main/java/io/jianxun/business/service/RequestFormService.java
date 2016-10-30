@@ -117,10 +117,21 @@ public class RequestFormService extends DepartmentableService<RequestForm> {
 	public void sysout(RequestForm f) {
 		Page<StockInDetail> p = stockInDetailService.findAll(new PageRequest(0, f.getCapacity(), Direction.DESC, "id"));
 		if (p.getContent() != null && !p.getContent().isEmpty()) {
+			stockInDetailService.selected(p.getContent());
 			f.getDetails().addAll(p.getContent());
+			save(f);
+			requestFormAuditorService.audit(f, "选择申请装备");
+		} else
+			throw new ServiceException("未选择任何装备");
+
+	}
+	
+	@Transactional(readOnly = false)
+	public void sysoutCommit(RequestForm f) {
+		if (f.getDetails() != null && !f.getDetails().isEmpty()) {
 			f.setStatus(RequestFormStatus.ENROLLMENT);
 			save(f);
-			requestFormAuditorService.audit(f, "登记成功");
+			requestFormAuditorService.audit(f, "确认申请装备");
 		} else
 			throw new ServiceException("未选择任何装备");
 
