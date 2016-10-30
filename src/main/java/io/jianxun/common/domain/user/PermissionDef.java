@@ -19,7 +19,7 @@ public enum PermissionDef {
 	STOCK_PAGE("stock_page", "列表", ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_IN_CREATE("stockin_create", "直接入库",
 			ModuleDef.STOCK, DomainDef.STOCK_STOCK), STOCK_IN_PAGE("stockin_page", "入库单明细", ModuleDef.STOCK,
 					DomainDef.STOCK_STOCK), STOCK_IN_DETAIL_REMOVE("stockindetail_page", "库存明细", ModuleDef.STOCK,
-							DomainDef.STOCK_STOCK),STOCK_SET("stock_setting", "库存限定设置", ModuleDef.STOCK,
+							DomainDef.STOCK_STOCK), STOCK_SET("stock_setting", "库存限定设置", ModuleDef.STOCK,
 									DomainDef.STOCK_STOCK),
 	// ----组织管理
 	// --机构管理
@@ -50,26 +50,39 @@ public enum PermissionDef {
 	// 申请
 	REQUESTFORM_PAGE("requestform_page", "列表", ModuleDef.REQUESTFORM,
 			DomainDef.REQUESTFORM_REQUESTFORM), REQUESTFORM_CREATE("requestform_create", "新增", ModuleDef.REQUESTFORM,
-					DomainDef.REQUESTFORM_REQUESTFORM), REQUESTFORM_MODIFY("requestform_modify", "修改", ModuleDef.REQUESTFORM,
-							DomainDef.REQUESTFORM_REQUESTFORM), REQUESTFORM_REMOVE("requestform_remove", "删除", ModuleDef.REQUESTFORM,
-									DomainDef.REQUESTFORM_REQUESTFORM), REQUESTFORM_UP("requestform_up", "提交", ModuleDef.REQUESTFORM,
-							DomainDef.REQUESTFORM_REQUESTFORM), REQUESTFORM_AUDITMESSAGE("requestform_auditmessage",
-									"查看审核信息", ModuleDef.REQUESTFORM,
-									DomainDef.REQUESTFORM_REQUESTFORM),
-//	审核
-	REQUESTFORM_AUDIT("requestform_audit","待审核", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_COMMIT),REQUESTFORM_COMMIT("requestform_commit","审核", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_COMMIT),
-	//登记
-	REQUESTFORM_ENROLLMENT("requestform_enrollment","待登记", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_ENROLLMENT),REQUESTFORM_OUT("requestform_out","选择登记", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_ENROLLMENT),REQUESTFORM_SYSOUT("requestform_sysout","系统登记", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_ENROLLMENT),
-	//领用
-	REQUESTFORM_FINISH("requestform_finish","待领用", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_FINISH),REQUESTFORM_FINISHED("requestform_finished","确认", ModuleDef.REQUESTFORM,DomainDef.REQUESTFORM_FINISH),
+					DomainDef.REQUESTFORM_REQUESTFORM), REQUESTFORM_MODIFY("requestform_modify", "修改",
+							ModuleDef.REQUESTFORM, DomainDef.REQUESTFORM_REQUESTFORM), REQUESTFORM_REMOVE(
+									"requestform_remove", "删除", ModuleDef.REQUESTFORM,
+									DomainDef.REQUESTFORM_REQUESTFORM), REQUESTFORM_UP("requestform_up", "提交",
+											ModuleDef.REQUESTFORM,
+											DomainDef.REQUESTFORM_REQUESTFORM), REQUESTFORM_AUDITMESSAGE(
+													"requestform_auditmessage", "查看审核信息", ModuleDef.REQUESTFORM,
+													DomainDef.REQUESTFORM_REQUESTFORM),
+	// 审核
+	REQUESTFORM_AUDIT("requestform_audit", "待审核", ModuleDef.REQUESTFORM,
+			DomainDef.REQUESTFORM_COMMIT), REQUESTFORM_COMMIT("requestform_commit", "审核", ModuleDef.REQUESTFORM,
+					DomainDef.REQUESTFORM_COMMIT),
+	// 登记
+	REQUESTFORM_ENROLLMENT("requestform_enrollment", "待登记", ModuleDef.REQUESTFORM,
+			DomainDef.REQUESTFORM_ENROLLMENT), REQUESTFORM_OUT("requestform_out", "选择登记", ModuleDef.REQUESTFORM,
+					DomainDef.REQUESTFORM_ENROLLMENT), REQUESTFORM_SYSOUT("requestform_sysout", "系统登记",
+							ModuleDef.REQUESTFORM, DomainDef.REQUESTFORM_ENROLLMENT),
+	// 领用
+	REQUESTFORM_FINISH("requestform_finish", "待领用", ModuleDef.REQUESTFORM,
+			DomainDef.REQUESTFORM_FINISH), REQUESTFORM_FINISHED("requestform_finished", "确认", ModuleDef.REQUESTFORM,
+					DomainDef.REQUESTFORM_FINISH),
 	// 维护提醒
-	NOTICE_MAINTAIN_PAGE("weaponnotice_page", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_MAINTAIN),NOTICE_MAINTAIN_MAINTAIN("weaponnotice_maintain", "维护确认", ModuleDef.NOTICE, DomainDef.NOTICE_MAINTAIN),
+	NOTICE_MAINTAIN_PAGE("weaponnotice_page", "列表", ModuleDef.NOTICE,
+			DomainDef.NOTICE_MAINTAIN), NOTICE_MAINTAIN_MAINTAIN("weaponnotice_maintain", "维护确认", ModuleDef.NOTICE,
+					DomainDef.NOTICE_MAINTAIN),
 	// 报废提醒
-	NOTICE_SCRAP_PAGE("rweaponnotice_page", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_SCRAP),NOTICE_SCRAP_SCRAP("rweaponnotice_scrap", "报废确认", ModuleDef.NOTICE, DomainDef.NOTICE_SCRAP),
+	NOTICE_SCRAP_PAGE("rweaponnotice_page", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_SCRAP), NOTICE_SCRAP_SCRAP(
+			"rweaponnotice_scrap", "报废确认", ModuleDef.NOTICE, DomainDef.NOTICE_SCRAP),
 	// 库存提醒
 	NOTICE_STOCK_PAGE("stocknotice_page", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_STOCK),
 	// 归还提醒
-	NOTICE_ESCHEAT_PAGE("backnotice_page", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_ESCHEAT),NOTICE_ESCHEAT_ESCHEAT("backnotice_escheat", "归还", ModuleDef.NOTICE, DomainDef.NOTICE_ESCHEAT);
+	NOTICE_ESCHEAT_PAGE("backnotice_page", "列表", ModuleDef.NOTICE, DomainDef.NOTICE_ESCHEAT), NOTICE_ESCHEAT_ESCHEAT(
+			"backnotice_escheat", "归还", ModuleDef.NOTICE, DomainDef.NOTICE_ESCHEAT);
 	// 操作代码
 	private String code;
 	// 描述
@@ -121,9 +134,39 @@ public enum PermissionDef {
 
 	private static Map<String, PermissionDef> valueMaps = Maps.newTreeMap();
 	private static Map<String, List<CodeNameDto>> persMap = Maps.newTreeMap();
+	private static Map<String, List<String>> initMap = Maps.newTreeMap();
 
 	static {
 		for (PermissionDef def : PermissionDef.values()) {
+			// 系统设置权限组
+			if (def.getDomain().equals(ModuleDef.SYS) || def.getDomain().equals(ModuleDef.ORGANIZATION)) {
+				initValue("sys", def);
+			}
+			// 装备基本信息权限组
+			if (def.getCode().trim().startsWith("weapon_")) {
+				initValue("weapon", def);
+			}
+			// 库存管理权及通知限组
+			if (def.getCode().trim().startsWith("stock") || def.getCode().trim().contains("notice")) {
+				initValue("stock", def);
+			}
+			// 申请
+			if (def.getCode().equals("requestform_page") || def.getCode().equals("requestform_create")
+					|| def.getCode().equals("requestform_modify") || def.getCode().equals("requestform_remove")
+					|| def.getCode().equals("requestform_up") || def.getCode().equals("requestform_auditmessage"))
+				initValue("sq", def);
+			// 审核
+			if (def.getCode().equals("requestform_audit") || def.getCode().equals("requestform_commit")
+					|| def.getCode().equals("requestform_auditmessage"))
+				initValue("sh", def);
+			// 登记
+			if (def.getCode().equals("requestform_enrollment") || def.getCode().equals("requestform_out")
+					|| def.getCode().equals("requestform_sysout") || def.getCode().equals("requestform_auditmessage"))
+				initValue("dj", def);
+			// 领用
+			if (def.getCode().equals("requestform_finish") || def.getCode().equals("requestform_finished")
+					|| def.getCode().equals("requestform_auditmessage"))
+				initValue("ly", def);
 			valueMaps.put(def.code, def);
 			if (persMap.containsKey(def.getDomain().getCode())) {
 				List<CodeNameDto> v = persMap.get(def.getDomain().getCode());
@@ -136,6 +179,18 @@ public enum PermissionDef {
 	// 根据操作代码获取权限定义
 	public static PermissionDef parse(String code) {
 		return valueMaps.get(code);
+	}
+
+	private static void initValue(String key, PermissionDef def) {
+		if (initMap.get(key) == null)
+			initMap.put(key, Lists.newArrayList(def.getCode()));
+		else
+			initMap.get(key).add(def.getCode());
+
+	}
+
+	public static List<String> getPerGroup(String key) {
+		return initMap.get(key);
 	}
 
 	private static CodeNameDto converToCodeName(PermissionDef def) {
